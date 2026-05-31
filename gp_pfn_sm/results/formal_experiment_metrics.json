@@ -1,19 +1,19 @@
 {
     "Robustness to Noise": {
         "umap_2d": {
-            "auc_roc": 0.46021899999999993,
-            "auc_pr": 0.5216614504237894,
-            "fpr_at_95_tpr": 0.973
+            "auc_roc": 0.5073529999999999,
+            "auc_pr": 0.5077727689043539,
+            "fpr_at_95_tpr": 0.95
         },
         "pca_10d": {
-            "auc_roc": 0.945657,
-            "auc_pr": 0.9547966922105022,
-            "fpr_at_95_tpr": 0.275
+            "auc_roc": 0.5520790000000001,
+            "auc_pr": 0.5766088900768673,
+            "fpr_at_95_tpr": 0.967
         },
         "prediction_mse": {
-            "auc_roc": 1.0,
-            "auc_pr": 1.0,
-            "fpr_at_95_tpr": 0.0
+            "auc_roc": 0.997479,
+            "auc_pr": 0.9968784029064146,
+            "fpr_at_95_tpr": 0.008
         }
     },
     "Near-OOD Detection": {
@@ -35,31 +35,31 @@
     },
     "Far-OOD Detection": {
         "umap_2d": {
-            "auc_roc": 0.747694,
-            "auc_pr": 0.7409605993086867,
-            "fpr_at_95_tpr": 0.847
+            "auc_roc": 1.0,
+            "auc_pr": 1.0,
+            "fpr_at_95_tpr": 0.0
         },
         "pca_10d": {
-            "auc_roc": 0.6224180000000001,
-            "auc_pr": 0.5937730852139967,
-            "fpr_at_95_tpr": 0.856
+            "auc_roc": 1.0,
+            "auc_pr": 1.0,
+            "fpr_at_95_tpr": 0.0
         },
         "prediction_mse": {
-            "auc_roc": 0.7958509999999999,
-            "auc_pr": 0.8317335691483159,
-            "fpr_at_95_tpr": 0.776
+            "auc_roc": 1.0,
+            "auc_pr": 1.0,
+            "fpr_at_95_tpr": 0.0
         }
     },
     "Real-World OOD Detection": {
         "umap_2d": {
-            "auc_roc": 0.79814,
-            "auc_pr": 0.8521337592521265,
-            "fpr_at_95_tpr": 0.712
+            "auc_roc": 0.883888,
+            "auc_pr": 0.9214986984547107,
+            "fpr_at_95_tpr": 0.679
         },
         "pca_10d": {
-            "auc_roc": 0.999834,
-            "auc_pr": 0.9998337721990034,
-            "fpr_at_95_tpr": 0.0
+            "auc_roc": 0.999835,
+            "auc_pr": 0.9998308810315709,
+            "fpr_at_95_tpr": 0.001
         },
         "prediction_mse": {
             "auc_roc": 1.0,
