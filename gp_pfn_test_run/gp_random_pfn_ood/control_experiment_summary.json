@@ -1,0 +1,102 @@
+{
+    "trained": [
+        {
+            "layer": 0,
+            "silhouette": 0.4503640830516815,
+            "d_id_95": 3,
+            "d_ood_95": 2,
+            "subspace_overlap": 0.9956865906715393,
+            "residual_update": 23.531404495239258
+        },
+        {
+            "layer": 1,
+            "silhouette": 0.4001235365867615,
+            "d_id_95": 3,
+            "d_ood_95": 2,
+            "subspace_overlap": 0.9983060359954834,
+            "residual_update": 6.99926233291626
+        },
+        {
+            "layer": 2,
+            "silhouette": 0.47823023796081543,
+            "d_id_95": 8,
+            "d_ood_95": 6,
+            "subspace_overlap": 0.7922632098197937,
+            "residual_update": 12.210022926330566
+        },
+        {
+            "layer": 3,
+            "silhouette": 0.6339862942695618,
+            "d_id_95": 12,
+            "d_ood_95": 5,
+            "subspace_overlap": 0.8235487937927246,
+            "residual_update": 6.3016581535339355
+        },
+        {
+            "layer": 4,
+            "silhouette": 0.597176730632782,
+            "d_id_95": 13,
+            "d_ood_95": 5,
+            "subspace_overlap": 0.684496283531189,
+            "residual_update": 9.18928337097168
+        },
+        {
+            "layer": 5,
+            "silhouette": 0.7278081178665161,
+            "d_id_95": 11,
+            "d_ood_95": 11,
+            "subspace_overlap": 0.40050169825553894,
+            "residual_update": 16.477632522583008
+        }
+    ],
+    "untrained": [
+        {
+            "layer": 0,
+            "silhouette": 0.24817396700382233,
+            "d_id_95": 4,
+            "d_ood_95": 3,
+            "subspace_overlap": 0.988802969455719,
+            "residual_update": 9.640774726867676
+        },
+        {
+            "layer": 1,
+            "silhouette": 0.26493045687675476,
+            "d_id_95": 3,
+            "d_ood_95": 3,
+            "subspace_overlap": 0.9834300875663757,
+            "residual_update": 8.81588363647461
+        },
+        {
+            "layer": 2,
+            "silhouette": 0.3268679976463318,
+            "d_id_95": 4,
+            "d_ood_95": 3,
+            "subspace_overlap": 0.9765132069587708,
+            "residual_update": 9.344614028930664
+        },
+        {
+            "layer": 3,
+            "silhouette": 0.3877032995223999,
+            "d_id_95": 4,
+            "d_ood_95": 3,
+            "subspace_overlap": 0.9729250073432922,
+            "residual_update": 9.009102821350098
+        },
+        {
+            "layer": 4,
+            "silhouette": 0.4017479121685028,
+            "d_id_95": 4,
+            "d_ood_95": 3,
+            "subspace_overlap": 0.973773181438446,
+            "residual_update": 9.253180503845215
+        },
+        {
+            "layer": 5,
+            "silhouette": 0.40491893887519836,
+            "d_id_95": 4,
+            "d_ood_95": 3,
+            "subspace_overlap": 0.9792032837867737,
+            "residual_update": 8.97615909576416
+        }
+    ]
+}

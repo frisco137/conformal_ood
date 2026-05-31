@@ -1,0 +1,20 @@
+/home/psquare_a6000/Desktop/conformal_ood/TransformersCanDoBayesianInference/transformer.py:18: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.self_attn.batch_first was not True(use batch_first for better inference performance)
+  self.transformer_encoder = TransformerEncoder(encoder_layers, nlayers)
+==========================================
+Training Model: matern_periodic
+Device: cuda:1
+Epochs: 100 | Steps/Epoch: 100
+==========================================
+DataLoader.__dict__ {'num_steps': 100, 'fuse_x_y': False, 'get_batch_kwargs': {'batch_size': 128, 'seq_len': 100, 'num_features': 1}, 'num_features': 1, 'num_outputs': 1}
+Epoch   1/100 | Train MSE: 0.9908 | Train NLL: 48.1561 | Val MSE: 0.9983 | Val NLL: 48.5336 | LR: 0.000057
+Epoch  10/100 | Train MSE: 0.0351 | Train NLL: 0.3733 | Val MSE: 0.0281 | Val NLL: 0.0206 | LR: 0.000573
+Epoch  20/100 | Train MSE: 0.0455 | Train NLL: 0.8897 | Val MSE: 0.0805 | Val NLL: 2.6400 | LR: 0.001145
+Epoch  30/100 | Train MSE: 0.0273 | Train NLL: -0.0205 | Val MSE: 0.0127 | Val NLL: -0.7476 | LR: 0.001102
+Epoch  40/100 | Train MSE: 0.0282 | Train NLL: 0.0274 | Val MSE: 0.0215 | Val NLL: -0.3094 | LR: 0.000978
+Epoch  50/100 | Train MSE: 0.0154 | Train NLL: -0.6114 | Val MSE: 0.0147 | Val NLL: -0.6485 | LR: 0.000792
+Epoch  60/100 | Train MSE: 0.0054 | Train NLL: -1.1159 | Val MSE: 0.0109 | Val NLL: -0.8371 | LR: 0.000573
+Epoch  70/100 | Train MSE: 0.0113 | Train NLL: -0.8186 | Val MSE: 0.0087 | Val NLL: -0.9470 | LR: 0.000354
+Epoch  80/100 | Train MSE: 0.0034 | Train NLL: -1.2148 | Val MSE: 0.0064 | Val NLL: -1.0627 | LR: 0.000168
+Epoch  90/100 | Train MSE: 0.0046 | Train NLL: -1.1527 | Val MSE: 0.0065 | Val NLL: -1.0586 | LR: 0.000044
+Epoch 100/100 | Train MSE: 0.0072 | Train NLL: -1.0258 | Val MSE: 0.0100 | Val NLL: -0.8815 | LR: 0.000000
+Training for matern_periodic completed successfully. Best Val MSE: 0.006418

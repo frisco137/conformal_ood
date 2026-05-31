@@ -1,0 +1,29 @@
+Evaluation Task,Indicator,AUROC,AUPR,FPR@95
+Robustness to Noise,UMAP-2D Mahalanobis,0.49522343750000003,0.9404845754867903,0.94
+Robustness to Noise,PCA-10D Mahalanobis,0.6510375,0.9660545448853851,0.935
+Robustness to Noise,Prediction MSE (50 Qs),1.0,1.0,0.0
+Robustness to Noise,Prediction MSE (20 Qs),1.0,1.0,0.0
+Robustness to Noise,Gradient Norm Mean,0.999875,0.9998740482229608,0.0
+Robustness to Noise,Gradient Cosine Similarity,0.9958,0.9949666893875485,0.015
+Robustness to Noise,Magnitude-Coherence Product,0.2605,0.451891365126584,1.0
+Near-OOD Detection,UMAP-2D Mahalanobis,0.480878125,0.9432102610390434,0.93
+Near-OOD Detection,PCA-10D Mahalanobis,0.6837921875,0.9729535073333412,0.935
+Near-OOD Detection,Prediction MSE (50 Qs),1.0,1.0,0.0
+Near-OOD Detection,Prediction MSE (20 Qs),1.0,1.0,0.0
+Near-OOD Detection,Gradient Norm Mean,1.0,1.0,0.0
+Near-OOD Detection,Gradient Cosine Similarity,0.9793,0.9533013287892838,0.04
+Near-OOD Detection,Magnitude-Coherence Product,1.0,1.0,0.0
+Far-OOD Detection,UMAP-2D Mahalanobis,1.0,1.0,0.0
+Far-OOD Detection,PCA-10D Mahalanobis,1.0,1.0,0.0
+Far-OOD Detection,Prediction MSE (50 Qs),1.0,1.0,0.0
+Far-OOD Detection,Prediction MSE (20 Qs),1.0,1.0,0.0
+Far-OOD Detection,Gradient Norm Mean,1.0,1.0,0.0
+Far-OOD Detection,Gradient Cosine Similarity,0.973275,0.9301952805350717,0.065
+Far-OOD Detection,Magnitude-Coherence Product,1.0,1.0,0.0
+Real-World OOD Detection,UMAP-2D Mahalanobis,0.99285,0.9995685785910753,0.0
+Real-World OOD Detection,PCA-10D Mahalanobis,0.9999921875,0.9999995124044194,0.0
+Real-World OOD Detection,Prediction MSE (50 Qs),1.0,1.0,0.0
+Real-World OOD Detection,Prediction MSE (20 Qs),1.0,1.0,0.0
+Real-World OOD Detection,Gradient Norm Mean,1.0,1.0,0.0
+Real-World OOD Detection,Gradient Cosine Similarity,0.9895499999999999,0.9856748064909617,0.025
+Real-World OOD Detection,Magnitude-Coherence Product,0.893875,0.9413859921408713,0.97

@@ -1,0 +1,17 @@
+Task,Indicator,AUROC,AUPR,FPR@95
+2 (ID High Noise),Prediction MSE (Baseline),1.0,1.0,0.0
+2 (ID High Noise),Gradient Norm Mean,1.0,1.0,0.0
+2 (ID High Noise),Gradient Cosine Similarity,0.9928,0.9892142449301289,0.01
+2 (ID High Noise),Gradient Variance Mean,1.0,1.0,0.0
+3 (Near-OOD),Prediction MSE (Baseline),1.0,1.0,0.0
+3 (Near-OOD),Gradient Norm Mean,1.0,1.0,0.0
+3 (Near-OOD),Gradient Cosine Similarity,0.984,0.954608991813684,0.04
+3 (Near-OOD),Gradient Variance Mean,1.0,1.0,0.0
+4 (Far-OOD),Prediction MSE (Baseline),1.0,1.0,0.0
+4 (Far-OOD),Gradient Norm Mean,1.0,1.0,0.0
+4 (Far-OOD),Gradient Cosine Similarity,0.9733,0.938278866334985,0.11
+4 (Far-OOD),Gradient Variance Mean,1.0,1.0,0.0
+5 (Real-World OOD),Prediction MSE (Baseline),1.0,1.0,0.0
+5 (Real-World OOD),Gradient Norm Mean,1.0,1.0,0.0
+5 (Real-World OOD),Gradient Cosine Similarity,0.99,0.9860456649641676,0.02
+5 (Real-World OOD),Gradient Variance Mean,1.0,1.0,0.0

@@ -1,0 +1,4 @@
+Max Complexity PFN Mean MSE: 0.000309
+Max Complexity PFN Std MSE: 0.000203
+Max Complexity Local Smoother Mean MSE: 0.012619
+Max Complexity Local Smoother Std MSE: 0.007486

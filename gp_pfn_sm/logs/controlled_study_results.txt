@@ -1,0 +1,4 @@
+PFN Mean MSE: 0.007303
+PFN Std MSE: 0.034522
+Local Smoother Mean MSE: 0.014151
+Local Smoother Std MSE: 0.033217

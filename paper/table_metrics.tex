@@ -1,0 +1,20 @@
+\begin{table*}[t]
+\centering
+\caption{Quantitative evaluation of PFN Out-of-Prior detection. UMAP-2D Mahalanobis balances high detection power with noise robustness (chance-level AUROC of 0.471 on ID High Noise).}
+\label{tab:ood_metrics}
+\vskip 0.1in
+\begin{footnotesize}
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{l ccc ccc ccc}
+\hline
+& \multicolumn{3}{c}{\textbf{UMAP-2D Mahalanobis (Ours)}} & \multicolumn{3}{c}{\textbf{PCA-10D Mahalanobis}} & \multicolumn{3}{c}{\textbf{Prediction MSE (Baseline)}} \\
+\textbf{Evaluation Task} & \textbf{AUROC} $\uparrow$ & \textbf{AUPR} $\uparrow$ & \textbf{FPR@95} $\downarrow$ & \textbf{AUROC} $\uparrow$ & \textbf{AUPR} $\uparrow$ & \textbf{FPR@95} $\downarrow$ & \textbf{AUROC} $\uparrow$ & \textbf{AUPR} $\uparrow$ & \textbf{FPR@95} $\downarrow$ \\
+\hline
+Robustness to Noise (ID High Noise) & 0.526 & 0.618 & 0.965 & 0.983 & 0.985 & 0.080 & 1.000 & 1.000 & 0.000 \\
+Near-OOD Detection (Freq Shift) & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 0.000 \\
+Far-OOD Detection (Extreme Freq) & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 0.000 \\
+Real-World OOD Detection & 0.882 & 0.920 & 0.687 & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 0.000 \\
+\hline
+\end{tabular}
+\end{footnotesize}
+\end{table*}

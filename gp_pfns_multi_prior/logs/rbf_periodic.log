@@ -1,0 +1,20 @@
+/home/psquare_a6000/Desktop/conformal_ood/TransformersCanDoBayesianInference/transformer.py:18: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.self_attn.batch_first was not True(use batch_first for better inference performance)
+  self.transformer_encoder = TransformerEncoder(encoder_layers, nlayers)
+==========================================
+Training Model: rbf_periodic
+Device: cuda:0
+Epochs: 100 | Steps/Epoch: 100
+==========================================
+DataLoader.__dict__ {'num_steps': 100, 'fuse_x_y': False, 'get_batch_kwargs': {'batch_size': 128, 'seq_len': 100, 'num_features': 1}, 'num_features': 1, 'num_outputs': 1}
+Epoch   1/100 | Train MSE: 1.0209 | Train NLL: 49.6637 | Val MSE: 1.0204 | Val NLL: 49.6383 | LR: 0.000057
+Epoch  10/100 | Train MSE: 0.0555 | Train NLL: 1.3918 | Val MSE: 0.0399 | Val NLL: 0.6102 | LR: 0.000573
+Epoch  20/100 | Train MSE: 0.0481 | Train NLL: 1.0215 | Val MSE: 0.0862 | Val NLL: 2.9243 | LR: 0.001145
+Epoch  30/100 | Train MSE: 0.0245 | Train NLL: -0.1567 | Val MSE: 0.0849 | Val NLL: 2.8595 | LR: 0.001102
+Epoch  40/100 | Train MSE: 0.0174 | Train NLL: -0.5144 | Val MSE: 0.0159 | Val NLL: -0.5887 | LR: 0.000978
+Epoch  50/100 | Train MSE: 0.0161 | Train NLL: -0.5795 | Val MSE: 0.0196 | Val NLL: -0.4035 | LR: 0.000792
+Epoch  60/100 | Train MSE: 0.0284 | Train NLL: 0.0339 | Val MSE: 0.0096 | Val NLL: -0.9013 | LR: 0.000573
+Epoch  70/100 | Train MSE: 0.0133 | Train NLL: -0.7167 | Val MSE: 0.0061 | Val NLL: -1.0803 | LR: 0.000354
+Epoch  80/100 | Train MSE: 0.0173 | Train NLL: -0.5170 | Val MSE: 0.0084 | Val NLL: -0.9652 | LR: 0.000168
+Epoch  90/100 | Train MSE: 0.0043 | Train NLL: -1.1679 | Val MSE: 0.0065 | Val NLL: -1.0581 | LR: 0.000044
+Epoch 100/100 | Train MSE: 0.0072 | Train NLL: -1.0236 | Val MSE: 0.0048 | Val NLL: -1.1436 | LR: 0.000000
+Training for rbf_periodic completed successfully. Best Val MSE: 0.004802
