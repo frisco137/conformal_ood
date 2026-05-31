@@ -1,19 +1,19 @@
 {
     "Robustness to Noise": {
         "umap_2d": {
-            "auc_roc": 0.5073529999999999,
-            "auc_pr": 0.5077727689043539,
-            "fpr_at_95_tpr": 0.95
+            "auc_roc": 0.490134,
+            "auc_pr": 0.4918743076781138,
+            "fpr_at_95_tpr": 0.952
         },
         "pca_10d": {
-            "auc_roc": 0.5520790000000001,
-            "auc_pr": 0.5766088900768673,
-            "fpr_at_95_tpr": 0.967
+            "auc_roc": 0.527261,
+            "auc_pr": 0.513994417218725,
+            "fpr_at_95_tpr": 0.913
         },
         "prediction_mse": {
-            "auc_roc": 0.997479,
-            "auc_pr": 0.9968784029064146,
-            "fpr_at_95_tpr": 0.008
+            "auc_roc": 0.99648,
+            "auc_pr": 0.9962766487458847,
+            "fpr_at_95_tpr": 0.017
         }
     },
     "Near-OOD Detection": {
@@ -52,14 +52,14 @@
     },
     "Real-World OOD Detection": {
         "umap_2d": {
-            "auc_roc": 0.883888,
-            "auc_pr": 0.9214986984547107,
-            "fpr_at_95_tpr": 0.679
+            "auc_roc": 0.894002,
+            "auc_pr": 0.9268313865365005,
+            "fpr_at_95_tpr": 0.628
         },
         "pca_10d": {
-            "auc_roc": 0.999835,
-            "auc_pr": 0.9998308810315709,
-            "fpr_at_95_tpr": 0.001
+            "auc_roc": 0.9997349999999999,
+            "auc_pr": 0.9997328613640172,
+            "fpr_at_95_tpr": 0.002
         },
         "prediction_mse": {
             "auc_roc": 1.0,
