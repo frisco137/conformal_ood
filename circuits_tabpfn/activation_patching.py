@@ -6,8 +6,8 @@ Causal tracing via activation patching, adapted from
 `circuits/activation_patching.py` to TabPFN (12 layers x 4 heads, classifier,
 two-call attention). Adds **per-head** patching, which the reference did not do.
 
-Three subexperiments, differing only in how the *corrupted* run is built. In all
-three the **clean** run is in-prior data without noise.
+Four subexperiments, differing only in how the *corrupted* run is built. In all
+of them the **clean** run is in-prior data.
 
   subexp1 (shuffle_y) : corrupt = the SAME clean batch, with all output labels
                         shuffled. Because TabPFN consumes only the *context*
@@ -20,6 +20,11 @@ three the **clean** run is in-prior data without noise.
                         against its own true labels.
   subexp3 (out_prior) : corrupt = out-prior (anti-prior) data (independent
                         draw). Each run evaluated against its own true labels.
+  subexp4 (oop_same_features) : corrupt = SAME features X, labels re-derived
+                        from a random causal DAG rooted at the feature columns
+                        (out-of-prior labeling, deterministic learnable function
+                        of X). x_corr == x_clean; each run vs its own labels.
+                        See README "Subexperiment 4" for the construction.
 
 Workflow (per subexp), mirroring the GP-PFN pipeline:
   - clean run, corrupt run -> baseline CEs.
@@ -56,7 +61,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 from tabpfn_hooks import (
-    load_tabpfn, make_inprior, make_outprior, shuffle_labels,
+    load_tabpfn, make_inprior, make_outprior, make_oop_same_features, shuffle_labels,
     ManualMHA, NLAYERS, NHEAD, N_CLASSES,
 )
 
@@ -255,25 +260,57 @@ def run_headwise_patching(model, x_src, ysrc_in, x_tgt, ytgt_in, ytgt_eval,
 # ==============================================================================
 # Build clean/corrupt data per subexperiment
 # ==============================================================================
+NOISE_SIGMA = 1.0   # std of feature noise added for the "noise" subexp
+
 def build_subexp_data(subexp, n, seq_len):
     """
     Returns a dict with:
       x_clean, yclean_in, yclean_eval, x_corr, ycorr_in, ycorr_eval
-    """
-    x_clean, y_clean = make_inprior(n, seq_len, without_noise=True)
 
+    Design principles:
+      shuffle_y : clean base is in-prior WITH noise (so labels are non-degenerate
+                  and shuffling actually breaks the x->y mapping, creating a real gap).
+                  corrupt = same (x, y) but context labels shuffled. Both runs share
+                  identical x; evaluated against the TRUE query labels.
+      noise     : corrupt = same datasets with Gaussian noise added to x features
+                  (x_corr = x_clean + sigma * randn, y unchanged). Matched pairs, so
+                  patching is example-to-example coherent and corrupt_ce > clean_ce.
+      out_prior : corrupt = out-prior data, independent draw (no meaningful match).
+      oop_same_features : corrupt = SAME features, with labels re-derived from a
+                  random causal DAG rooted at the feature columns (out-of-prior
+                  labeling, but a deterministic learnable function of X). Matched x;
+                  each run evaluated against its own labels.
+    """
+    # shuffle_y needs a noisy clean base so labels are diverse and shuffling matters
     if subexp == "shuffle_y":
+        x_clean, y_clean = make_inprior(n, seq_len, without_noise=False)
         x_corr = x_clean.clone()
-        ycorr_in = shuffle_labels(y_clean)          # shuffled labels fed to model
-        ycorr_eval = y_clean.clone()                # evaluate vs TRUE labels (shared x)
+        ycorr_in = shuffle_labels(y_clean)          # shuffled context labels mislead model
+        ycorr_eval = y_clean.clone()                # evaluate BOTH runs vs true labels
         yclean_eval = y_clean.clone()
+
     elif subexp == "noise":
-        x_corr, y_corr = make_inprior(n, seq_len, without_noise=False)
+        x_clean, y_clean = make_inprior(n, seq_len, without_noise=True)
+        # Corrupt = same datasets + feature noise; y is shared/unchanged.
+        # This keeps the pair matched: patching example i's activations into the
+        # corrupt run for example i is meaningful because they share the same
+        # underlying dataset and labels.
+        x_corr = x_clean + NOISE_SIGMA * torch.randn_like(x_clean)
+        ycorr_in = y_clean.clone()
+        ycorr_eval = y_clean.clone()
+        yclean_eval = y_clean.clone()
+    elif subexp == "out_prior":
+        x_clean, y_clean = make_inprior(n, seq_len, without_noise=True)
+        x_corr, y_corr = make_outprior(n, seq_len)
         ycorr_in = y_corr
         ycorr_eval = y_corr.clone()
         yclean_eval = y_clean.clone()
-    elif subexp == "out_prior":
-        x_corr, y_corr = make_outprior(n, seq_len)
+    elif subexp == "oop_same_features":
+        # Same features X, but labels re-derived from a random causal DAG rooted at
+        # the feature columns: an out-of-prior labeling that is still a deterministic,
+        # learnable function of X. x_corr == x_clean (the matched-pair ideal).
+        x_clean, y_clean, y_corr = make_oop_same_features(n, seq_len)
+        x_corr = x_clean.clone()
         ycorr_in = y_corr
         ycorr_eval = y_corr.clone()
         yclean_eval = y_clean.clone()
@@ -335,15 +372,20 @@ def plot_component_heatmaps(fwd_modes, rev_modes, ce_clean, ce_corr, path):
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(13, 8), dpi=200)
     for ax, mat, ttl, cmap in [(a1, fwd, "Forward: Recovery", "Blues"),
                                (a2, rev, "Reverse: Degradation", "Reds")]:
-        im = ax.imshow(mat, cmap=cmap, aspect='auto', vmin=0, vmax=1)
+        vmin, vmax = mat.min(), mat.max()
+        # give the colorbar a little headroom when all values are the same
+        if vmax - vmin < 1e-6:
+            vmax = vmin + 1e-3
+        im = ax.imshow(mat, cmap=cmap, aspect='auto', vmin=vmin, vmax=vmax)
         ax.set_title(ttl, fontweight='bold', fontsize=12)
         ax.set_xlabel("Component", fontweight='bold'); ax.set_ylabel("Layer", fontweight='bold')
         ax.set_xticks(range(len(modes))); ax.set_xticklabels([m.upper() for m in modes])
         ax.set_yticks(range(NLAYERS))
+        mid = (vmin + vmax) / 2
         for l in range(NLAYERS):
             for j in range(len(modes)):
                 ax.text(j, l, f"{mat[l, j]:.2f}", ha='center', va='center', fontsize=8,
-                        color='white' if mat[l, j] > 0.6 else 'black')
+                        color='white' if mat[l, j] > mid else 'black')
         fig.colorbar(im, ax=ax, shrink=0.8)
     plt.tight_layout()
     plt.savefig(path, bbox_inches='tight')
@@ -362,14 +404,18 @@ def plot_head_heatmap(mat_ce, ce_clean, ce_corr, forward, title, path):
             else:
                 frac[l, h] = (mat_ce[l, h] - ce_clean) / gap
     fig, ax = plt.subplots(figsize=(6, 9), dpi=200)
-    im = ax.imshow(frac, cmap='Blues' if forward else 'Reds', aspect='auto', vmin=0, vmax=1)
+    vmin, vmax = frac.min(), frac.max()
+    if vmax - vmin < 1e-6:
+        vmax = vmin + 1e-3
+    mid = (vmin + vmax) / 2
+    im = ax.imshow(frac, cmap='Blues' if forward else 'Reds', aspect='auto', vmin=vmin, vmax=vmax)
     ax.set_xlabel("Head Index", fontweight='bold'); ax.set_ylabel("Layer Index", fontweight='bold')
     ax.set_xticks(range(NHEAD)); ax.set_yticks(range(NLAYERS))
     ax.set_title(title, fontweight='bold', fontsize=12)
     for l in range(NLAYERS):
         for h in range(NHEAD):
             ax.text(h, l, f"{frac[l, h]:.2f}", ha='center', va='center', fontsize=7,
-                    color='white' if frac[l, h] > 0.6 else 'black')
+                    color='white' if frac[l, h] > mid else 'black')
     fig.colorbar(im, ax=ax, shrink=0.7)
     plt.tight_layout()
     plt.savefig(path, bbox_inches='tight')
@@ -450,7 +496,7 @@ def main():
     ap.add_argument("--single_eval_pos", type=int, default=450)
     ap.add_argument("--batch_size", type=int, default=128)
     ap.add_argument("--subexp", type=str, default="all",
-                    choices=["all", "shuffle_y", "noise", "out_prior"])
+                    choices=["all", "shuffle_y", "noise", "out_prior", "oop_same_features"])
     args = ap.parse_args()
 
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
@@ -459,7 +505,8 @@ def main():
 
     model = load_tabpfn(device)
 
-    subexps = ["shuffle_y", "noise", "out_prior"] if args.subexp == "all" else [args.subexp]
+    subexps = (["shuffle_y", "noise", "out_prior", "oop_same_features"]
+               if args.subexp == "all" else [args.subexp])
     for se in subexps:
         run_subexp(model, se, args, device)
 

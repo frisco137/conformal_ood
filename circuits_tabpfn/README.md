@@ -108,23 +108,84 @@ increase in cross-entropy on **in-prior** query points (`ΔCE`) is recorded.
 ## Experiment 2 — Activation patching
 
 ```bash
-python3 activation_patching.py                      # runs all 3 subexperiments
+python3 activation_patching.py                      # runs all 4 subexperiments
 python3 activation_patching.py --subexp shuffle_y   # a single subexperiment
+python3 activation_patching.py --subexp oop_same_features
 python3 activation_patching.py --n_samples 128 --batch_size 64
 ```
 
-The **clean** run is always in-prior (no-noise) data. The three subexperiments differ
+The **clean** run is always in-prior data. The four subexperiments differ
 only in how the **corrupted** run is built:
 
 | subexp | corrupted run | pairing | evaluation target |
 |---|---|---|---|
 | `shuffle_y`  | same clean batch, **labels shuffled** | matched x | **true** query labels (both runs) |
-| `noise`      | in-prior **with noise** (independent draw) | by index | each run's own labels |
+| `noise`      | same clean batch **+ Gaussian feature noise** | matched x | each run's own labels |
 | `out_prior`  | **out-prior** data (independent draw) | by index | each run's own labels |
+| `oop_same_features` | **same X**, labels re-derived from a random causal DAG over the feature columns | matched x (`x_corr == x_clean`) | each run's own labels |
 
 For `shuffle_y`, since the model only consumes context labels and clean/corrupt share
 the same `x`, both runs are scored against the *true* query labels — otherwise patching
 against randomly-shuffled targets would be meaningless.
+
+### Subexperiment 4 — `oop_same_features` (out-of-prior, same features)
+
+The earlier corruptions trade off two things you actually want at the same time. A
+pure resample (`out_prior`) lands far from the clean run, so there is little shared
+structure for patching to *recover* toward. `noise`/`shuffle_y` stay close but are not
+really a different *function* of the data. `oop_same_features` is designed to be both
+**close** (it shares the exact feature matrix `X`) and **genuinely out-of-prior** (the
+labels come from a labeling mechanism outside TabPFN's MLP prior), while still being a
+**deterministic, learnable function of `X`** — so in-context recovery is possible.
+
+**Construction** (`generate_data.oop_same_features`, exposed as
+`tabpfn_hooks.make_oop_same_features`):
+
+1. Draw a clean in-prior table `(X, y_clean)`.
+2. Sample a random **causal DAG** whose only roots are the feature columns:
+   - Nodes `0 … F-1` are the **feature roots** (`F = num_features`); they are
+     assigned the clean feature columns. Nodes `F … n_nodes-1` are internal hidden
+     nodes (one of which becomes the target). `n_nodes ≫ F` (default `3·F`).
+   - Edges only point from a **lower index to a higher index**, which makes the graph
+     acyclic by construction. Each candidate edge is included independently with
+     probability `edge_prob` (default `0.10`).
+   - **Every internal node is forced to have ≥ 1 parent** among the strictly-earlier
+     nodes (if none were sampled, one earlier node is drawn at random). This guarantees
+     every internal node — and therefore the target — is causally downstream of the
+     feature roots, i.e. the labels are a function of `X` and nothing else. The feature
+     columns are the *only* roots.
+   - Each edge carries a Gaussian weight and a random **per-edge activation** in
+     `{Linear, ReLU, Tanh, Sigmoid, ELU}` — the same activation set the anti-prior
+     (`AntiLinearLayer`) uses.
+3. The **target node** is chosen at random from the internal nodes whose in-degree is
+   in the top quartile (≥ 1 guaranteed) — i.e. a node with a "good number" of incoming
+   edges.
+4. **Propagate** the clean features through the DAG, **noise-free**, in index order.
+   Each node value is the in-degree-normalised sum of its per-edge activated, weighted
+   parent values (`sum_e act_e(w_e · v_parent) / √(in-degree)`, the `AntiLinearLayer`
+   scaling). A fresh DAG is drawn per call.
+5. **Bin** the target-node values into class labels with the *exact same* pipeline the
+   real generators use (`process_batch_data`: normalize → `MulticlassRank` →
+   consecutive-class compression → label rotation), giving `y_corr`.
+
+The corrupted table is `(X, y_corr)`: identical features, a new anti-prior-but-learnable
+labeling function. Because `x_corr == x_clean`, forward/reverse patching isolate exactly
+the components that implement the *labeling rule* the table follows, with the input
+representation held fixed.
+
+**Sanity check** — `sanity_oop_same_features.py` draws `--n_tables` tables (a fresh
+clean table + a new random DAG corruption each), runs TabPFN on the clean and corrupted
+version of every table, and plots the two **query-accuracy** distributions as a quantile
+candlestick (`Low=10th, Open=25th, mid=50th, Close=75th, High=90th`, the repo
+convention). A valid corruption should sit **below** the clean accuracy (it is
+out-of-prior) yet **above** chance `1/num_classes` (it is still learnable in-context).
+
+```bash
+python3 sanity_oop_same_features.py                 # 100 tables, seq=500, ctx=450
+python3 sanity_oop_same_features.py --n_tables 200 --edge_prob 0.05
+```
+
+Outputs: `results/oop_same_features_sanity_candlestick.png`, `results/oop_same_features_sanity.json`.
 
 **Workflow per subexperiment:**
 1. Baseline clean CE and corrupt CE.

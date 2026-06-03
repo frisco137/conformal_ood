@@ -1,4 +1,9 @@
 import os
+os.environ["OPENBLAS_NUM_THREADS"] = "1" # Limit OpenBLAS threads to avoid memory region allocation errors
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
@@ -27,7 +32,7 @@ def main():
     print(f"Using device for inference: {device}")
 
     # Paths configuration
-    checkpoint_path = "gp_pfns_multi_prior/checkpoints/rbf_periodic.pt"
+    checkpoint_path = "gp_pfn_test_run/checkpoints/onefeature_gp_ls.1_pnf_4M.pt"
     results_dir = "gp_pfn_ood/results/conformal"
     os.makedirs(results_dir, exist_ok=True)
 
@@ -35,7 +40,7 @@ def main():
     # Phase 1: Search for layer with max silhouette score
     # ---------------------------------------------------------
     print("\n--- Phase 1: Search for Best Layer ---")
-    search_samples_per_class = 3000
+    search_samples_per_class = 10000
     x_id, y_id, x_ood, y_ood = get_id_and_ood_data(
         num_samples_per_class=search_samples_per_class,
         num_points=100,

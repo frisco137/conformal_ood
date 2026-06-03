@@ -50,7 +50,7 @@ for _p in (_TABPFN_OOD, _TABPFN_REPO):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
-from generate_data import get_inprior_data, get_outprior_data  # noqa: E402
+from generate_data import get_inprior_data, get_outprior_data, oop_same_features  # noqa: E402
 from tabpfn.scripts.model_builder import load_model_only_inference  # noqa: E402
 
 # --- Architecture constants -----------------------------------------------------
@@ -92,6 +92,22 @@ def make_outprior(n: int, seq_len: int,
                   num_features: int = NUM_FEATURES, num_classes: int = N_CLASSES):
     """Out-prior (anti-prior) data. Shapes: x (seq, n, feat), y (seq, n)."""
     return get_outprior_data(n, seq_len, num_features, num_classes)
+
+
+def make_oop_same_features(n: int, seq_len: int, num_features: int = NUM_FEATURES,
+                           num_classes: int = N_CLASSES, n_nodes: Optional[int] = None,
+                           edge_prob: float = 0.1, without_noise: bool = False,
+                           device: str = "cpu", seed: Optional[int] = None):
+    """
+    "Out-of-prior, same features" data. Returns (x_clean, y_clean, y_corr): an
+    in-prior table plus a CORRUPTED labeling for the SAME features, derived from a
+    random causal DAG rooted at the feature columns (see generate_data.oop_same_features
+    and circuits_tabpfn/README.md, Experiment 2 subexperiment 4). Shapes:
+    x (seq, n, feat), y_clean/y_corr (seq, n).
+    """
+    return oop_same_features(n, seq_len, num_features, num_classes, n_nodes=n_nodes,
+                             edge_prob=edge_prob, without_noise=without_noise,
+                             device=device, seed=seed)
 
 
 def shuffle_labels(y: torch.Tensor, generator: Optional[torch.Generator] = None) -> torch.Tensor:
