@@ -1,3 +1,14 @@
-.pt
-.pth
-.cpkt
+*.pt
+*.pth
+*.cpkt
+*.joblib
+*.pkl
+*.pickle
+__pycache__/
+
+intermediate_stuff/
+balef_repo/
+scratch/
+results/prior_dataset*/
+results/extras/
+results/ag_models/
