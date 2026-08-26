@@ -235,6 +235,8 @@ class InterpModel(abc.ABC):
 
     @staticmethod
     def _to_numpy(tensor: torch.Tensor) -> np.ndarray:
+        if tensor.dtype in (torch.float32, torch.float16, torch.bfloat16):
+            return tensor.detach().to(torch.float32).cpu().numpy()
         return tensor.detach().to(torch.float64).cpu().numpy()
 
     def _new_trace(self, layout: TokenLayout) -> Trace:

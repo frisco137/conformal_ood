@@ -120,7 +120,17 @@ interval metrics.
 A third correction is local to `src/chunk4_aux.py`: `TargetedImitator.inner_jacobian` in
 `tier0_instrument/` returns `-c*vvᵀ` where the map applies `-(c/2)*vvᵀ`, the same doubling
 `FINAL_NUMBERS.md` §2.3 records for `audit_phase2_imitator.py`. It is corrected here rather than by
-editing the tier-0 control, which other results depend on. **The tier-0 file still carries the bug.**
+editing the tier-0 control, which other results depend on.
+
+> **CORRECTION, 2026-08-26.** The sentence that stood here — "The tier-0 file still carries the bug"
+> — **is no longer true.** The bug was fixed at source in `experiments/core/controls.py`, now the
+> single definition of `TargetedImitator`; this script's inline workaround and the two others
+> (`exp22_analyse.py`, `tier0_instrument/chunk3_dither_controls.py`) call the corrected method.
+> Verified **bit-identical** to the inline form — max abs difference exactly `0.0` on all five seeds
+> — so **no number in this directory changed.** Regression test at
+> `experiments/core/test_controls.py`. The record documents (`RESULTS.md`, `LOCALISATION.md`,
+> `SEQUENTIAL.md`, `UNCERTAINTY_EXPERIMENT.md`, `PHASE2.md`) still describe the pre-fix state and
+> are left as history.
 
 ## Reproduction check
 

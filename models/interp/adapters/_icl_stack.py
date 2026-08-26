@@ -132,7 +132,7 @@ class IclStackInterp(InterpModel):
         patches: Sequence[PatchSpec] = (),
     ) -> Trace:
         capture = capture or CaptureSpec()
-        X_test = np.asarray(X_test, dtype=np.float64)
+        X_test = np.asarray(X_test)
         self._fit(X_train, y_train)
 
         layout = self._layout(len(X_train), len(X_test))
@@ -152,12 +152,19 @@ class IclStackInterp(InterpModel):
             return {"layer": context["where"]}
 
         pre_handles: list = []
+        if capture.pre_icl:
+            pre_icl_cap = []
+            def hook(m, args, kwargs):
+                tensor = args[0] if len(args) > 0 else list(kwargs.values())[0]
+                pre_icl_cap.append(self._to_numpy(tensor))
+            pre_handles.append(resolvers["block_0"]().register_forward_pre_hook(hook, with_kwargs=True))
+            
         capture_cm = ForwardCapture({f"block_{l}": resolvers[f"block_{l}"] for l in wanted})
         patch_cm = ForwardPatch(resolvers, patches) if patches else None
 
         try:
             if capture.attention:
-                pre_handles = self._attention_context(context)
+                pre_handles.extend(self._attention_context(context))
             with capture_cm:
                 observer_cm = (
                     FunctionObserver(self._attention_module, "sdpa_with_flattened_batch", observe)
@@ -194,9 +201,19 @@ class IclStackInterp(InterpModel):
                     f"{self.model_id}: expected batch 1, got {state.shape[0]}"
                 )
             layout.check(state.shape[1], f"{self.model_id} block_{layer}")
-            trace.resid[layer] = self._to_numpy(state[0])
+            val = self._to_numpy(state[0])
+            if getattr(self.estimator, "inference_precision", None) == torch.float32:
+                val = val.astype(np.float32)
+            trace.resid[layer] = val
             if capture.resid_full:
-                trace.resid_full[layer] = self._to_numpy(state[0])
+                val_full = self._to_numpy(state[0])
+                if getattr(self.estimator, "inference_precision", None) == torch.float32:
+                    val_full = val_full.astype(np.float32)
+                trace.resid_full[layer] = val_full
+
+
+        if capture.pre_icl and 'pre_icl_cap' in locals() and pre_icl_cap:
+            trace.pre_icl['0'] = pre_icl_cap[0]
 
         if capture.attention:
             for record in attn_records:

@@ -81,7 +81,7 @@ class TabICLv2Interp(IclStackInterp):
             levels if levels is not None else np.linspace(0.005, 0.995, 199), dtype=float
         )
         q = self.estimator.predict(
-            np.asarray(X_test, dtype=np.float64),
+            np.asarray(X_test),
             output_type="quantiles",
             alphas=[float(a) for a in levels],
         )

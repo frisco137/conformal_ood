@@ -83,7 +83,7 @@ class TabPFNv2Interp(InterpModel):
         self._fit(X, y)
         model = self._torch_model()
         self._n_layers = len(model.transformer_encoder.layers)
-        self._d_model = int(model.ninp)
+        self._d_model = int(getattr(model, "emsize", getattr(model, "embedding_dim", getattr(model, "ninp", 192))))
 
     # -- model access --------------------------------------------------------
 
@@ -255,7 +255,7 @@ class TabPFNv2Interp(InterpModel):
         patches: Sequence[PatchSpec] = (),
     ) -> Trace:
         capture = capture or CaptureSpec()
-        X_test = np.asarray(X_test, dtype=np.float64)
+        X_test = np.asarray(X_test)
         self._fit(X_train, y_train)
 
         layout = self._layout(len(X_train), len(X_test))
@@ -266,6 +266,12 @@ class TabPFNv2Interp(InterpModel):
         attn_records: list[dict] = []
         observe, context = self._attention_observer(attn_records)
         pre_handles: list = []
+        if capture.pre_icl:
+            pre_icl_cap = []
+            def hook(m, args, kwargs):
+                tensor = args[0] if len(args) > 0 else list(kwargs.values())[0]
+                pre_icl_cap.append(self._to_numpy(tensor))
+            pre_handles.append(resolvers["block_0"]().register_forward_pre_hook(hook, with_kwargs=True))
 
         capture_cm = ForwardCapture({f"block_{l}": resolvers[f"block_{l}"] for l in wanted})
         patch_cm = ForwardPatch(resolvers, patches) if patches else None
@@ -312,9 +318,18 @@ class TabPFNv2Interp(InterpModel):
                 )
             layout.check(state.shape[1], f"{self.model_id} block_{layer}")
             native = state[0]  # (items, groups, d_model)
-            trace.resid[layer] = self._to_numpy(native[:, -1, :])
+            val = self._to_numpy(native[:, -1, :])
+            if getattr(self.estimator, "inference_precision", None) == torch.float32:
+                val = val.astype(np.float32)
+            trace.resid[layer] = val
             if capture.resid_full:
-                trace.resid_full[layer] = self._to_numpy(native)
+                val_full = self._to_numpy(native)
+                if getattr(self.estimator, "inference_precision", None) == torch.float32:
+                    val_full = val_full.astype(np.float32)
+                trace.resid_full[layer] = val_full
+
+        if capture.pre_icl and 'pre_icl_cap' in locals() and pre_icl_cap:
+            trace.pre_icl['0'] = pre_icl_cap[0]
 
         if capture.attention:
             for record in attn_records:
@@ -364,7 +379,7 @@ class TabPFNv2Interp(InterpModel):
             levels if levels is not None else np.linspace(0.005, 0.995, 199), dtype=float
         )
         q = self.estimator.predict(
-            np.asarray(X_test, dtype=np.float64),
+            np.asarray(X_test),
             output_type="quantiles",
             quantiles=[float(a) for a in levels],
         )

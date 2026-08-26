@@ -1,6 +1,13 @@
 # `experiments/` — navigation
 
-Start here.
+> **For results, start one level up.** `PHASE1.md` and `PHASE2.md` at the repository root are the
+> source of truth for the paper, self-contained and with provenance inline at every number. This file
+> is the map of the code and data underneath them.
+>
+> - `../PHASE1.md` — the audit. Compiled from `FINAL_NUMBERS.md`, which stays as the ledger and wins any dispute.
+> - `../PHASE2.md` — downstream consequences. Compiled from `phase_2/PHASE2.md`, which stays as the record.
+> - `experiments.md` — **FROZEN** pre-registration. What happened to each experiment is in `DEVIATIONS.md`.
+> - `theory_and_claims.md` — **LIVE**, revision 2, with an amendment log at its §5.
 
 This directory holds **two separate research programmes**. They share an
 instrument and nothing else. Keep them separate when reading and when writing.

@@ -1,6 +1,11 @@
 # Theory and Claims
 
-**PFN Interpretability Project · working document · August 2026**
+**PFN Interpretability Project · working document · revision 2 · 2026-08-26**
+
+> **This document is LIVE and is amended.** Unlike `experiments.md`, which is a frozen
+> pre-registration, this one is updated as results land — but **as recorded amendments, never as
+> silent edits**. Section 5 is the amendment log; every change since revision 1 is listed there with
+> its cause. Revision 1 was August 2026.
 
 This document fixes canonical numbering, states every result the paper will rely on, and lists every
 claim the paper will assert. The two existing notes (the dense theorem–proof note and the study
@@ -341,3 +346,134 @@ For each of **TabPFN v2, TabICL v2, TabSwift**:
 - Non-diagonal noise structures.
 - Classification.
 - Any claim that these models are poor predictors.
+
+---
+
+## 5. Amendment log
+
+Every change since revision 1, with its cause. Nothing above was edited silently; each amended item
+carries a pointer to its entry here.
+
+### Revision 2 — 2026-08-26
+
+#### A1. N4 — proven, and without instrument power against the failure that occurred
+
+**N4 stands as proved.** `cv_s = std(J_ii)/(1 + mean J_ii) ≤ std(J_ii)/mean(J_ii) = cv_J` whenever
+`mean(J_ii) > 0`, with no fitted `σ²`, no regression and no design leverage. Nothing about the
+derivation changes.
+
+**What is added is a limitation on its use as an instrument.** `cv_s ≤ cv_J` **holds** for both
+models with a variance channel — TabICL `0.197 ≤ 0.289`, TabPFN `0.051 ≤ 0.800` — so it returns **no
+violation** on maps that fail A3 badly by regression (`R² = 0.0199` and `0.1065`). The reason is that
+**it is permutation-invariant**: permuting `s²` across context points leaves `cv_s` bit-identical
+(`0.0894008` in both rows of the control table) while `R²` falls from `1.000000000000` to
+`0.010468752`.
+
+**Both facts stand.** N4 is a true and parameter-free *necessary* consequence of the cross-channel
+law. It is **not sufficient**, and it has **no power against the specific failure these models
+exhibit**, which is a *reordering* of the variance channel relative to the sensitivity channel rather
+than an inflation of its spread. C-N4 is amended below accordingly.
+*Evidence:* `chunk2_a3_controls.py` → `chunk2_results.json`; `PHASE1.md` §5.4.
+
+#### A2. N5 — the exclusion inference is softened to what was actually measured
+
+**Amended.** N5(3) previously licensed reading a mismatch between the measured Jacobian and a closed
+form as *mechanism exclusion*, subject to a calibrated tolerance from E2.6. **E2.6 was never run
+correctly**, so that tolerance does not exist. The N5 table's closed forms are unaffected — they are
+derivations and remain true.
+
+**What §7's measurement actually supports**, and the strongest form the claim may take:
+
+> Fitting the two **diagonal-scaling** hypotheses to the measured Jacobian by least squares in log
+> space, **neither admits a positive solution with small residual.** The column system
+> (`J_ij σ_j² = J_ji σ_i²`, the heteroscedastic-Bayes form of N6) and the row system
+> (`d_i J_ij = d_j J_ji`, the Nadaraya–Watson / attention-vote form of N5) return residuals of
+> `0.476`–`0.616` across the three models, against **`1.5e-15` on a Nadaraya–Watson positive control
+> pushed through the identical procedure**. The recovered profiles span factors of `87×`, `68×` and
+> `169×` against `2.4×` and `1.7×` on the two controls.
+
+That is an exclusion of **two diagonal-scaling hypotheses at the measured residual, calibrated by the
+NW control**. It is **not** the calibrated exclusion of the field's published mechanisms that N5(3)
+describes, because that requires fitting each mechanism as a **surrogate to the model's own outputs**
+and reporting value agreement beside derivative agreement — E2.6, which does not exist.
+
+**Consequence for the paper.** The scatter of value agreement against derivative agreement, which
+`experiments.md` calls "the headline figure", **cannot be drawn**. C-N5 and C-E6 are amended below.
+*Evidence:* `exp2_ambient_profiling.py` → `exp2_ambient_profiling.json`; `PHASE1.md` §6, §9.1.
+
+#### A3. N7 — the cross-channel law through the affine wrapper *(NEW — DERIVATION PENDING)*
+
+> **PLACEHOLDER. The derivation has not been supplied and must not be invented.**
+> This entry records the *empirical* fact that N7 is required to explain, and reserves its number.
+
+**The fact requiring a derivation.** A hierarchical GP satisfies A3 **exactly** by construction: T2
+gives `σ²J = Cov(f|y)` for every prior, so `s²_i = σ²(1 + J_ii)` holds pointwise. Measured
+**unwrapped** through the audit's own A3 procedure on 60 real contexts, it returns `R² = 1.000000` on
+all 60. Measured **wrapped** in the affine context-statistic normaliser of N1 — the same wrapper the
+audited models wear — its `R²` falls as low as **`0.675`** and it fails the `R² ≥ 0.90` gate on
+**3 of 60**.
+
+**What is already known about the effect:**
+- It is **not** the lengthscale ladder: rescaling the ladder to the data leaves it (`R²` min `0.843`,
+  A3 `55/60`).
+- It is **not** real data or the pipeline: A1 and A2 pass `60/60` in every condition, and `negeig` is
+  **exactly zero** throughout.
+- It **requires a nonlinear inner map.** The exact GP, whose inner map is linear, shows `R²` min
+  `0.999974` wrapped. All three audited models are nonlinear.
+
+**What N7 must supply.** A statement of what `s²_i = σ²(1 + J_ii)` becomes under
+`m(y) = ȳ·1 + s_y·g(u)` — i.e. how the ambient diagonal `[J]_ii` of the wrapped map relates to the
+inner `G_ii`, given `J = (1/n)11ᵀ + (1/n)g uᵀ + GM` with `M = I − (1/n)11ᵀ − (1/n)uuᵀ`. The diagonal
+picks up `1/n + (1/n)g_i u_i` plus the row-sum corrections inside `(GM)_ii`, none of which vanish for
+nonlinear `g`.
+
+**Until N7 exists,** `PHASE1.md` §5.0 carries the floor as an **empirical** bound and the A3 verdict
+rests on the measured values being an order of magnitude below it — not on a theorem.
+*Evidence:* `tier5_positive/e5_1_positive_control.py` → `e5_1_results.json`; `PHASE1.md` §5.0, §7.2.
+
+#### A4. C-X2 — promoted from claim to result
+
+**Amended.** C-X2 previously read as a claim awaiting evidence: *the value-level battery and the
+derivative channel disagree on the same model, same contexts.* **E4.1 instantiates it empirically.**
+
+On the **exact** audit contexts, the two models with a predictive distribution are **well calibrated
+and near-oracle in NLL** — coverage at 90% of `0.896` (TabICL) and `0.886` (TabPFN) against the
+Bayes-optimal oracle's `0.894`, NLL `1.755`/`1.758` against `1.676` — **while failing A1 and A2 by
+`57×`–`22 711×` over the artifact floor.** The statistic has power: the deliberately misspecified
+`σ = 0.5` control GP is the **worst-calibrated map in the table** at `0.722`.
+
+**T1 is no longer instantiated only by an adversarial construction.** It is instantiated by three
+production checkpoints on the data the audit was run on.
+
+**Scope, which must travel with the claim.** One context family, deliberately hard. E4.1 does **not**
+establish that the models perform at their *published* level, because published benchmarks are real
+tabular data with exploitable structure rather than a near-white `d=5` GP at SNR 1. It establishes the
+narrower thing: on the contexts where the violations were measured, the models work, are calibrated,
+and beat every trivial baseline. E3.1 remains the experiment that settles the distributional question.
+*Evidence:* `tier4_value/e4_1_value_battery.py` → `e4_1_results.json`; `PHASE1.md` §8.
+
+---
+
+### Amended claim statements
+
+Replacing the corresponding entries in Section 4. The originals are left in place above; these are
+the versions the paper uses.
+
+- **C-N4 (amended).** `cv_s ≤ cv_J` is a parameter-free *necessary* consequence of the cross-channel
+  law. It is **not sufficient** and is **permutation-invariant**, so it has no power against a
+  reordering of the variance channel — which is the failure these models exhibit. It holds for both
+  models and is reported as a secondary diagnostic, never as a pass. *(A1)*
+- **C-N5 (amended).** Every published candidate mechanism has a closed-form Jacobian; the
+  linear-solver family satisfies A1/A2 by construction; smoothers are row-scaled symmetric. **The
+  measured Jacobians admit neither a row nor a column diagonal rescaling**, at residuals of
+  `0.476`–`0.616` against `1.5e-15` on a Nadaraya–Watson positive control. **This excludes the two
+  diagonal-scaling classes at the measured residual. It is not a calibrated exclusion of the
+  published mechanisms, which requires E2.6 and was not run.** *(A2)*
+- **C-E6 (amended).** Which row of the N5 catalogue is compatible with the measured Jacobian is
+  **answered only negatively and only for the diagonal-scaling rows.** No surrogate fit exists.
+- **C-N7 (new, pending).** The cross-channel law is not invariant under the affine context-statistic
+  normaliser for a nonlinear inner map. Empirically a map satisfying A3 exactly reads `R²` as low as
+  `0.675` through the wrapper. **Derivation pending.** *(A3)*
+- **C-X2 (amended — now a result).** The value-level battery and the derivative channel disagree on
+  the same models on the same contexts: near-oracle calibration and NLL alongside A1/A2 violations of
+  `57×`–`22 711×` over the artifact floor. **Measured, not claimed.** *(A4)*

@@ -1,3 +1,18 @@
+> # ⛔ FROZEN — PRE-REGISTRATION. DO NOT EDIT.
+>
+> **Frozen 2026-08-26.** This document is a **pre-registration**: its value comes entirely from being
+> dated and from stating thresholds and falsifiers *before* the runs. Amending it destroys that
+> value. Nothing in it is updated to reflect what happened, including the inline **Status** lines,
+> which are stale as of the date they were written and are preserved as-is.
+>
+> **What actually happened to each experiment is recorded separately**, in
+> [`DEVIATIONS.md`](DEVIATIONS.md), against four outcomes: *run as specified*, *run with a stated
+> deviation*, *not run*, or *falsifier fired*.
+>
+> For results, read `PHASE1.md` and `PHASE2.md` at the repository root. For the Phase 1 ledger, read
+> `FINAL_NUMBERS.md`. The live theory document is `theory_and_claims.md`, which **is** amended and
+> carries a revision number.
+
 # Experiment Battery
 
 **PFN Interpretability Project · August 2026**
