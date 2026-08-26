@@ -1,3 +1,17 @@
+"""SUPERSEDED FOR OUTPUT, RETAINED FOR ITS SPECIFICATION.
+
+FINAL_NUMBERS.md section 9.3: "new, superseded by exp12_...; partial log only;
+not a source of any number here." Do not read a result off this script.
+
+It is NOT quarantined because FINAL_NUMBERS.md section 5 cites it as SOURCE
+CODE, not as data -- it quotes the A3 ordinary-least-squares specification at
+exp1_a3_models.py:52-58, called at :137. Moving the file would break a live
+citation in a frozen document.
+
+The A3 numbers themselves come from exp12_ambient_jacobians.py ->
+exp12_ambient_jacobians.npz -> exp1_a3_final.json.
+"""
+
 """Experiment 1 — A3 cross-channel regression on the models. First time run.
 
     A3:  s^2(x_i) = sigma^2 (1 + J_ii)      fresh observation at x_i

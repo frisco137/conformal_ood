@@ -39,28 +39,13 @@ def central_jacobian(model_func, y, h=1e-4):
         J[:, j] = (m_plus - m_minus) / (2 * h)
     return J
 
-def get_Q(y):
-    """
-    Returns an orthonormal basis of span{1, u}^orth
-    where u = (y - mean(y)) / std(y)
-    """
-    n = len(y)
-    v1 = np.ones(n)
-    v2 = y - np.mean(y)
-    # Handle the case where all y are the same
-    if np.linalg.norm(v2) < 1e-12:
-        # Just use some random vector orthogonal to v1
-        while True:
-            v2 = np.random.randn(n)
-            v2 -= np.mean(v2)
-            if np.linalg.norm(v2) > 1e-5:
-                break
-                
-    A = np.random.randn(n, n)
-    A[:, 0] = v1
-    A[:, 1] = v2
-    Q_full, _ = np.linalg.qr(A)
-    return Q_full[:, 2:]
+# An UNSEEDED get_Q used to be defined here. It was dead code -- the seeded
+# definition below shadowed it at import time, so nothing ever called it -- but
+# it was the first one a reader met going down the file, and an unseeded get_Q
+# is exactly the defect that made 12 earlier copies of this function across the
+# tree non-reproducible (FINAL_NUMBERS.md 1.1). Removed 2026-08-26. This changes
+# no behaviour: the shadowing definition is unchanged and is the only get_Q that
+# was ever reachable. Use get_Q(y, seed=...) below.
 
 def extract_variance(quantiles, levels):
     """
@@ -101,14 +86,46 @@ def extract_variance(quantiles, levels):
 # =============================================================================
 
 
-def negfrac(J, rel_tol=1e-10):
-    """Fraction of eigenvalues of sym(J) that are negative.
+class RetractedMetricWarning(UserWarning):
+    """Raised as a warning when a retracted metric is computed."""
 
-    The cutoff is relative to ||J||_2 rather than an absolute -1e-10, so the
-    quantity does not silently change meaning when J is rescaled. For the
-    matrices in this project ||J||_2 = O(1), so this coincides with the
-    historical absolute cutoff.
+
+def negfrac(J, rel_tol=1e-10, acknowledge_retracted=False):
+    """RETRACTED. Fraction of eigenvalues of sym(J) that are negative.
+
+    ***  DO NOT REPORT THIS AS A MODEL RESULT.  ***
+
+    It measures the rank deficiency of the CONTEXT, not a property of the model.
+    generate_audit_context duplicates the first 10 rows of X exactly, so K is
+    rank-deficient and W = K(K+s2 I)^-1 inherits a null space: the exact GP's
+    reduced spectrum has nine eigenvalues at machine zero and then a hard gap to
+    2.2e-2, and any noise tips them negative. The quantised control and TabICL v2
+    both read 9/98 = 0.0918367 -- on every seed, at every amplitude, in every
+    dither configuration. It does not respond to the probe at all.
+
+    FINAL_NUMBERS.md section 8 lists it under "explicitly not measured";
+    section 1.3 lists the files carrying retracted values.
+
+    The function is KEPT, not quarantined, because FINAL_NUMBERS.md section 7.4
+    uses it as evidence for its own retraction: it verifies N3 by showing negfrac
+    pinned at 0.0918367 while negeig falls by a factor of 106 over the same
+    matrices. Removing it would make that section unreproducible.
+
+    Pass acknowledge_retracted=True to silence the warning. The return value is
+    identical either way -- no recorded number changes.
+
+    Use negeig instead for any positivity statement. It weights by magnitude and
+    is the canonical A2 quantity.
     """
+    if not acknowledge_retracted:
+        import warnings
+        warnings.warn(
+            "negfrac is RETRACTED: it reads the audit context's rank deficiency "
+            "(9/98 on the control and on TabICL alike), not the model. Use negeig "
+            "for A2. See experiments/_quarantine/QUARANTINE.md. Pass "
+            "acknowledge_retracted=True if you are reproducing FINAL_NUMBERS 7.4.",
+            RetractedMetricWarning, stacklevel=2,
+        )
     sym_J = (J + J.T) / 2
     eigs = np.linalg.eigvalsh(sym_J)
     scale = np.linalg.norm(J, ord=2)
