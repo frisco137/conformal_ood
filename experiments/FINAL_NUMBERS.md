@@ -960,7 +960,17 @@ figures.
 | `tier0_instrument/exp3_reprobe.py` | new | `exp3_reprobe.json`, `exp3_reduced_jacobians.npz`, `exp3_reprobe.log` |
 | `tier0_instrument/exp4_quanta_and_tabicl.py` | new | `exp4_results.json`, `exp4_tabicl_reduced.npz`, `exp4.log` |
 | `tier0_instrument/e11_wrapper_form.py` | new | `e11_wrapper_form.json` |
-| in-session scripts | — | `exp_stress_tests.json`, `exp_negeigvec.json`, `exp_n1ii.json`, `exp1_a3_final.json`, `exp1_tabicl_a3.json`, `e14_paired.json`, `exp4_floor_brackets.json`, `clarif_item4_6.json`, `clarif_item5.json` |
+| in-session scripts, **code recovered 2026-08-26** | `tier0_instrument/recompute_orphans.py` | `exp_stress_tests.json`, `exp_negeigvec.json`, `exp_n1ii.json`, `exp1_a3_final.json`, `exp1_tabicl_a3.json`, `e14_paired.json`, `exp4_floor_brackets.json`, `clarif_item4_6.json`, `clarif_item5.json` |
+
+**Note on the row above.** These files were written in-session and their code was never saved. It has
+since been reconstructed as `tier0_instrument/recompute_orphans.py`, which recomputes every affected
+quantity from the tracked `.npz` Jacobians and compares it against the record. Result: **292 of 293
+checks reproduce, and none differs** — 262 bit-identical, 25 agreeing to `≤ 1e-12` relative, 5 pairs
+of instrument-error floors that are both at machine precision (true value exactly zero, so only
+magnitude is meaningful). **No number in this document changed.** The single exception is Section
+3.6, the E1.4 paired RoPE analysis, which needs fresh forward passes through a *modified* TabICL and
+is recorded as NOT RECOMPUTABLE rather than approximated. Full per-quantity table in
+`tier0_instrument/recompute_orphans.json`.
 | `tier0_instrument/exp1_a3_models.py` | new, superseded by `exp12_…` | partial log only; not a source of any number here |
 
 ### 9.4 Gate conditions as measured

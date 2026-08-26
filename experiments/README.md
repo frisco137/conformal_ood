@@ -187,26 +187,19 @@ invariant) · reduced-basis profiling.
 
 ## 5. Two provenance hazards to know about before writing
 
-**(a) Ten result files have no producing script in the tree.** They were written
-in-session and the code was never saved. `FINAL_NUMBERS.md` §9.3 acknowledges
-this in its last row. Affected:
+**(a) Ten result files had no producing script. Code recovered 2026-08-26.**
+They were written in-session and never saved. `tier0_instrument/recompute_orphans.py`
+is that missing code: it recomputes every affected quantity from the tracked
+`.npz` Jacobians and diffs it against the record.
 
-```
-exp_stress_tests.json      exp_negeigvec.json      exp_n1ii.json
-exp1_a3_final.json         exp1_tabicl_a3.json     e14_paired.json
-exp4_floor_brackets.json   clarif_item4_6.json     clarif_item5.json
-chunk1_profile_control.json  chunk3_control_matrix.json
-```
+**292 of 293 checks reproduce; none differs.** 262 bit-identical, 25 agreeing to
+`<= 1e-12` relative, 5 instrument-error floors where both values are at machine
+precision. The one exception is `e14_paired.json` (FINAL_NUMBERS §3.6), which
+needs fresh forward passes through a *modified* TabICL (RoPE zeroed) — no stored
+array can stand in, so it is flagged NOT RECOMPUTABLE rather than approximated.
+Re-running it is ~2000 GPU fits, about an hour.
 
-These carry FINAL_NUMBERS §2.5 (seven stress tests), §2.8 (`r₁`), §2.9 (ambient
-floor), §3.4/§4.2 (floor brackets), §3.6 (E1.4 paired), §4.3 (negative
-eigenvector, `#(J_ii<0)`), §5.2/§5.3 (A3 regressions), §5.8 (no-intercept fits),
-§7.3 (N1(ii)).
-
-**They are recomputable without a GPU** — the raw Jacobians they were derived
-from are in `exp12_ambient_jacobians.npz` and `exp3_reduced_jacobians.npz`, both
-now tracked. Re-deriving them into scripts is the cheapest reproducibility win
-available and needs no new measurement.
+Per-quantity table: `tier0_instrument/recompute_orphans.json`.
 
 **(b) Nine cited documents no longer exist** — not in the working tree, not in
 `intermediate/`, and not in any git commit (`experiments/` was untracked until
