@@ -152,13 +152,16 @@ no live module can reach it through the package path.
 `FINAL_NUMBERS.md` §8 is authoritative. Consolidated, with the blocking items
 first:
 
-**Blocking, per `experiments.md`'s own sequencing:**
+**Both former blocking items are now cleared** (2026-08-26):
 
-- **E5.1 — positive control on real data.** *"Without this the paper does not go
-  out."* Every control to date is on synthetic GP contexts.
-- **E4.1 / E4.2 — the value-level battery.** No MSE, NLL, calibration, coverage,
-  martingale or prequential number exists for any model **on the audit's
-  contexts**. `experiments.md` calls this the headline figure.
+- **E5.1 — positive control on real data. RUN.** `tier5_positive/` →
+  `FINAL_NUMBERS.md` §11. A1 and A2 pass 120/120 on real OpenML data through the
+  identical pipeline. A3 exposed an artifact floor — see §5's added note.
+- **E4.1 — value battery on the audit contexts. RUN.** `tier4_value/` →
+  `FINAL_NUMBERS.md` §10. The models denoise at 0.77/0.64/0.52 of oracle
+  efficiency and are well calibrated, so the audit is not confounded with
+  out-of-distribution failure.
+- **E4.2 — the imitator on the value battery. Still not run.**
 
 **Tier 0 instrument gaps:**
 

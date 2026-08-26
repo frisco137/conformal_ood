@@ -555,6 +555,21 @@ at `t=1e-1`, because it weights by magnitude.
 
 ## Section 5 — A3 cross-channel
 
+> **Added 2026-08-26 — A3 now has an artifact floor, and it is not small.**
+> Section 11 (E5.1) pushed a hierarchical GP — a map that satisfies A3 *exactly*, by
+> construction — through this section's own wrapped-ambient A3 procedure on 60 real contexts.
+> Unwrapped it returns `R² = 1.000000` on all 60. **Wrapped in the same normaliser the audited
+> models wear, its `R²` falls as low as `0.675`,** and it fails the `R² ≥ 0.90` gate on 3 of 60.
+> The exact GP does not show this, because its inner map is linear; the effect needs a *nonlinear*
+> inner map, which all three audited models are.
+>
+> Consequence for this section: `R²` values below `~0.68` cannot be attributed to the model alone,
+> because the wrapper can produce them on a map that satisfies the law exactly. The measured model
+> values are TabICL `0.0199` and TabPFN `0.1065` — an order of magnitude below that floor, so the
+> A3 verdict stands. But **the floor must now be quoted beside them**, and the bare statement "the
+> models fail A3" is not licensed without it.
+
+
 `s^2_i = a + b * (1 + J_ii)`, ambient diagonal, ordinary least squares across the 100 context
 points. Specification, `tier0_instrument/exp1_a3_models.py:52-58`, called at `:137` as
 `ols(1.0 + Jd, s2)`:
@@ -881,7 +896,7 @@ two amplitudes over the same matrices.
 | E0.2 N5 analytic battery | Script exists, no saved output, covers 6 of 9 rows. |
 | E0.4 autograd cross-check | No code. |
 | Tier 3 robustness, E3.1–E3.5 | Not run. One context family throughout: `n=100, d=5, sigma=1.0`. |
-| E5.1 positive control on real data | Not run. All controls are on synthetic GP contexts. |
+| E5.1 positive control on real data | **Run 2026-08-26 — see Section 11.** A1 and A2 pass 120/120 on real OpenML data through the identical pipeline. A3 passes for the exact GP 60/60 and for the hierarchical GP 60/60 unwrapped, but the *wrapped* hierarchical GP fails 3/60, which establishes an artifact floor for A3 — see Section 5's added note. |
 | E5.2 as a registered test, E5.3, E5.4 | Not run. |
 | A3 for TabSwift | No predictive distribution. |
 | N1(ii) exactness for TabSwift | Not established: the map satisfies neither the shift nor the scale identity (Section 2.7). Its reduced-basis A1 is reported as the asymmetry of the compressed Jacobian. A2 is unaffected. |
@@ -1068,3 +1083,96 @@ distributional question.
 | 10.2 all rows | `tier4_value/e4_1_results.json` | `aggregate.<name>` |
 | per-seed | `tier4_value/e4_1_results.json` | `per_seed.<seed>[]` |
 | config, query rule | `tier4_value/e4_1_results.json` | `_config` |
+
+---
+
+## Section 11 — Positive control on real data, E5.1
+
+**Added 2026-08-26.** Produced by `tier5_positive/e5_1_positive_control.py` →
+`tier5_positive/e5_1_results.json`. Supersedes the Section 8 row that read "E5.1 positive control on
+real data — Not run."
+
+`experiments.md` calls this **blocking**: "Nothing is reported before a real Bayesian model passes on
+real data." Its falsifier is the one that ends the project — if a real Bayesian fails here, the
+pipeline rather than the models is producing the violations.
+
+### 11.1 Setup
+
+Exact GP and hierarchical GP, wrapped in the same context-statistic normaliser the audited models
+wear, through the **identical** pipeline: `core.metrics.reduced_jacobian`, `get_Q(y, seed=0)`,
+`core.metrics.asym` / `negeig`, and the A3 ordinary least squares of `chunk2_a3_controls.py`.
+
+Data: the Phase 2 OpenML selection read from the tracked `phase_2/arrays/chunk2_data.npz` — **12
+datasets × 5 splits = 60 contexts per control**, `n_ctx = 100`, features standardised on context rows
+only, targets in original units (sd `0.75` to `1083`).
+
+**Probe step: relative**, `h = 6.860e-4 · std(y_ctx)` — the audit's own `1e-3` divided by its mean
+context label sd `1.457782`, exactly as `phase_2/src/chunk2_estimators.py` defines it. These controls
+are analytic float64 with no output quantisation, so an absolute step would not have broken them; the
+relative step is used because E5.1's claim is "through the identical pipeline", and handing the
+control an easier probe than the models got would void the comparison. A four-decade step sweep is
+reported in `e5_1_results.json → sensitivity` and moves `asym` from `1.15e-9` to `1.18e-13` while
+`negeig` stays exactly `0` and A3 `R²` stays `0.999982` throughout.
+
+**Lengthscale: the median heuristic** per context, to avoid a *vacuous* pass. A GP is
+Bayes-realisable for any hyperparameters so A1/A2 cannot be tuned into passing; the real risk is
+degeneracy, since an RBF kernel with lengthscale `1.0` on standardised features at `d = 25` or `50` is
+nearly diagonal and would land on N5's `J = I` row. A lengthscale sweep over `×0.25 … ×4` is
+reported and moves nothing.
+
+### 11.2 Result
+
+| | A1 `asym` max | A2 `negeig` max | non-degenerate | A1 | A2 | A3 |
+|---|---|---|---|---|---|---|
+| exact GP, wrapped | `1.702e-11` | `0.000e+00` | `60/60` | **`60/60`** | **`60/60`** | **`60/60`** |
+| hierarchical GP, wrapped | `2.643e-08` | `0.000e+00` | `53/60` | **`60/60`** | **`60/60`** | `57/60` |
+| hierarchical GP, **unwrapped** | `2.642e-08` | `0.000e+00` | `53/60` | `60/60` | `60/60` | **`60/60`** |
+
+Gates: A1 `≤ 0.05`, A2 `≤ 0.02`, A3 `R² ≥ 0.90` and slope within `±25%` of `σ²s_y²`, non-degeneracy
+`‖J−I‖_F/‖J‖_F > 0.3`.
+
+**A1 and A2 pass 120/120 across both wrapped controls.** `asym` clears its gate by nine orders of
+magnitude on the exact GP and six on the hierarchical GP; `negeig` is **exactly zero** on all 120,
+not merely small. A3 `R²` for the exact GP: min `0.999974`, mean `0.999990`, slope within `7.8e-3` of
+`σ²s_y²`.
+
+**Tangential curvature separates the two controls by `8.1e6`×** — hierarchical `3.122e-3` against
+exact `3.848e-10` — which is the T3/T4 prediction. Caveat stated: this is the second difference along
+`Q`'s columns, which preserves `ȳ` exactly and `‖y−ȳ‖` to second order. It is **not** the full M0
+great-circle construction with the geodesic correction.
+
+### 11.3 The one failure, and what it is
+
+The wrapped hierarchical GP fails A3 on 3 of 60. Two diagnostic conditions, each changing exactly one
+thing, locate the cause:
+
+| condition | A1 | A2 | A3 | A3 `R²` min |
+|---|---|---|---|---|
+| wrapped, shipped lengthscale ladder (primary) | `60/60` | `60/60` | `57/60` | `0.675` |
+| wrapped, ladder rescaled to the data | `60/60` | `60/60` | `55/60` | `0.843` |
+| **unwrapped** | `60/60` | `60/60` | **`60/60`** | **`1.000000`** |
+
+**It is the normaliser, not the pipeline, not real data, and not the lengthscale ladder.** Rescaling
+the ladder does not fix it; removing the wrapper fixes it completely. The exact GP does not show the
+effect because its inner map is linear — the effect requires a *nonlinear* inner map, which all three
+audited models are.
+
+### 11.4 Verdict
+
+**The pipeline does not manufacture A1 or A2 violations on real data.** That is E5.1's load-bearing
+claim and it holds without qualification: two real Bayesian predictors, 120 real contexts, identical
+pipeline, `negeig` exactly zero throughout and `asym` at `1e-11`–`1e-8` against models measuring
+`0.58`–`1.31`.
+
+**A3 is a weaker instrument than this document previously implied**, and Section 5 now carries the
+floor this measurement establishes.
+
+### 11.5 Provenance
+
+| Quantity | File | Key |
+|---|---|---|
+| 11.2 per-context rows | `tier5_positive/e5_1_results.json` | `rows[]` |
+| 11.2 aggregates | `tier5_positive/e5_1_results.json` | `summary.<kind>` |
+| 11.3 diagnostics | `tier5_positive/e5_1_results.json` | `diagnostic.{unwrapped,scaled_ladder}` |
+| step-size and lengthscale sweeps | `tier5_positive/e5_1_results.json` | `sensitivity` |
+| verdict booleans | `tier5_positive/e5_1_results.json` | `E5_1` |

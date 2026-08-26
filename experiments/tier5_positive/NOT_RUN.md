@@ -1,4 +1,17 @@
-# Tier 5 — Positive control — NOT RUN
+# Tier 5 — E5.1 RUN, E5.2–E5.4 outstanding
+
+> **E5.1 was run on 2026-08-26.** `e5_1_positive_control.py` → `e5_1_results.json`,
+> reported in `FINAL_NUMBERS.md` **Section 11**. A1 and A2 pass **120/120** across
+> both wrapped controls on 60 real OpenML contexts through the identical
+> pipeline — `negeig` exactly zero throughout. A3 passes 60/60 for the exact GP
+> and 60/60 for the hierarchical GP unwrapped, but the *wrapped* hierarchical GP
+> fails 3/60, which establishes an artifact floor for A3 (see the note added to
+> `FINAL_NUMBERS.md` Section 5). Tangential curvature separates hierarchical from
+> exact by 8.1e6x, as predicted.
+>
+> **The pipeline does not manufacture A1 or A2 violations.** The blocking gate is
+> cleared. E5.2–E5.4 below are still outstanding.
+
 
 This directory is **empty because nothing in it has ever been run.** It is kept,
 rather than deleted, so that the gap is visible in the tree rather than only in
@@ -18,16 +31,8 @@ Do not rename or renumber the experiments — the IDs are referenced across
 | E5.3 | adaptive-bandwidth Nadaraya–Watson — the probing rebuttal |
 | E5.4 | McCarter duplication-anomaly reproduction |
 
-**E5.1 is blocking.** `experiments.md`: "Without this the paper does not go out",
-and "Nothing is reported before a real Bayesian model passes on real data." Its
-falsifier is that if the controls fail on real data, the pipeline rather than the
-models is producing the violations, and nothing else in the paper survives.
-
-Every control measured to date is on synthetic GP contexts
-(`FINAL_NUMBERS.md` §2). `phase_2` runs an exact-GP and hierarchical-GP control
-on real OpenML data, but as an **oracle baseline for the uncertainty and
-detection experiments**, not as an A1/A2/A3 audit through the projection. It
-does not close E5.1.
+**E5.1 was blocking and is now cleared** — see the banner above and
+`FINAL_NUMBERS.md` Section 11.
 
 **E5.2 note.** It was pre-registered as "TabPFN v2 materially closer to passing
 than TabICL v2". The measured values run the other way — TabPFN is worse on both
