@@ -1,4 +1,14 @@
-# Tier 4 — The value channel — NOT RUN
+# Tier 4 — The value channel — E4.1 RUN, E4.2 outstanding
+
+> **E4.1 was run on 2026-08-26.** `e4_1_value_battery.py` → `e4_1_results.json`,
+> reported in `FINAL_NUMBERS.md` **Section 10**. Verdict: the models denoise at
+> 0.77 / 0.64 / 0.52 of oracle efficiency on the audit contexts, are well
+> calibrated (cov@90 0.896 / 0.886 vs oracle 0.894), and beat every trivial
+> baseline — so the audit is **not** confounded with out-of-distribution
+> failure. They are nonetheless 1.5x–2.06x the oracle's in-sample error.
+>
+> The rest of this file describes E4.2, which is still outstanding.
+
 
 This directory is **empty because nothing in it has ever been run.** It is kept,
 rather than deleted, so that the gap is visible in the tree rather than only in

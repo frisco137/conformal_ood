@@ -875,7 +875,7 @@ two amplitudes over the same matrices.
 | `negfrac`, all models | Context rank-deficiency artifact; Section 4.4. |
 | `cv_s <= cv_J` as a pass | Permutation-invariant; a permuted variance head gives a bit-identical `cv_s` with `R^2 = 0.0105`. Section 5.5. |
 | Reduced-basis profiling | NW control profiles to `0.259940` after projection from raw `0.249240`; Section 6.1. |
-| Value-level battery (E4.1, E4.2) | Not run. No MSE, NLL, calibration, coverage, martingale or prequential number exists for any model. |
+| Value-level battery, E4.2 only | E4.2 (imitator on the value battery) not run. **E4.1 is now measured — see Section 10**, added 2026-08-26. |
 | E1.4 for TabPFN v2 | Requires source modification of the TabPFN attention path. |
 | Determinism on models (E0.1) | Requires a GPU refit-twice pass on the audit path. |
 | E0.2 N5 analytic battery | Script exists, no saved output, covers 6 of 9 rows. |
@@ -973,3 +973,88 @@ figures.
 | 2 | wrapped ExactGP inflation | `< 2` | `0.9784` |
 | 3 | TabPFN signal-to-artifact, `t=1e-1` vs `t=1e-2` | ratio improves | asym `13.7x → 134.7x`; negeig `211.5x → 22711.5x` |
 | E1.1 | shift and scale identities | `< 1e-3` relative | TabPFN `7.270e-07` / `0.000e+00`; TabICL `2.206e-06` / `0.000e+00`; TabSwift `3.379e+00` / `3.693e+00` |
+
+---
+
+## Section 10 — Value channel, E4.1
+
+**Added 2026-08-26.** Produced by `tier4_value/e4_1_value_battery.py` →
+`tier4_value/e4_1_results.json`. Supersedes the Section 8 row that read "Value-level battery (E4.1,
+E4.2) — Not run."
+
+Same contexts as the rest of this document: `generate_audit_context(n=100, d=5, sigma=1.0, seed=s)`,
+seeds `[42, 100, 200, 300, 400]`. The contexts are **not modified**: held-out queries are drawn from
+the GP conditional `f_* | f` at 200 fresh `X_* ~ N(0, I_5)` per seed, so `(X, y, f)` stay
+bit-identical to what every other script sees.
+
+### 10.1 Read this before judging any MSE
+
+The RBF kernel has unit signal variance and the context noise is `sigma = 1.0`, so the
+signal-to-noise ratio is **1 by design**. Worse, at `d = 5` with `lengthscale = 1.0` the kernel is
+nearly diagonal — the median off-diagonal `K_ij` is `0.0158` (seed 42) and `0.0099` (seed 100), with
+only `17–20%` of pairs above `0.1`. **The Bayes-optimal oracle itself reaches only `R² = 0.1425` on
+held-out data.** A raw MSE is therefore uninterpretable here, and every number below is reported
+against two fixed points:
+
+    efficiency = (MSE_constant - MSE_model) / (MSE_constant - MSE_oracle)
+
+`0` = predicting the context mean, `1` = the Bayes-optimal oracle GP (true kernel, true `sigma`).
+
+### 10.2 Headline, mean over 5 seeds
+
+`ctx_vs_f` is `MSE(m(y), f)` at the 100 context points — **the object the Jacobian audit
+differentiates**. `test_vs_f` is `MSE(m(x_*), f_*)` at the 200 held-out queries. NLL is Gaussian
+under each predictor's own mean and variance.
+
+| | `ctx_vs_f` | /oracle | **eff_ctx** | `test_vs_f` | /oracle | **eff_test** | NLL | cov@90 |
+|---|---|---|---|---|---|---|---|---|
+| oracle GP (`sigma=1.0`, true model) | `0.3288` | `1.00` | `1.000` | `0.6827` | `1.00` | `1.000` | `1.6764` | `0.894` |
+| hierarchical GP | `0.3514` | `1.07` | `0.968` | `0.7365` | `1.07` | `0.805` | `1.6963` | `0.906` |
+| audit control GP (`sigma=0.5`) | `0.4293` | `1.32` | `0.858` | `0.7540` | `1.11` | `0.741` | `1.9203` | `0.722` |
+| **TabICL v2** | `0.4936` | `1.51` | `0.768` | `0.8393` | `1.25` | `0.431` | `1.7554` | `0.896` |
+| **TabSwift** | `0.5876` | `1.82` | `0.636` | `0.8571` | `1.26` | `0.367` | N/A | N/A |
+| **TabPFN v2** | `0.6703` | `2.06` | `0.519` | `0.9180` | `1.37` | `0.145` | `1.7584` | `0.886` |
+| constant `mean(y)` | `1.0387` | `3.37` | `0.000` | `0.9580` | `1.42` | `0.000` | `1.7666` | `0.914` |
+| 1-NN | `0.9567` | `2.99` | `0.116` | `2.1456` | `3.19` | `-4.314` | N/A | N/A |
+
+Per-seed values in `e4_1_results.json → per_seed`. `R²` against held-out `y`: oracle `0.1425`,
+TabICL `0.0402`, TabSwift `0.0486`, **TabPFN `-0.0042`**, constant `-0.0019`.
+
+TabSwift has no predictive distribution (`Linear(384,1)`, `registry.has_predictive_distribution =
+False`), so NLL, coverage and interval score are **N/A, not zero and not synthesised**.
+
+### 10.3 Verdict
+
+**The models are not broken on these contexts, and the audit is not confounded with
+out-of-distribution failure.** All three denoise substantially in the regime the audit measures:
+`eff_ctx` of `0.77 / 0.64 / 0.52` against `0.12` for 1-NN and `0.00` for the constant predictor.
+All three beat every trivial baseline on both regimes.
+
+**They are, however, materially worse than a correctly-specified Bayesian**, at `1.5x`, `1.8x` and
+`2.06x` the oracle's in-sample error. That gap is the honest headline and should not be softened.
+
+**The uncertainty channel is the interesting part.** Coverage at 90% is `0.896` (TabICL) and `0.886`
+(TabPFN) against the oracle's `0.894`, and NLL is `1.755` / `1.758` against the oracle's `1.676` —
+both well calibrated, both close to optimal. Note that the **misspecified audit control GP is the
+worst-calibrated map in the table** (cov@90 `0.722`), which is what an overconfident `sigma = 0.5`
+on `sigma = 1.0` data should do, and confirms the coverage statistic has power here.
+
+So on these contexts the two frozen models with a predictive distribution are **well calibrated and
+near-oracle in NLL while failing A1 and A2 by factors of 57x–22711x over the artifact floor**
+(Sections 3.4, 4.2). That is C-X2 — the value channel and the derivative channel disagreeing on the
+same model on the same contexts — instantiated empirically rather than by construction.
+
+**Scope, stated not hidden.** This is one context family, and a deliberately hard one. It does not
+establish that the models perform at their *published* level, because published benchmarks are real
+tabular data with exploitable structure, not a near-white `d=5` GP at SNR 1. It establishes the
+narrower thing E4.1 was for: on the contexts where the violations were measured, the models work,
+are calibrated, and beat every trivial baseline. E3.1 remains the experiment that would settle the
+distributional question.
+
+### 10.4 Provenance
+
+| Quantity | File | Key |
+|---|---|---|
+| 10.2 all rows | `tier4_value/e4_1_results.json` | `aggregate.<name>` |
+| per-seed | `tier4_value/e4_1_results.json` | `per_seed.<seed>[]` |
+| config, query rule | `tier4_value/e4_1_results.json` | `_config` |
