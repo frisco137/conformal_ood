@@ -27,7 +27,7 @@ SRC = Path(__file__).resolve().parent
 sys.path.insert(0, str(SRC.parent.parent.parent))                     # repo root
 
 from experiments.phase_2.src.paths import RESULTS                     # noqa: E402
-from experiments.core.context import generate_audit_context           # noqa: E402
+from experiments.phase_1.core.context import generate_audit_context           # noqa: E402
 from experiments.phase_2.src.estimators import (                      # noqa: E402
     GPTrainTest, HierGPTrainTest, check_matches_audit_surrogate,
     context_jacobian, jacobian_star_batch, s2_from_Jstar, sigma2_hat, jsonable,

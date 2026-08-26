@@ -65,13 +65,13 @@ warnings.filterwarnings("ignore")
 
 from experiments.phase_2.src.paths import RESULTS, ARRAYS, TIER0    # noqa: E402
 
-from experiments.core.metrics import get_Q, negeig, asym          # noqa: E402
-from experiments.core.context import generate_audit_context       # noqa: E402
-from experiments.core.surrogates import ExactGP                   # noqa: E402
+from experiments.phase_1.core.metrics import get_Q, negeig, asym          # noqa: E402
+from experiments.phase_1.core.context import generate_audit_context       # noqa: E402
+from experiments.phase_1.core.surrogates import ExactGP                   # noqa: E402
 from experiments.phase_2.src.estimators import spearman, jsonable # noqa: E402
 # Controls now come from experiments/core/controls.py, the single definition.
 # This used to reach into tier0_instrument via a sys.path insert.
-from experiments.core.controls import TargetedImitator, wrap, GP_SIGMA   # noqa: E402
+from experiments.phase_1.core.controls import TargetedImitator, wrap, GP_SIGMA   # noqa: E402
 
 MODELS = ["tabicl_v2", "tabpfn_v2", "tabswift"]
 AUDIT_MEAN_SY = 1.457782

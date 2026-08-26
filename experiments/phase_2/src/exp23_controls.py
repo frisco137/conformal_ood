@@ -40,7 +40,7 @@ SRC = Path(__file__).resolve().parent
 sys.path.insert(0, str(SRC.parent.parent.parent))
 warnings.filterwarnings("ignore")
 
-from experiments.core.surrogates import ExactGP, HierarchicalGP        # noqa: E402
+from experiments.phase_1.core.surrogates import ExactGP, HierarchicalGP        # noqa: E402
 from experiments.phase_2.src.paths import RESULTS, ARRAYS              # noqa: E402
 from experiments.phase_2.src.estimators import jsonable                # noqa: E402
 from experiments.phase_2.src.exp23_corrupt import (                    # noqa: E402

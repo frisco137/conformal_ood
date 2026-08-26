@@ -67,7 +67,7 @@ warnings.filterwarnings("ignore")
 
 import torch                                                        # noqa: E402
 from models import load                                             # noqa: E402
-from experiments.core.metrics import extract_variance               # noqa: E402
+from experiments.phase_1.core.metrics import extract_variance               # noqa: E402
 from experiments.phase_2.src.paths import RESULTS, ARRAYS           # noqa: E402
 from experiments.phase_2.src.estimators import (                    # noqa: E402
     context_jacobian, jacobian_star_batch, s2_from_Jstar, sigma2_hat,

@@ -39,12 +39,12 @@ SRC = Path(__file__).resolve().parent
 sys.path.insert(0, str(SRC.parent.parent.parent))                  # repo root
 warnings.filterwarnings("ignore")
 
-from experiments.core.metrics import get_Q                         # noqa: E402
-from experiments.core.context import generate_audit_context        # noqa: E402
-from experiments.core.surrogates import ExactGP                    # noqa: E402
+from experiments.phase_1.core.metrics import get_Q                         # noqa: E402
+from experiments.phase_1.core.context import generate_audit_context        # noqa: E402
+from experiments.phase_1.core.surrogates import ExactGP                    # noqa: E402
 from experiments.phase_2.src.paths import RESULTS, ARRAYS, TIER0   # noqa: E402
 from experiments.phase_2.src.estimators import jsonable, spearman  # noqa: E402
-from experiments.core.controls import TargetedImitator             # noqa: E402
+from experiments.phase_1.core.controls import TargetedImitator             # noqa: E402
 
 SEEDS = [42, 100, 200, 300, 400]
 MODELS = ["tabicl_v2", "tabpfn_v2", "tabswift"]

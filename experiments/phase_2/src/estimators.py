@@ -2,9 +2,9 @@
 
 Nothing canonical is reimplemented here. `asym`, `negeig`, `get_Q`,
 `profile_jacobian`, `second_difference_norm` are imported from
-`experiments.core.metrics` wherever they are needed; `ExactGP`,
+`experiments.phase_1.core.metrics` wherever they are needed; `ExactGP`,
 `HierarchicalGP`, `NadarayaWatson`, `Imitator` from
-`experiments.core.surrogates`.
+`experiments.phase_1.core.surrogates`.
 
 What IS new here, and why:
 
@@ -138,7 +138,7 @@ def check_matches_audit_surrogate(X, y, sigma=0.5, lengthscale=1.0):
     Returns max abs deviation of (a) the mean map and (b) the Jacobian /
     predictive variance, evaluated in-sample against core.surrogates.
     """
-    from experiments.core.surrogates import ExactGP, HierarchicalGP
+    from experiments.phase_1.core.surrogates import ExactGP, HierarchicalGP
 
     egp = ExactGP(X, sigma=sigma, lengthscale=lengthscale)
     mine = GPTrainTest(X, y, sigma=sigma, lengthscale=lengthscale)

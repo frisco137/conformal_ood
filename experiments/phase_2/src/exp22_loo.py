@@ -51,7 +51,7 @@ warnings.filterwarnings("ignore")
 
 import torch                                                        # noqa: E402
 from models import load                                             # noqa: E402
-from experiments.core.metrics import get_Q                          # noqa: E402
+from experiments.phase_1.core.metrics import get_Q                          # noqa: E402
 from experiments.phase_2.src.paths import RESULTS, ARRAYS           # noqa: E402
 from experiments.phase_2.src.estimators import jsonable             # noqa: E402
 from experiments.phase_2.src.chunk2_estimators import make_predict  # noqa: E402

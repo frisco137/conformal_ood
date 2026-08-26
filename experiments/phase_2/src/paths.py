@@ -17,9 +17,11 @@ RESULTS = PHASE2 / "results"
 ARRAYS = PHASE2 / "arrays"
 LOGS = PHASE2 / "logs"
 
-#: imported controls live here (wrap, TargetedImitator); added to sys.path by
-#: the scripts that need them rather than at import time of this module.
-TIER0 = EXPERIMENTS / "tier0_instrument"
+#: Phase 1's instrument directory. Phase 2 reads two of its stored arrays
+#: (exp3_reduced_jacobians.npz, exp_negeigvec.json) to reproduce the audit's
+#: localisation in exp 2.2. The control MAPS now come from
+#: experiments.phase_1.core.controls, imported normally.
+TIER0 = EXPERIMENTS / "phase_1" / "tier0_instrument"
 
 for _d in (RESULTS, ARRAYS, LOGS):
     _d.mkdir(exist_ok=True)
