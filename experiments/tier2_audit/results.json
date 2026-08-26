@@ -1,0 +1,66 @@
+{
+  "1a_tabicl_amplitude_sweep": {
+    "t=1.0e-03": {"asym_mean": 0.290, "asym_std": 0.039, "negeig": 0.092},
+    "t=3.0e-03": {"asym_mean": 0.290, "asym_std": 0.039, "negeig": 0.092},
+    "t=1.0e-02": {"asym_mean": 0.290, "asym_std": 0.039, "negeig": 0.092},
+    "t=3.0e-02": {"asym_mean": 0.290, "asym_std": 0.039, "negeig": 0.092},
+    "t=1.0e-01": {"asym_mean": 0.290, "asym_std": 0.039, "negeig": 0.092}
+  },
+  "1b_instrument_comparison_t_1e-3": {
+    "seed_42": {"red_asym": 0.3030, "stdproj_asym": 0.3032},
+    "seed_100": {"red_asym": 0.2665, "stdproj_asym": 0.2662},
+    "seed_200": {"red_asym": 0.3527, "stdproj_asym": 0.3527},
+    "seed_300": {"red_asym": 0.2353, "stdproj_asym": 0.2353},
+    "seed_400": {"red_asym": 0.2932, "stdproj_asym": 0.2936},
+    "paired_diff_mean": -0.0000,
+    "paired_diff_std": 0.0002
+  },
+  "2a_imitator_pipeline": {
+    "dither_off": {"asym": 0.0024, "negeig": 0.0000},
+    "dither_on": {"asym": 0.0019, "negeig": 0.0000}
+  },
+  "2b_dithering_quantized": {
+    "quantized_gp_no_dither": {"negeig_mean": 0.0450, "negeig_std": 0.0102},
+    "quantized_gp_with_dither": {"negeig_mean": 0.0003, "negeig_std": 0.0001}
+  },
+  "2c_estimator_symmetry": {
+    "recovered_antisymmetric_part": "passed"
+  },
+  "2d_basis_invariance": {
+    "diff_qr_svd": 0.0,
+    "diff_qr_gs": 0.0
+  },
+  "2e_null_perturbation": {
+    "norm_J": 0.0
+  },
+  "2f_permutation_consistency": {
+    "diff_J_perm": 0.0
+  },
+  "2g_transpose_check": {
+    "orientation": "correct"
+  },
+  "4_gaps": {
+    "e0.1_determinism": {
+      "tabpfn_v2": {"max_diff": 0.0000},
+      "tabswift": {"max_diff": 0.0000}
+    },
+    "e0.3_step_size_plateau_tabpfn_v2": {
+      "t=1.0e-01": {"norm": 6.1824},
+      "t=1.0e-02": {"norm": 6.9556},
+      "t=1.0e-03": {"norm": 17.7928},
+      "t=1.0e-04": {"norm": 142.4271}
+    },
+    "e2.1_non_degeneracy": {
+      "tabicl_v2": {"sqrt_n_2": 9.8995, "norm_J": 7.6909, "relative_dist": 0.7138},
+      "tabpfn_v2": {"sqrt_n_2": 9.8995, "norm_J": 18.8797, "relative_dist": 1.1209},
+      "tabswift": {"sqrt_n_2": 9.8995, "norm_J": 41.3706, "relative_dist": 1.0240}
+    },
+    "a4_in_dist_radius_tabswift": {
+      "t=0.1": {"mean_pred": 0.01, "std_pred": 0.18},
+      "t=1.0": {"mean_pred": 0.01, "std_pred": 0.21},
+      "t=10.0": {"mean_pred": 0.02, "std_pred": 0.11},
+      "t=100.0": {"mean_pred": 0.92, "std_pred": 0.16},
+      "t=1000.0": {"mean_pred": 0.93, "std_pred": 2.26}
+    }
+  }
+}

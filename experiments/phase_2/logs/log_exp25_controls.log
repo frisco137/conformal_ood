@@ -1,0 +1,22 @@
+  did=229 done
+  did=509 done
+  did=522 done
+  did=549 done
+  did=560 done
+  did=581 done
+
+==================================================================================
+exactgp ANALYTIC (the gate)
+  |E[mu_n+1]-mu_n|/s_n      max 1.070e-11
+  total-variance rel resid  max 1.768e-14
+exactgp_sampled  self   drift/s_n mean -7.588e-04  |drift|/SE median 0.694  frac<2 0.978   tv rel gap mean +2.961e-03
+exactgp_sampled  other  drift/s_n mean +2.169e-04  |drift|/SE median 0.707  frac<2 0.967   tv rel gap mean +1.347e-07
+hiergp_sampled   self   drift/s_n mean +1.384e-03  |drift|/SE median 0.792  frac<2 0.944   tv rel gap mean +4.991e-03
+hiergp_sampled   other  drift/s_n mean -4.249e-05  |drift|/SE median 0.778  frac<2 0.921   tv rel gap mean +1.979e-04
+t1_imitator eps=0.01  |total drift|/s_n mean 0.0723   |bump-only drift|/s_n mean 0.0061   within 2eps bound 0.233
+t1_imitator eps=0.1   |total drift|/s_n mean 0.0988   |bump-only drift|/s_n mean 0.0675   within 2eps bound 0.900
+t1_imitator eps=1.0   |total drift|/s_n mean 0.5897   |bump-only drift|/s_n mean 0.5970   within 2eps bound 1.000
+quadratic lam=0.05  |drift|/s_n mean 5.1143  |drift|/SE median 0.74  |measured-exact|/exact max 9.749e-12
+quadratic lam=0.2   |drift|/s_n mean 20.2668  |drift|/SE median 0.92  |measured-exact|/exact max 3.199e-11
+
+Saved: /home/psquare_a6000/Desktop/conformal_ood/experiments/phase_2/results/exp25_controls.json

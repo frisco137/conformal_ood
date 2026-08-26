@@ -1,0 +1,58 @@
+{
+  "tabicl_v2": {
+    "model_id": "tabicl_v2",
+    "h": 0.001,
+    "dither": false,
+    "N": 1,
+    "dither_halfwidth": null,
+    "seeds": [
+      42,
+      100,
+      200,
+      300,
+      400
+    ]
+  },
+  "tabswift": {
+    "model_id": "tabswift",
+    "h": 0.1,
+    "dither": false,
+    "N": 1,
+    "dither_halfwidth": null,
+    "seeds": [
+      42,
+      100,
+      200,
+      300,
+      400
+    ]
+  },
+  "tabpfn_v2_nodither": {
+    "model_id": "tabpfn_v2",
+    "h": 0.1,
+    "dither": false,
+    "N": 1,
+    "dither_halfwidth": null,
+    "seeds": [
+      42,
+      100,
+      200,
+      300,
+      400
+    ]
+  },
+  "tabpfn_v2_dither": {
+    "model_id": "tabpfn_v2",
+    "h": 0.1,
+    "dither": true,
+    "N": 10,
+    "dither_halfwidth": 0.000687,
+    "seeds": [
+      42,
+      100,
+      200,
+      300,
+      400
+    ]
+  }
+}

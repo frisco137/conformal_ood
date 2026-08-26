@@ -1,0 +1,67 @@
+datasets: [223, 229, 509, 522, 540, 547, 549, 560, 579, 581, 582, 583]
+
+==============================================================================
+MODEL tabicl_v2   h=6.8597e-04 x std(y_ctx), no dither
+==============================================================================
+  did=223    seed 42     100.7s  trJ   88.80  n-trJ   11.20  sig2    0.09979  neg Jii   0  clip 0.040  rmse 1.199
+  did=223    seed 100    102.4s  trJ   93.36  n-trJ    6.64  sig2    0.08034  neg Jii   0  clip 0.100  rmse 1.104
+  did=223    seed 200    100.4s  trJ   88.58  n-trJ   11.42  sig2     0.0889  neg Jii   0  clip 0.000  rmse 1.362
+  did=223    seed 300    100.3s  trJ   89.82  n-trJ   10.18  sig2    0.08477  neg Jii   0  clip 0.040  rmse 0.7514
+  did=223    seed 400    100.5s  trJ   96.80  n-trJ    3.20  sig2    0.07267  neg Jii   0  clip 0.160  rmse 1.1
+  did=229    seed 42     103.2s  trJ   76.73  n-trJ   23.27  sig2     0.7881  neg Jii   0  clip 0.000  rmse 1.794
+  did=229    seed 100    104.8s  trJ   67.78  n-trJ   32.22  sig2      1.154  neg Jii   0  clip 0.000  rmse 1.761
+  did=229    seed 200    103.5s  trJ   45.68  n-trJ   54.32  sig2      1.917  neg Jii   0  clip 0.000  rmse 1.787
+  did=229    seed 300    104.7s  trJ   67.48  n-trJ   32.52  sig2     0.9981  neg Jii   0  clip 0.000  rmse 1.693
+  did=229    seed 400     98.4s  trJ   77.28  n-trJ   22.72  sig2     0.7117  neg Jii   0  clip 0.000  rmse 1.787
+  did=509    seed 42     100.0s  trJ   92.66  n-trJ    7.34  sig2   8.99e+04  neg Jii   0  clip 0.060  rmse 848.6
+  did=509    seed 100    103.8s  trJ   92.93  n-trJ    7.07  sig2  1.964e+05  neg Jii   0  clip 0.080  rmse 906.2
+  did=509    seed 200    102.6s  trJ   90.68  n-trJ    9.32  sig2  9.031e+04  neg Jii   0  clip 0.060  rmse 969.3
+  did=509    seed 300    104.6s  trJ   81.92  n-trJ   18.08  sig2  2.899e+05  neg Jii   0  clip 0.020  rmse 817
+  did=509    seed 400    103.2s  trJ   94.32  n-trJ    5.68  sig2  1.013e+05  neg Jii   0  clip 0.040  rmse 899.6
+  did=522    seed 42     103.3s  trJ   98.00  n-trJ    2.00  sig2    0.01571  neg Jii   0  clip 0.440  rmse 0.9154
+  did=522    seed 100    104.3s  trJ   96.08  n-trJ    3.92  sig2    0.03132  neg Jii   0  clip 0.160  rmse 0.701
+  did=522    seed 200    103.3s  trJ   86.30  n-trJ   13.70  sig2    0.07488  neg Jii   0  clip 0.000  rmse 0.7575
+  did=522    seed 300    102.2s  trJ   90.11  n-trJ    9.89  sig2    0.05652  neg Jii   0  clip 0.000  rmse 0.7582
+  did=522    seed 400    102.3s  trJ   98.01  n-trJ    1.99  sig2    0.01733  neg Jii   0  clip 0.300  rmse 0.8093
+  did=540    seed 42     102.2s  trJ   45.63  n-trJ   54.37  sig2      18.52  neg Jii   0  clip 0.000  rmse 6.688
+  did=540    seed 100    102.4s  trJ   57.54  n-trJ   42.46  sig2      11.56  neg Jii   0  clip 0.000  rmse 6.606
+  did=540    seed 200    101.4s  trJ   66.43  n-trJ   33.57  sig2      17.08  neg Jii   0  clip 0.000  rmse 6.252
+  did=540    seed 300    102.1s  trJ   61.17  n-trJ   38.83  sig2      14.86  neg Jii   3  clip 0.000  rmse 5.177
+  did=540    seed 400    102.4s  trJ   52.14  n-trJ   47.86  sig2      14.58  neg Jii   0  clip 0.000  rmse 7.014
+  did=547    seed 42     103.3s  trJ   69.90  n-trJ   30.10  sig2    0.09095  neg Jii   0  clip 0.000  rmse 0.54
+  did=547    seed 100    103.7s  trJ   98.43  n-trJ    1.57  sig2    0.01155  neg Jii   0  clip 0.300  rmse 0.4841
+  did=547    seed 200    316.0s  trJ   96.75  n-trJ    3.25  sig2     0.0148  neg Jii   0  clip 0.040  rmse 0.4579
+  did=547    seed 300    507.8s  trJ   98.99  n-trJ    1.01  sig2    0.01327  neg Jii   0  clip 0.340  rmse 0.4883
+  did=547    seed 400    126.5s  trJ   93.66  n-trJ    6.34  sig2    0.03419  neg Jii   0  clip 0.060  rmse 0.562
+  did=549    seed 42     102.7s  trJ   89.24  n-trJ   10.76  sig2  1.596e+04  neg Jii   0  clip 0.040  rmse 364.6
+  did=549    seed 100    101.7s  trJ   91.84  n-trJ    8.16  sig2  2.736e+04  neg Jii   0  clip 0.120  rmse 310.9
+  did=549    seed 200     95.3s  trJ   69.70  n-trJ   30.30  sig2  1.818e+04  neg Jii   0  clip 0.000  rmse 463.1
+  did=549    seed 300     77.9s  trJ   74.73  n-trJ   25.27  sig2  2.573e+05  neg Jii   0  clip 0.080  rmse 316.4
+  did=549    seed 400     79.1s  trJ   84.69  n-trJ   15.31  sig2  1.212e+05  neg Jii   0  clip 0.060  rmse 879.2
+  did=560    seed 42      77.1s  trJ   75.38  n-trJ   24.62  sig2     0.7767  neg Jii   1  clip 0.040  rmse 0.1652
+  did=560    seed 100    199.2s  trJ   89.05  n-trJ   10.95  sig2      1.495  neg Jii   0  clip 0.060  rmse 1.356
+  did=560    seed 200    553.2s  trJ   77.63  n-trJ   22.37  sig2      4.112  neg Jii   2  clip 0.000  rmse 2.213
+  did=560    seed 300    623.9s  trJ   84.77  n-trJ   15.23  sig2      1.067  neg Jii   1  clip 0.020  rmse 2.228
+  did=560    seed 400    584.7s  trJ   90.97  n-trJ    9.03  sig2      11.13  neg Jii   0  clip 0.240  rmse 0.1921
+  did=579    seed 42     616.4s  trJ   75.46  n-trJ   24.54  sig2    0.02536  neg Jii   0  clip 0.000  rmse 0.3379
+  did=579    seed 100    626.8s  trJ   95.91  n-trJ    4.09  sig2    0.01054  neg Jii   0  clip 0.180  rmse 0.2657
+  did=579    seed 200    543.9s  trJ   98.74  n-trJ    1.26  sig2   0.009415  neg Jii   0  clip 0.400  rmse 0.3269
+  did=579    seed 300    628.6s  trJ   84.97  n-trJ   15.03  sig2    0.01795  neg Jii   0  clip 0.020  rmse 0.4582
+  did=579    seed 400    653.8s  trJ   94.24  n-trJ    5.76  sig2    0.01289  neg Jii   0  clip 0.060  rmse 0.3411
+  did=581    seed 42     647.3s  trJ  101.05  n-trJ   -1.05  sig2        nan  neg Jii   0  clip 0.000  rmse 0.322
+  did=581    seed 100    648.9s  trJ  101.03  n-trJ   -1.03  sig2        nan  neg Jii   0  clip 0.000  rmse 0.2937
+  did=581    seed 200    656.6s  trJ  101.16  n-trJ   -1.16  sig2        nan  neg Jii   0  clip 0.000  rmse 0.2312
+  did=581    seed 300    397.5s  trJ   98.39  n-trJ    1.61  sig2    0.01354  neg Jii   0  clip 0.340  rmse 0.2772
+  did=581    seed 400    172.1s  trJ   99.11  n-trJ    0.89  sig2    0.01488  neg Jii   0  clip 0.580  rmse 0.2777
+  did=582    seed 42     107.6s  trJ  101.99  n-trJ   -1.99  sig2        nan  neg Jii   0  clip 0.000  rmse 0.2571
+  did=582    seed 100     77.1s  trJ   98.56  n-trJ    1.44  sig2    0.00703  neg Jii   0  clip 0.500  rmse 0.3326
+  did=582    seed 200     78.6s  trJ   99.76  n-trJ    0.24  sig2    0.05267  neg Jii   0  clip 0.380  rmse 0.459
+  did=582    seed 300     79.9s  trJ  100.58  n-trJ   -0.58  sig2        nan  neg Jii   0  clip 0.000  rmse 0.3826
+  did=582    seed 400     79.0s  trJ  100.25  n-trJ   -0.25  sig2        nan  neg Jii   0  clip 0.000  rmse 0.3762
+  did=583    seed 42      80.6s  trJ  101.37  n-trJ   -1.37  sig2        nan  neg Jii   0  clip 0.000  rmse 0.4257
+  did=583    seed 100     79.6s  trJ  100.61  n-trJ   -0.61  sig2        nan  neg Jii   0  clip 0.000  rmse 0.4459
+  did=583    seed 200     78.8s  trJ   99.99  n-trJ    0.01  sig2     0.2789  neg Jii   0  clip 0.760  rmse 0.3422
+  did=583    seed 300     80.3s  trJ  100.37  n-trJ   -0.37  sig2        nan  neg Jii   0  clip 0.000  rmse 0.3902
+  did=583    seed 400     80.6s  trJ  100.73  n-trJ   -0.73  sig2        nan  neg Jii   0  clip 0.000  rmse 0.3286
+
+Done.

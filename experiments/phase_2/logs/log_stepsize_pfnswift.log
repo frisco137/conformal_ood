@@ -1,0 +1,58 @@
+
+==============================================================================
+tabpfn_v2   chosen h_frac = 6.8597e-02
+==============================================================================
+  did=583 fri_c1_1000_50     std(y)=0.92336
+    h_frac 1.000e-04  h  9.2336e-05  trJ   123.834  n-trJ   -23.834  neg Jii  38  mean J_** +2.55325
+    h_frac 1.000e-03  h  0.00092336  trJ    84.148  n-trJ    15.852  neg Jii  11  mean J_** +1.16532
+    h_frac 1.000e-02  h   0.0092336  trJ    70.738  n-trJ    29.262  neg Jii   0  mean J_** +0.76092
+    h_frac 3.000e-02  h    0.027701  trJ    72.397  n-trJ    27.603  neg Jii   0  mean J_** +0.75313
+    h_frac 6.860e-02  h    0.063341  trJ    72.453  n-trJ    27.547  neg Jii   0  mean J_** +0.75528
+    h_frac 2.000e-01  h     0.18467  trJ    73.535  n-trJ    26.465  neg Jii   0  mean J_** +0.74815
+    h_frac 5.000e-01  h     0.46168  trJ    71.533  n-trJ    28.467  neg Jii   0  mean J_** +0.71029
+  did=223 stock              std(y)=6.5778
+    h_frac 1.000e-04  h  0.00065778  trJ    45.838  n-trJ    54.162  neg Jii  26  mean J_** +1.41766
+    h_frac 1.000e-03  h   0.0065778  trJ    65.031  n-trJ    34.969  neg Jii   8  mean J_** +0.73791
+    h_frac 1.000e-02  h    0.065778  trJ    65.736  n-trJ    34.264  neg Jii   0  mean J_** +0.67761
+    h_frac 3.000e-02  h     0.19733  trJ    66.435  n-trJ    33.565  neg Jii   0  mean J_** +0.68042
+    h_frac 6.860e-02  h     0.45122  trJ    66.138  n-trJ    33.862  neg Jii   0  mean J_** +0.67011
+    h_frac 2.000e-01  h      1.3156  trJ    64.039  n-trJ    35.961  neg Jii   0  mean J_** +0.67555
+    h_frac 5.000e-01  h      3.2889  trJ    61.931  n-trJ    38.069  neg Jii   0  mean J_** +0.67945
+  did=509 places             std(y)=1107.8
+    h_frac 1.000e-04  h     0.11078  trJ   180.056  n-trJ   -80.056  neg Jii  37  mean J_** +0.16264
+    h_frac 1.000e-03  h      1.1078  trJ    18.343  n-trJ    81.657  neg Jii  34  mean J_** -0.07438
+    h_frac 1.000e-02  h      11.078  trJ    15.758  n-trJ    84.242  neg Jii   5  mean J_** +0.14410
+    h_frac 3.000e-02  h      33.235  trJ    16.191  n-trJ    83.809  neg Jii   2  mean J_** +0.14665
+    h_frac 6.860e-02  h      75.994  trJ    16.515  n-trJ    83.485  neg Jii   2  mean J_** +0.13654
+    h_frac 2.000e-01  h      221.56  trJ    16.000  n-trJ    84.000  neg Jii   0  mean J_** +0.15570
+    h_frac 5.000e-01  h      553.91  trJ    16.177  n-trJ    83.823  neg Jii   0  mean J_** +0.16448
+
+==============================================================================
+tabswift   chosen h_frac = 6.8597e-02
+==============================================================================
+  did=583 fri_c1_1000_50     std(y)=0.92336
+    h_frac 1.000e-04  h  9.2336e-05  trJ   -39.496  n-trJ   139.496  neg Jii  21  mean J_** +0.00000
+    h_frac 1.000e-03  h  0.00092336  trJ    40.290  n-trJ    59.710  neg Jii  30  mean J_** +0.26440
+    h_frac 1.000e-02  h   0.0092336  trJ    38.418  n-trJ    61.582  neg Jii   3  mean J_** +0.26705
+    h_frac 3.000e-02  h    0.027701  trJ    38.759  n-trJ    61.241  neg Jii   2  mean J_** +0.28820
+    h_frac 6.860e-02  h    0.063341  trJ    38.660  n-trJ    61.340  neg Jii   2  mean J_** +0.29370
+    h_frac 2.000e-01  h     0.18467  trJ    38.148  n-trJ    61.852  neg Jii   4  mean J_** +0.29547
+    h_frac 5.000e-01  h     0.46168  trJ    36.542  n-trJ    63.458  neg Jii   2  mean J_** +0.30498
+  did=223 stock              std(y)=6.5778
+    h_frac 1.000e-04  h  0.00065778  trJ     0.000  n-trJ   100.000  neg Jii   0  mean J_** +0.00000
+    h_frac 1.000e-03  h   0.0065778  trJ     0.000  n-trJ   100.000  neg Jii   0  mean J_** +0.38601
+    h_frac 1.000e-02  h    0.065778  trJ    -1.528  n-trJ   101.528  neg Jii  53  mean J_** +0.47954
+    h_frac 3.000e-02  h     0.19733  trJ    -1.356  n-trJ   101.356  neg Jii  65  mean J_** +0.46073
+    h_frac 6.860e-02  h     0.45122  trJ    -1.119  n-trJ   101.119  neg Jii  71  mean J_** +0.47246
+    h_frac 2.000e-01  h      1.3156  trJ    -1.140  n-trJ   101.140  neg Jii  73  mean J_** +0.55429
+    h_frac 5.000e-01  h      3.2889  trJ    -1.005  n-trJ   101.005  neg Jii  74  mean J_** +0.49367
+  did=509 places             std(y)=1107.8
+    h_frac 1.000e-04  h     0.11078  trJ    -0.220  n-trJ   100.220  neg Jii  10  mean J_** -0.34203
+    h_frac 1.000e-03  h      1.1078  trJ    -0.066  n-trJ   100.066  neg Jii  38  mean J_** -0.80879
+    h_frac 1.000e-02  h      11.078  trJ     0.002  n-trJ    99.998  neg Jii  40  mean J_** +0.13836
+    h_frac 3.000e-02  h      33.235  trJ     0.001  n-trJ    99.999  neg Jii  36  mean J_** -0.11314
+    h_frac 6.860e-02  h      75.994  trJ     0.001  n-trJ    99.999  neg Jii  35  mean J_** -0.00537
+    h_frac 2.000e-01  h      221.56  trJ     0.000  n-trJ   100.000  neg Jii  37  mean J_** +0.01391
+    h_frac 5.000e-01  h      553.91  trJ     0.000  n-trJ   100.000  neg Jii  35  mean J_** +0.01191
+
+Saved: /home/psquare_a6000/Desktop/conformal_ood/experiments/phase_2/chunk2_stepsize_tabpfn_v2_tabswift.json

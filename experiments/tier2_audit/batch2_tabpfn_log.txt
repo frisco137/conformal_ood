@@ -1,0 +1,7 @@
+Loading TabPFN...
+Running TabPFN seed 42
+Running TabPFN seed 100
+Running TabPFN seed 200
+Running TabPFN seed 300
+Running TabPFN seed 400
+[W812 23:11:34.282408159 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())

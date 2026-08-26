@@ -1,0 +1,10 @@
+{
+  "1_estimator_recovers": 6.14827137296359e-13,
+  "2_transpose": 8.881784197001252e-16,
+  "3_basis_inv_asym": 0.0,
+  "3_basis_inv_negeig": 1.5265566588595902e-16,
+  "4_null": 0.0,
+  "5_determinism_analytic": 0.0,
+  "6_reduced_vs_ambient": 2.050861514143072e-12,
+  "7_permutation": 0.0
+}

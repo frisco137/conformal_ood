@@ -1,0 +1,56 @@
+==============================================================================
+PART A  output quantum, direct scan
+==============================================================================
+  tabicl_v2    scan t in [-1e-03, 1e-03], 501 points, dt=4.000e-06
+    fraction of exactly-zero jumps  0.0259
+    median nonzero jump             9.8348e-07
+    10th / 90th pct nonzero jump    2.3842e-07 / 2.9802e-06
+    min nonzero / max jump          1.8481e-09 / 1.3471e-05
+    output dtype float32, mean |m| 0.8822
+  tabswift     scan t in [-1e-01, 1e-01], 501 points, dt=4.000e-04
+    fraction of exactly-zero jumps  0.0401
+    median nonzero jump             4.2725e-04
+    10th / 90th pct nonzero jump    9.1553e-05 / 1.9531e-03
+    min nonzero / max jump          9.5367e-07 / 9.7656e-03
+    output dtype float16, mean |m| 0.1312
+
+  TabPFN reference (diagnostic_a_results.json): median jump 6.8700e-04
+
+==============================================================================
+PART B  matched quantised controls (true asym/negeig exactly 0)
+==============================================================================
+  tabicl_floor     delta=9.8348e-07, t=1e-03, no dither
+    asym   [4.369448e-03  4.299316e-03  4.196719e-03  4.240983e-03  4.182523e-03]  mean 4.257798e-03
+    negeig [3.995556e-06  3.312172e-06  5.272950e-06  4.080489e-06  3.720104e-06]  mean 4.076254e-06
+    ||J||_F rel err mean 3.023794e-03
+  tabswift_floor   delta=4.2725e-04, t=1e-01, no dither
+    asym   [1.771571e-02  1.844219e-02  1.771207e-02  1.811571e-02  1.799218e-02]  mean 1.799557e-02
+    negeig [7.407348e-05  6.399356e-05  7.849463e-05  7.909518e-05  5.278064e-05]  mean 6.968750e-05
+    ||J||_F rel err mean 1.277130e-02
+
+==============================================================================
+PART C  TabICL v2 reduced basis, amplitude sweep
+==============================================================================
+
+  t = 1e-03
+    seed 42     51.4s  asym 0.606662  negeig 0.241642  ||J||_F 7.6902  ||J-I||/||J|| 0.7142
+    seed 100    51.7s  asym 0.532994  negeig 0.159460  ||J||_F 7.8000  ||J-I||/||J|| 0.6485
+    seed 200    51.0s  asym 0.705353  negeig 0.220369  ||J||_F 5.0447  ||J-I||/||J|| 1.3761
+    seed 300    50.6s  asym 0.470117  negeig 0.129146  ||J||_F 8.0836  ||J-I||/||J|| 0.5845
+    seed 400    51.0s  asym 0.586529  negeig 0.132684  ||J||_F 6.3314  ||J-I||/||J|| 0.9329
+
+  t = 1e-02
+    seed 42     51.6s  asym 0.605577  negeig 0.241319  ||J||_F 7.6886  ||J-I||/||J|| 0.7139
+    seed 100    50.9s  asym 0.532535  negeig 0.158644  ||J||_F 7.7973  ||J-I||/||J|| 0.6486
+    seed 200    50.7s  asym 0.705125  negeig 0.221069  ||J||_F 5.0431  ||J-I||/||J|| 1.3764
+    seed 300    49.8s  asym 0.470265  negeig 0.129568  ||J||_F 8.0828  ||J-I||/||J|| 0.5847
+    seed 400    50.6s  asym 0.586781  negeig 0.132682  ||J||_F 6.3312  ||J-I||/||J|| 0.9330
+
+  t = 1e-01
+    seed 42     51.0s  asym 0.603683  negeig 0.238328  ||J||_F 7.6824  ||J-I||/||J|| 0.7135
+    seed 100    49.1s  asym 0.532091  negeig 0.158586  ||J||_F 7.7956  ||J-I||/||J|| 0.6485
+    seed 200    50.0s  asym 0.704948  negeig 0.221040  ||J||_F 5.0437  ||J-I||/||J|| 1.3760
+    seed 300    50.9s  asym 0.468556  negeig 0.129372  ||J||_F 8.0786  ||J-I||/||J|| 0.5843
+    seed 400    50.1s  asym 0.586406  negeig 0.132381  ||J||_F 6.3303  ||J-I||/||J|| 0.9329
+
+Saved: /home/psquare_a6000/Desktop/conformal_ood/experiments/tier0_instrument/exp4_results.json  and  /home/psquare_a6000/Desktop/conformal_ood/experiments/tier0_instrument/exp4_tabicl_reduced.npz

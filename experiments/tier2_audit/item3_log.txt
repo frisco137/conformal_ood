@@ -1,0 +1,148 @@
+nohup: ignoring input
+=== ITEM 3: Profiling ===
+
+Computing Jacobian for tabicl_v2...
+Raw asym: 0.3020
+[tabicl_v2] Column-system post-profile asym: 0.2842 (residual: 0.00e+00)
+[tabicl_v2] Row-system post-profile asym: 0.2839 (residual: 0.00e+00)
+
+Computing Jacobian for tabpfn_v2...
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+Raw asym: 0.6655
+[tabpfn_v2] Column-system post-profile asym: 0.6493 (residual: 0.00e+00)
+[tabpfn_v2] Row-system post-profile asym: 0.6490 (residual: 0.00e+00)
+
+Computing Jacobian for tabswift...
+Raw asym: 0.6056
+[tabswift] Column-system post-profile asym: 0.5768 (residual: 0.00e+00)
+[tabswift] Row-system post-profile asym: 0.5772 (residual: 0.00e+00)
+[W812 20:26:21.754405580 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())

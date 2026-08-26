@@ -1,0 +1,60 @@
+  tabicl_v2: 60 splits scored
+  tabpfn_v2: 60 splits scored
+  tabswift: 60 splits scored
+
+==============================================================================
+tabicl_v2  -- aggregate over datasets
+==============================================================================
+  estimator     cov50   cov80   cov90   cov95      IS@90   width@90  recalW@90      NLL     rho
+  splits: 60 total, 50 with the Jacobian estimator defined; mean clip rate 0.1020, mean rate(J_** >= 1) 0.2220, mean n-trJ 12.729
+  native        0.564   0.831   0.905   0.942      515.8      378.5      299.6    2.238   0.300
+  jacobian      0.604   0.743   0.776   0.792        772      582.1      673.8  871.747   0.054
+  conformal     0.501   0.783   0.883   0.949      523.6        352      344.3   10.684     n/a
+  gp_oracle     0.560   0.825   0.907   0.945      545.1      386.1      326.3    2.708   0.182
+    IS@90 jacobian_vs_native       wins 1-11 of 12   mean diff +256.1  CI [+3.926, +682.1]
+    IS@90 jacobian_vs_conformal    wins 0-12 of 12   mean diff +248.4  CI [+2.681, +671.3]
+    IS@90 native_vs_conformal      wins 9-3 of 12   mean diff -7.76  CI [-28.93, +5.764]
+    IS@90 jacobian_vs_gp_oracle    wins 2-10 of 12   mean diff +226.8  CI [+1.161, +615.5]
+    IS@90 native_vs_gp_oracle      wins 10-2 of 12   mean diff -29.27  CI [-67.81, -1.175]
+
+==============================================================================
+tabpfn_v2  -- aggregate over datasets
+==============================================================================
+  estimator     cov50   cov80   cov90   cov95      IS@90   width@90  recalW@90      NLL     rho
+  splits: 60 total, 60 with the Jacobian estimator defined; mean clip rate 0.0137, mean rate(J_** >= 1) 0.0137, mean n-trJ 56.864
+  native        0.556   0.826   0.906   0.947      515.9      375.5        301    2.119   0.283
+  jacobian      0.609   0.839   0.903   0.934      547.4      416.1      336.5   40.948   0.124
+  conformal     0.488   0.801   0.896   0.949      519.9      356.6      312.1   14.075     n/a
+  gp_oracle     0.560   0.825   0.907   0.945      545.1      386.1      326.3    2.708   0.182
+    IS@90 jacobian_vs_native       wins 0-12 of 12   mean diff +31.53  CI [+0.33, +85.63]
+    IS@90 jacobian_vs_conformal    wins 4-8 of 12   mean diff +27.57  CI [-11.86, +94.82]
+    IS@90 native_vs_conformal      wins 8-4 of 12   mean diff -3.967  CI [-26.22, +16.03]
+    IS@90 jacobian_vs_gp_oracle    wins 8-4 of 12   mean diff +2.319  CI [-30.87, +39.74]
+    IS@90 native_vs_gp_oracle      wins 9-3 of 12   mean diff -29.21  CI [-67.82, -1.395]
+
+==============================================================================
+tabswift  -- aggregate over datasets
+==============================================================================
+  estimator     cov50   cov80   cov90   cov95      IS@90   width@90  recalW@90      NLL     rho
+  splits: 60 total, 60 with the Jacobian estimator defined; mean clip rate 0.0120, mean rate(J_** >= 1) 0.0120, mean n-trJ 70.367
+  native       NOT MEASURED (estimator absent or undefined on every split)
+  jacobian      0.499   0.858   0.934   0.961       1818       1714       1283   18.091   0.042
+  conformal     0.501   0.812   0.915   0.960       1553       1370       1269    3.261     n/a
+  gp_oracle     0.560   0.825   0.907   0.945      545.1      386.1      326.3    2.708   0.182
+    IS@90 jacobian_vs_conformal    wins 1-11 of 12   mean diff +265.3  CI [+3.041, +764.9]
+    IS@90 jacobian_vs_gp_oracle    wins 5-7 of 12   mean diff +1273  CI [+14.67, +3680]
+
+==============================================================================
+GATE 2  (conformal is the harness check: calibrated by construction)
+==============================================================================
+  tabicl_v2   conformal  coverage@90 0.8830  signed dev -0.0170  tol +/-0.03  met=True   per-split sd 0.0564 over 60
+  tabicl_v2   gp_oracle  coverage@90 0.9073  signed dev +0.0073  tol +/-0.05  met=True   per-split sd 0.0473 over 60
+  tabicl_v2   finite intervals: all estimators finite   jacobian defined on 50/60 splits
+  tabpfn_v2   conformal  coverage@90 0.8957  signed dev -0.0043  tol +/-0.03  met=True   per-split sd 0.0494 over 60
+  tabpfn_v2   gp_oracle  coverage@90 0.9073  signed dev +0.0073  tol +/-0.05  met=True   per-split sd 0.0473 over 60
+  tabpfn_v2   finite intervals: all estimators finite   jacobian defined on 60/60 splits
+  tabswift    conformal  coverage@90 0.9153  signed dev +0.0153  tol +/-0.03  met=True   per-split sd 0.0450 over 60
+  tabswift    gp_oracle  coverage@90 0.9073  signed dev +0.0073  tol +/-0.05  met=True   per-split sd 0.0473 over 60
+  tabswift    finite intervals: all estimators finite   jacobian defined on 60/60 splits
+
+Saved: /home/psquare_a6000/Desktop/conformal_ood/experiments/phase_2/results/chunk3_results.json

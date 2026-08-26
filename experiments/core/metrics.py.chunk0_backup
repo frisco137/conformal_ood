@@ -1,0 +1,78 @@
+import numpy as np
+
+def asym(J):
+    """
+    asym(J) = ||J - J.T||_F / ||J||_F
+    This precisely matches the C-N1 definition.
+    """
+    norm_denom = np.linalg.norm(J, ord='fro')
+    if norm_denom < 1e-12:
+        return 0.0
+    return np.linalg.norm(J - J.T, ord='fro') / norm_denom
+
+def negeig(J):
+    """
+    negeig(J) = -min(0, lambda_min(sym J)) / ||J||_2
+    """
+    sym_J = (J + J.T) / 2
+    vals = np.linalg.eigvalsh(sym_J)
+    min_val = np.min(vals)
+    if min_val >= 0:
+        return 0.0
+    norm_J = np.linalg.norm(J, ord=2)
+    if norm_J < 1e-12:
+        return 0.0
+    return -min_val / norm_J
+
+def central_jacobian(model_func, y, h=1e-4):
+    n = len(y)
+    J = np.zeros((n, n), dtype=y.dtype)
+    for j in range(n):
+        y_plus = y.copy()
+        y_plus[j] += h
+        m_plus = model_func(y_plus)
+        
+        y_minus = y.copy()
+        y_minus[j] -= h
+        m_minus = model_func(y_minus)
+        
+        J[:, j] = (m_plus - m_minus) / (2 * h)
+    return J
+
+def get_Q(y):
+    """
+    Returns an orthonormal basis of span{1, u}^orth
+    where u = (y - mean(y)) / std(y)
+    """
+    n = len(y)
+    v1 = np.ones(n)
+    v2 = y - np.mean(y)
+    # Handle the case where all y are the same
+    if np.linalg.norm(v2) < 1e-12:
+        # Just use some random vector orthogonal to v1
+        while True:
+            v2 = np.random.randn(n)
+            v2 -= np.mean(v2)
+            if np.linalg.norm(v2) > 1e-5:
+                break
+                
+    A = np.random.randn(n, n)
+    A[:, 0] = v1
+    A[:, 1] = v2
+    Q_full, _ = np.linalg.qr(A)
+    return Q_full[:, 2:]
+
+def extract_variance(quantiles, levels):
+    """
+    Extracts the predictive variance via numerical integration of the 
+    second moment over the quantile grid, instead of a tail spread.
+    Levels represent probabilities p in [0, 1].
+    Mean = int_0^1 Q(p) dp
+    Second moment = int_0^1 Q(p)^2 dp
+    Variance = E[X^2] - (E[X])^2
+    """
+    mean_val = np.trapz(quantiles, x=levels, axis=-1)
+    second_moment = np.trapz(quantiles**2, x=levels, axis=-1)
+    # Ensure non-negative due to numerical precision
+    var = second_moment - mean_val**2
+    return np.maximum(var, 0.0)

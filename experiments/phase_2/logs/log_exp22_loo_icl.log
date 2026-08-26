@@ -1,0 +1,66 @@
+
+==============================================================================
+MODEL tabicl_v2   full LOO over all 100 context points per split
+==============================================================================
+  did=223    seed 42      85.0s  lam_min -0.3473  LOO [0.1357, 3.476]  i_hi  87 i_lo   0  Jii gap 0.431  sens hi/lo 0.793
+  did=223    seed 100     79.8s  lam_min +0.0103  LOO [0.1014, 3.368]  i_hi  94 i_lo  69  Jii gap 0.033  sens hi/lo 2.768
+  did=223    seed 200    102.4s  lam_min -0.3149  LOO [0.1447, 3.585]  i_hi  67 i_lo  80  Jii gap 0.054  sens hi/lo 0.494
+  did=223    seed 300     80.6s  lam_min -0.1978  LOO [0.1264, 1.949]  i_hi  63 i_lo  15  Jii gap 0.300  sens hi/lo 1.034
+  did=223    seed 400     83.4s  lam_min +0.6359  LOO [0.1265, 3.997]  i_hi  31 i_lo  81  Jii gap 0.008  sens hi/lo 0.762
+  did=229    seed 42      96.5s  lam_min -1.0028  LOO [0.3475, 3.596]  i_hi  17 i_lo  41  Jii gap 0.008  sens hi/lo 0.776
+  did=229    seed 100     86.5s  lam_min -0.9982  LOO [0.3085, 3.218]  i_hi  86 i_lo  31  Jii gap 0.238  sens hi/lo 0.885
+  did=229    seed 200    101.4s  lam_min -0.9522  LOO [0.1808, 3.958]  i_hi  72 i_lo  99  Jii gap 0.136  sens hi/lo 0.635
+  did=229    seed 300     81.8s  lam_min -0.7188  LOO [0.2265, 2.07]  i_hi  98 i_lo  45  Jii gap 0.454  sens hi/lo 0.704
+  did=229    seed 400     78.1s  lam_min -1.3082  LOO [0.284, 2.914]  i_hi  29 i_lo  84  Jii gap 0.018  sens hi/lo 0.958
+  did=509    seed 42      83.2s  lam_min -0.0136  LOO [59.77, 701.7]  i_hi   4 i_lo  19  Jii gap 0.100  sens hi/lo 1.377
+  did=509    seed 100     81.4s  lam_min -0.0956  LOO [98.81, 1396]  i_hi  34 i_lo  82  Jii gap 0.002  sens hi/lo 0.949
+  did=509    seed 200     78.2s  lam_min -0.2269  LOO [121.1, 965.2]  i_hi  48 i_lo  19  Jii gap 0.014  sens hi/lo 0.932
+  did=509    seed 300     81.5s  lam_min -0.7970  LOO [53.91, 1140]  i_hi  55 i_lo  42  Jii gap 0.001  sens hi/lo 1.798
+  did=509    seed 400     87.4s  lam_min +0.0849  LOO [76.52, 1586]  i_hi  45 i_lo  88  Jii gap 0.073  sens hi/lo 1.113
+  did=522    seed 42      80.4s  lam_min +0.5431  LOO [0.1007, 1.145]  i_hi  90 i_lo  20  Jii gap 0.005  sens hi/lo 1.496
+  did=522    seed 100     79.0s  lam_min +0.3834  LOO [0.09752, 0.7893]  i_hi  11 i_lo  96  Jii gap 0.180  sens hi/lo 0.835
+  did=522    seed 200     83.0s  lam_min -1.3006  LOO [0.09917, 0.7244]  i_hi  38 i_lo   8  Jii gap 0.037  sens hi/lo 0.806
+  did=522    seed 300     80.7s  lam_min -0.1089  LOO [0.07659, 0.8333]  i_hi  94 i_lo  53  Jii gap 0.001  sens hi/lo 1.201
+  did=522    seed 400     76.9s  lam_min +0.6187  LOO [0.1343, 0.9003]  i_hi  86 i_lo  88  Jii gap 0.019  sens hi/lo 0.832
+  did=540    seed 42      78.5s  lam_min -1.4749  LOO [0.687, 13.62]  i_hi  77 i_lo  99  Jii gap 0.027  sens hi/lo 1.334
+  did=540    seed 100     84.2s  lam_min -0.9256  LOO [0.6087, 16.53]  i_hi  82 i_lo  20  Jii gap 0.013  sens hi/lo 0.998
+  did=540    seed 200     80.5s  lam_min -1.2886  LOO [0.7379, 10.16]  i_hi  86 i_lo  46  Jii gap 0.239  sens hi/lo 0.995
+  did=540    seed 300     81.3s  lam_min -1.4724  LOO [0.6419, 10.68]  i_hi  20 i_lo  81  Jii gap 0.003  sens hi/lo 0.521
+  did=540    seed 400     78.1s  lam_min -1.5082  LOO [0.5524, 12.37]  i_hi  61 i_lo  28  Jii gap 0.004  sens hi/lo 0.824
+  did=547    seed 42      74.9s  lam_min -1.5338  LOO [0.06173, 0.5745]  i_hi  56 i_lo   5  Jii gap 0.001  sens hi/lo 1.214
+  did=547    seed 100     81.2s  lam_min +0.6445  LOO [0.0982, 1.236]  i_hi  67 i_lo  41  Jii gap 0.023  sens hi/lo 0.989
+  did=547    seed 200     82.9s  lam_min +0.4131  LOO [0.1149, 1.091]  i_hi  21 i_lo  82  Jii gap 0.013  sens hi/lo 1.393
+  did=547    seed 300     85.0s  lam_min +0.4472  LOO [0.1721, 0.862]  i_hi  11 i_lo  47  Jii gap 0.101  sens hi/lo 0.937
+  did=547    seed 400     84.4s  lam_min -0.1820  LOO [0.0648, 0.7171]  i_hi  49 i_lo  92  Jii gap 0.002  sens hi/lo 1.071
+  did=549    seed 42      84.3s  lam_min -0.2818  LOO [45.05, 1080]  i_hi  45 i_lo  95  Jii gap 0.193  sens hi/lo 0.652
+  did=549    seed 100     91.8s  lam_min -0.2590  LOO [34.15, 535.5]  i_hi  57 i_lo  49  Jii gap 0.023  sens hi/lo 1.257
+  did=549    seed 200     86.1s  lam_min -0.7808  LOO [27.95, 1542]  i_hi  66 i_lo  56  Jii gap 0.276  sens hi/lo 3.139
+  did=549    seed 300     80.5s  lam_min -1.0638  LOO [25.59, 737.5]  i_hi   5 i_lo   4  Jii gap 0.066  sens hi/lo 1.640
+  did=549    seed 400     87.4s  lam_min -2.1906  LOO [34.22, 857.7]  i_hi  53 i_lo  28  Jii gap 0.121  sens hi/lo 1.114
+  did=560    seed 42      85.3s  lam_min -0.3216  LOO [0.03408, 0.8322]  i_hi  79 i_lo  44  Jii gap 5.749  sens hi/lo 2.039
+  did=560    seed 100     82.7s  lam_min -0.1024  LOO [0.03535, 2.347]  i_hi  44 i_lo  98  Jii gap 3.021  sens hi/lo 1.064
+  did=560    seed 200     85.4s  lam_min -0.2744  LOO [0.03716, 0.7161]  i_hi  59 i_lo  72  Jii gap 13.466  sens hi/lo 1.183
+  did=560    seed 300     89.7s  lam_min -0.2599  LOO [0.04028, 1.678]  i_hi  58 i_lo  84  Jii gap 7.546  sens hi/lo 0.804
+  did=560    seed 400     82.4s  lam_min -0.1613  LOO [0.02903, 1.653]  i_hi   8 i_lo  64  Jii gap 7.642  sens hi/lo 0.523
+  did=579    seed 42      83.7s  lam_min -1.3013  LOO [0.07595, 0.4856]  i_hi  28 i_lo  36  Jii gap 0.430  sens hi/lo 0.719
+  did=579    seed 100     95.6s  lam_min +0.2564  LOO [0.09577, 0.6673]  i_hi  13 i_lo  58  Jii gap 0.004  sens hi/lo 1.328
+  did=579    seed 200     83.6s  lam_min +0.7814  LOO [0.1214, 0.9494]  i_hi  80 i_lo  43  Jii gap 0.004  sens hi/lo 1.073
+  did=579    seed 300     87.0s  lam_min -1.3552  LOO [0.1237, 0.971]  i_hi  70 i_lo  93  Jii gap 0.001  sens hi/lo 0.942
+  did=579    seed 400     84.4s  lam_min +0.0941  LOO [0.1211, 0.8943]  i_hi  25 i_lo  79  Jii gap 0.190  sens hi/lo 1.085
+  did=581    seed 42      82.3s  lam_min +0.9208  LOO [0.1005, 0.866]  i_hi  44 i_lo   4  Jii gap 0.002  sens hi/lo 0.832
+  did=581    seed 100     82.3s  lam_min +0.9215  LOO [0.1167, 0.6737]  i_hi  63 i_lo  48  Jii gap 0.051  sens hi/lo 0.374
+  did=581    seed 200     80.6s  lam_min +0.8667  LOO [0.1342, 0.945]  i_hi  92 i_lo  23  Jii gap 0.019  sens hi/lo 0.734
+  did=581    seed 300     85.6s  lam_min +0.7525  LOO [0.1023, 1.082]  i_hi  62 i_lo  50  Jii gap 0.017  sens hi/lo 1.070
+  did=581    seed 400     81.4s  lam_min +0.7354  LOO [0.1192, 1.495]  i_hi  93 i_lo  78  Jii gap 0.004  sens hi/lo 0.902
+  did=582    seed 42      81.3s  lam_min +0.9200  LOO [0.1117, 0.9554]  i_hi  57 i_lo   7  Jii gap 0.001  sens hi/lo 0.580
+  did=582    seed 100     81.4s  lam_min +0.7707  LOO [0.0802, 0.5348]  i_hi  29 i_lo  27  Jii gap 0.033  sens hi/lo 1.692
+  did=582    seed 200     83.9s  lam_min +0.8631  LOO [0.1154, 0.8597]  i_hi   4 i_lo  11  Jii gap 0.000  sens hi/lo 2.219
+  did=582    seed 300     90.5s  lam_min +0.9000  LOO [0.1162, 0.7529]  i_hi  37 i_lo  78  Jii gap 0.024  sens hi/lo 0.726
+  did=582    seed 400     81.7s  lam_min +0.8766  LOO [0.1548, 1.013]  i_hi  52 i_lo  13  Jii gap 0.064  sens hi/lo 0.842
+  did=583    seed 42      95.3s  lam_min +0.9114  LOO [0.1957, 1.103]  i_hi  28 i_lo  48  Jii gap 0.032  sens hi/lo 0.819
+  did=583    seed 100     68.8s  lam_min +0.9338  LOO [0.233, 1.114]  i_hi  86 i_lo  23  Jii gap 0.022  sens hi/lo 1.010
+  did=583    seed 200     39.4s  lam_min +0.8626  LOO [0.1889, 0.7241]  i_hi  86 i_lo  94  Jii gap 0.000  sens hi/lo 1.139
+  did=583    seed 300     39.2s  lam_min +0.8782  LOO [0.1353, 1.348]  i_hi  53 i_lo  54  Jii gap 0.002  sens hi/lo 0.574
+  did=583    seed 400     37.5s  lam_min +0.9249  LOO [0.188, 1.009]  i_hi  20 i_lo  75  Jii gap 0.019  sens hi/lo 1.132
+
+Done.

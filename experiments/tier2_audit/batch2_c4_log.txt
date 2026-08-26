@@ -1,0 +1,5 @@
+--- C.4 Quantized ExactGP Check ---
+t = 0.01, N=10, Dither=True
+Quantized ExactGP Curvature: 4.3859e+00
+Quantized ExactGP ||J||_F:   6.5749
+Analytic ExactGP ||J||_F:    6.5518

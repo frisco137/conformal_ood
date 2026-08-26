@@ -1,0 +1,4 @@
+--- tabswift ---
+  Latency (E2.7): 2410.5 ms/query
+  Cross-channel var (E2.5): 4.8252e-04
+  Top-2 eig ratio (E2.6): 2.2352

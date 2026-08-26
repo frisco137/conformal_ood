@@ -1,0 +1,5 @@
+--- tabpfn_v2 ---
+  Latency (E2.7): 1573.8 ms/query
+  Cross-channel var (E2.5): 4.7089e-03
+  Top-2 eig ratio (E2.6): 1.3497
+[W812 09:20:06.200048926 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())

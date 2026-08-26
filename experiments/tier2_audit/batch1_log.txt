@@ -1,0 +1,14 @@
+
+--- Running 5 seeds for exactgp ---
+
+--- Running 5 seeds for hierarchicalgp ---
+
+--- Running 5 seeds for tabicl_v2 ---
+
+--- TabICL Curvature vs Drift Sweep ---
+t=0.001 | Curv: 3.0926e+00 | s_y: 1.3731e-04
+t=0.01 | Curv: 4.4858e-02 | s_y: 1.3782e-03
+t=0.1 | Curv: 3.5564e-02 | s_y: 1.3665e-02
+
+--- Running 5 seeds for imitator ---
+Batch 1 Complete!

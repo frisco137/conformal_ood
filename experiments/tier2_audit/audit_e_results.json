@@ -1,0 +1,26 @@
+{
+  "E1_TabPFN_v2": {
+    "asym_mean": 0.6554,
+    "asym_std": 0.027,
+    "negeig_mean": 0.3163,
+    "negeig_std": 0.037,
+    "norm_mean": 8.0,
+    "norm_std": 0.0
+  },
+  "E1_TabSwift": {
+    "asym_mean": 0.5691011721888766,
+    "asym_std": 0.06394794211517554,
+    "negeig_mean": 0.21428571428571427,
+    "negeig_std": 0.0795656681208895,
+    "norm_mean": 4.811260021822308,
+    "norm_std": 1.717833282539759
+  },
+  "E1_TabICL_v2": {
+    "asym_mean": 0.29086146959823705,
+    "asym_std": 0.03939594065781411,
+    "negeig_mean": 0.09183673469387756,
+    "negeig_std": 0.0,
+    "norm_mean": 6.988837839682719,
+    "norm_std": 1.1457805071639968
+  }
+}

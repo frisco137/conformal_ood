@@ -1,0 +1,34 @@
+
+========================================
+E1: Auditing tabswift (t=0.1, dither=False)
+========================================
+  Seed 42...
+    Asym: 0.6248, NegEig: 0.2653, err: 1.1058e+00
+  Seed 100...
+    Asym: 0.6656, NegEig: 0.3469, err: 3.5806e+00
+  Seed 200...
+    Asym: 0.5329, NegEig: 0.1531, err: 1.2781e+00
+  Seed 300...
+    Asym: 0.5115, NegEig: 0.1429, err: 2.1094e+00
+  Seed 400...
+    Asym: 0.5108, NegEig: 0.1633, err: 2.9035e+00
+  --> Final Asym: 0.569 +/- 0.064
+  --> Final NegEig: 0.214 +/- 0.080
+
+========================================
+E1: Auditing tabicl_v2 (t=0.001, dither=False)
+========================================
+  Seed 42...
+    Asym: 0.3035, NegEig: 0.0918, err: 1.9144e-01
+  Seed 100...
+    Asym: 0.2664, NegEig: 0.0918, err: 2.0107e-01
+  Seed 200...
+    Asym: 0.3536, NegEig: 0.0918, err: 1.9603e-01
+  Seed 300...
+    Asym: 0.2356, NegEig: 0.0918, err: 1.5675e-01
+  Seed 400...
+    Asym: 0.2953, NegEig: 0.0918, err: 1.9433e-01
+  --> Final Asym: 0.291 +/- 0.039
+  --> Final NegEig: 0.092 +/- 0.000
+
+Done. Results saved to experiments/tier2_audit/audit_e_results.json

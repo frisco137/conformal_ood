@@ -1,0 +1,160 @@
+==============================================================================
+1.0  train/test surrogates vs core/surrogates.py, evaluated in-sample
+==============================================================================
+    worst |deviation|  exactgp_mean     0.000000e+00
+    worst |deviation|  exactgp_var      9.658940e-15
+    worst |deviation|  hiergp_mean      0.000000e+00
+    worst |deviation|  hiergp_var       8.770762e-15
+
+==============================================================================
+1.1/1.2 [exactgp]  s2_jac vs closed form; sigma2_hat vs true sigma^2
+==============================================================================
+  seed 42    trJ  59.9054  n-trJ  40.0946  sigma2_hat 0.277749  ratio 1.1110  J_** in [+0.3077, +0.7931]
+          specified  rel err (true sigma^2)  median 4.170e-01  p90 6.107e-01  max 6.290e-01
+          inverted   rel err (true sigma^2)  median 2.664e-13  p90 7.050e-13  max 1.305e-12
+          specified  rel err (sigma2_hat)    median 3.523e-01  p90 5.675e-01  max 5.878e-01
+          inverted   rel err (sigma2_hat)    median 1.110e-01  p90 1.110e-01  max 1.110e-01
+  seed 100   trJ  62.0006  n-trJ  37.9994  sigma2_hat 0.320945  ratio 1.2838  J_** in [+0.4009, +0.7909]
+          specified  rel err (true sigma^2)  median 4.854e-01  p90 5.963e-01  max 6.255e-01
+          inverted   rel err (true sigma^2)  median 2.655e-13  p90 4.951e-13  max 8.924e-13
+          specified  rel err (sigma2_hat)    median 3.394e-01  p90 4.818e-01  max 5.192e-01
+          inverted   rel err (sigma2_hat)    median 2.838e-01  p90 2.838e-01  max 2.838e-01
+  seed 200   trJ  60.0735  n-trJ  39.9265  sigma2_hat 0.240520  ratio 0.9621  J_** in [+0.4346, +0.7998]
+          specified  rel err (true sigma^2)  median 4.822e-01  p90 6.224e-01  max 6.397e-01
+          inverted   rel err (true sigma^2)  median 9.789e-14  p90 2.795e-13  max 8.933e-13
+          specified  rel err (sigma2_hat)    median 5.018e-01  p90 6.367e-01  max 6.534e-01
+          inverted   rel err (sigma2_hat)    median 3.792e-02  p90 3.792e-02  max 3.792e-02
+  seed 300   trJ  59.4606  n-trJ  40.5394  sigma2_hat 0.218714  ratio 0.8749  J_** in [+0.4551, +0.7992]
+          specified  rel err (true sigma^2)  median 4.909e-01  p90 6.283e-01  max 6.388e-01
+          inverted   rel err (true sigma^2)  median 4.733e-14  p90 1.335e-13  max 4.275e-13
+          specified  rel err (sigma2_hat)    median 5.546e-01  p90 6.748e-01  max 6.840e-01
+          inverted   rel err (sigma2_hat)    median 1.251e-01  p90 1.251e-01  max 1.251e-01
+  seed 400   trJ  62.4741  n-trJ  37.5259  sigma2_hat 0.309532  ratio 1.2381  J_** in [+0.3155, +0.7987]
+          specified  rel err (true sigma^2)  median 5.196e-01  p90 5.991e-01  max 6.379e-01
+          inverted   rel err (true sigma^2)  median 3.292e-13  p90 8.340e-13  max 1.376e-12
+          specified  rel err (sigma2_hat)    median 4.052e-01  p90 5.036e-01  max 5.517e-01
+          inverted   rel err (sigma2_hat)    median 2.381e-01  p90 2.381e-01  max 2.381e-01
+
+==============================================================================
+1.3 [hiergp]  same comparison
+==============================================================================
+  seed 42    trJ  66.4607  n-trJ  33.5393  sigma2_hat 0.231671  ratio 0.9267  J_** in [+0.3921, +0.8004]
+          specified  rel err (true sigma^2)  median 5.201e-01  p90 6.324e-01  max 6.400e-01
+          inverted   rel err (true sigma^2)  median 9.075e-03  p90 2.561e-02  max 4.323e-01
+          specified  rel err (sigma2_hat)    median 5.553e-01  p90 6.593e-01  max 6.663e-01
+          inverted   rel err (sigma2_hat)    median 7.396e-02  p90 9.285e-02  max 3.273e-01
+  seed 100   trJ  70.0639  n-trJ  29.9361  sigma2_hat 0.233312  ratio 0.9332  J_** in [+0.6014, +0.8209]
+          specified  rel err (true sigma^2)  median 6.056e-01  p90 6.336e-01  max 6.396e-01
+          inverted   rel err (true sigma^2)  median 9.139e-03  p90 7.303e-02  max 2.290e-01
+          specified  rel err (sigma2_hat)    median 6.319e-01  p90 6.581e-01  max 6.637e-01
+          inverted   rel err (sigma2_hat)    median 7.068e-02  p90 1.055e-01  max 1.820e-01
+  seed 200   trJ  55.3528  n-trJ  44.6472  sigma2_hat 0.282970  ratio 1.1319  J_** in [+0.3784, +0.8088]
+          specified  rel err (true sigma^2)  median 4.069e-01  p90 6.010e-01  max 6.363e-01
+          inverted   rel err (true sigma^2)  median 4.628e-02  p90 1.654e-01  max 1.135e+00
+          specified  rel err (sigma2_hat)    median 3.286e-01  p90 5.484e-01  max 5.884e-01
+          inverted   rel err (sigma2_hat)    median 1.214e-01  p90 3.191e-01  max 1.417e+00
+  seed 300   trJ  65.8430  n-trJ  34.1570  sigma2_hat 0.183911  ratio 0.7356  J_** in [+0.5539, +0.8055]
+          specified  rel err (true sigma^2)  median 5.751e-01  p90 6.379e-01  max 6.406e-01
+          inverted   rel err (true sigma^2)  median 2.375e-02  p90 4.048e-02  max 1.087e-01
+          specified  rel err (sigma2_hat)    median 6.875e-01  p90 7.336e-01  max 7.356e-01
+          inverted   rel err (sigma2_hat)    median 2.661e-01  p90 2.909e-01  max 3.086e-01
+  seed 400   trJ  68.3287  n-trJ  31.6713  sigma2_hat 0.272895  ratio 1.0916  J_** in [+0.4535, +0.8005]
+          specified  rel err (true sigma^2)  median 5.944e-01  p90 6.305e-01  max 6.407e-01
+          inverted   rel err (true sigma^2)  median 3.742e-03  p90 1.367e-02  max 2.143e-02
+          specified  rel err (sigma2_hat)    median 5.573e-01  p90 5.967e-01  max 6.078e-01
+          inverted   rel err (sigma2_hat)    median 9.158e-02  p90 1.058e-01  max 1.150e-01
+
+==============================================================================
+1.4  append perturbation  ||m_appended[:n] - m_original|| / ||m_original||
+==============================================================================
+  exactgp  seed 42    median 7.548006e-03  p90 3.413442e-02  max 7.593760e-02
+  exactgp  seed 100   median 4.817685e-03  p90 2.023508e-02  max 3.475693e-02
+  exactgp  seed 200   median 5.463260e-03  p90 2.558148e-02  max 4.294755e-02
+  exactgp  seed 300   median 5.357255e-03  p90 1.656361e-02  max 4.296358e-02
+  exactgp  seed 400   median 5.247749e-03  p90 2.860483e-02  max 4.418870e-02
+  hiergp   seed 42    median 5.112964e-03  p90 2.600353e-02  max 5.680782e-02
+  hiergp   seed 100   median 2.546434e-03  p90 8.345314e-03  max 1.592371e-02
+  hiergp   seed 200   median 1.034877e-02  p90 2.916783e-02  max 6.955921e-02
+  hiergp   seed 300   median 4.857172e-03  p90 9.686736e-03  max 3.735893e-02
+  hiergp   seed 400   median 2.351580e-03  p90 1.870221e-02  max 4.122716e-02
+
+==============================================================================
+1.5  J_** sensitivity to the hypothetical label y_*  (mean, mean +/- 1 SD)
+==============================================================================
+  exactgp  seed 42    abs spread median 2.775558e-13  max 1.110223e-12   rel spread max 2.326812e-12
+  exactgp  seed 100   abs spread median 2.775558e-13  max 8.413270e-13   rel spread max 1.661976e-12
+  exactgp  seed 200   abs spread median 1.907918e-13  max 8.326673e-13   rel spread max 1.134719e-12
+  exactgp  seed 300   abs spread median 2.775558e-13  max 8.326673e-13   rel spread max 1.398469e-12
+  exactgp  seed 400   abs spread median 5.551115e-13  max 1.110223e-12   rel spread max 3.518957e-12
+  hiergp   seed 42    abs spread median 1.244243e-02  max 9.143350e-01   rel spread max 9.685836e-01
+  hiergp   seed 100   abs spread median 1.123322e-02  max 2.378864e-01   rel spread max 3.347773e-01
+  hiergp   seed 200   abs spread median 1.310650e-01  max 5.537857e-01   rel spread max 8.678725e-01
+  hiergp   seed 300   abs spread median 2.159430e-02  max 1.409864e-01   rel spread max 2.401685e-01
+  hiergp   seed 400   abs spread median 4.483756e-03  max 1.316688e-02   rel spread max 2.131747e-02
+
+==============================================================================
+1.6  step-size plateau for J_**
+==============================================================================
+  exactgp                            mean J_** by h   1e-05:+0.66755  1e-04:+0.66755  1e-03:+0.66755  1e-02:+0.66755  3e-02:+0.66755  1e-01:+0.66755  3e-01:+0.66755  1e+00:+0.66755
+  hiergp                             mean J_** by h   1e-05:+0.71380  1e-04:+0.71380  1e-03:+0.71380  1e-02:+0.71380  3e-02:+0.71381  1e-01:+0.71386  3e-01:+0.71436  1e+00:+0.72000
+  exactgp_wrapped                    mean J_** by h   1e-05:+0.66823  1e-04:+0.66823  1e-03:+0.66823  1e-02:+0.66823  3e-02:+0.66823  1e-01:+0.66823  3e-01:+0.66823  1e+00:+0.66823
+  quantised_tabicl_v2_q9.835e-07     mean J_** by h   1e-05:+0.67073  1e-04:+0.66818  1e-03:+0.66823  1e-02:+0.66823  3e-02:+0.66823  1e-01:+0.66823  3e-01:+0.66823  1e+00:+0.66823
+  quantised_tabswift_q4.273e-04      mean J_** by h   1e-05:+0.42725  1e-04:+0.57679  1e-03:+0.66651  1e-02:+0.66886  3e-02:+0.66729  1e-01:+0.66760  3e-01:+0.66753  1e+00:+0.66755
+  quantised_tabpfn_v2_q6.870e-04     mean J_** by h   1e-05:+1.03050  1e-04:+0.79005  1e-03:+0.66639  1e-02:+0.66776  3e-02:+0.66811  1e-01:+0.66831  3e-01:+0.66824  1e+00:+0.66822
+
+==============================================================================
+1.2s  closed-form sampling spread of sigma2_hat on the exact GP
+==============================================================================
+  seed 42    n-trJ  40.0946   predicted SD(sigma2_hat)/sigma^2 0.1750
+  seed 100   n-trJ  37.9994   predicted SD(sigma2_hat)/sigma^2 0.1760
+  seed 200   n-trJ  39.9265   predicted SD(sigma2_hat)/sigma^2 0.1758
+  seed 300   n-trJ  40.5394   predicted SD(sigma2_hat)/sigma^2 0.1746
+  seed 400   n-trJ  37.5259   predicted SD(sigma2_hat)/sigma^2 0.1760
+  mean predicted relative SD of a SINGLE-seed sigma2_hat: 0.1755
+  mean predicted relative SD of the 5-seed average:       0.0785
+
+==============================================================================
+1.5b  y_* choice scored against the closed form (inverted form, true sigma^2)
+==============================================================================
+  exactgp  seed 42    p90 rel err by y_*   context_mean:7.050e-13  self_consistent_m_star:7.542e-13  mean_plus_sd:1.239e-12  mean_minus_sd:1.502e-12
+  exactgp  seed 100   p90 rel err by y_*   context_mean:4.951e-13  self_consistent_m_star:8.998e-13  mean_plus_sd:1.560e-12  mean_minus_sd:1.596e-12
+  exactgp  seed 200   p90 rel err by y_*   context_mean:2.795e-13  self_consistent_m_star:6.262e-13  mean_plus_sd:1.270e-12  mean_minus_sd:1.343e-12
+  exactgp  seed 300   p90 rel err by y_*   context_mean:1.335e-13  self_consistent_m_star:8.625e-13  mean_plus_sd:1.108e-12  mean_minus_sd:1.634e-12
+  exactgp  seed 400   p90 rel err by y_*   context_mean:8.340e-13  self_consistent_m_star:1.211e-12  mean_plus_sd:1.642e-12  mean_minus_sd:3.708e-12
+    exactgp  context_mean             mean p90 over seeds 4.8941e-13
+    exactgp  self_consistent_m_star   mean p90 over seeds 8.7066e-13
+    exactgp  mean_plus_sd             mean p90 over seeds 1.3638e-12
+    exactgp  mean_minus_sd            mean p90 over seeds 1.9566e-12
+  hiergp   seed 42    p90 rel err by y_*   context_mean:2.561e-02  self_consistent_m_star:2.273e-02  mean_plus_sd:3.913e-02  mean_minus_sd:4.393e-02
+  hiergp   seed 100   p90 rel err by y_*   context_mean:7.303e-02  self_consistent_m_star:1.037e-01  mean_plus_sd:1.647e-01  mean_minus_sd:1.211e-01
+  hiergp   seed 200   p90 rel err by y_*   context_mean:1.654e-01  self_consistent_m_star:8.997e-02  mean_plus_sd:1.832e+00  mean_minus_sd:1.599e+00
+  hiergp   seed 300   p90 rel err by y_*   context_mean:4.048e-02  self_consistent_m_star:4.664e-02  mean_plus_sd:8.923e-02  mean_minus_sd:8.903e-02
+  hiergp   seed 400   p90 rel err by y_*   context_mean:1.367e-02  self_consistent_m_star:1.030e-02  mean_plus_sd:1.567e-02  mean_minus_sd:1.733e-02
+    hiergp   context_mean             mean p90 over seeds 6.3633e-02
+    hiergp   self_consistent_m_star   mean p90 over seeds 5.4676e-02
+    hiergp   mean_plus_sd             mean p90 over seeds 4.2825e-01
+    hiergp   mean_minus_sd            mean p90 over seeds 3.7403e-01
+
+==============================================================================
+1.4b  per-query rank correlation: append perturbation vs estimator error
+==============================================================================
+  exactgp  seed 42    spearman(perturbation, rel err) -0.1461   pert median 7.548e-03   err median 2.664e-13
+  exactgp  seed 100   spearman(perturbation, rel err) -0.0820   pert median 4.818e-03   err median 2.655e-13
+  exactgp  seed 200   spearman(perturbation, rel err) +0.2338   pert median 5.463e-03   err median 9.789e-14
+  exactgp  seed 300   spearman(perturbation, rel err) +0.2843   pert median 5.357e-03   err median 4.733e-14
+  exactgp  seed 400   spearman(perturbation, rel err) -0.0550   pert median 5.248e-03   err median 3.292e-13
+  hiergp   seed 42    spearman(perturbation, rel err) +0.4005   pert median 5.113e-03   err median 9.075e-03
+  hiergp   seed 100   spearman(perturbation, rel err) +0.9000   pert median 2.546e-03   err median 9.139e-03
+  hiergp   seed 200   spearman(perturbation, rel err) +0.4681   pert median 1.035e-02   err median 4.628e-02
+  hiergp   seed 300   spearman(perturbation, rel err) +0.7600   pert median 4.857e-03   err median 2.375e-02
+  hiergp   seed 400   spearman(perturbation, rel err) +0.5461   pert median 2.352e-03   err median 3.742e-03
+
+==============================================================================
+GATE 1
+==============================================================================
+  gp_relerr_p90__specified           worst 6.283266e-01  required < 0.05  met=0
+  gp_relerr_p90__inverted            worst 8.340409e-13  required < 0.05  met=1
+  sigma2hat_ratio                    worst 2.837805e-01  required < 0.1  met=0
+  append_perturbation                worst 7.593760e-02  required < 0.01  met=0
+
+Saved: /home/psquare_a6000/Desktop/conformal_ood/experiments/phase_2/results/chunk1_results.json

@@ -1,0 +1,8 @@
+seed 42: raw 0.606412  zeroed 0.622545  paired diff +0.016132  rmse 0.46541 -> 0.50566
+seed 100: raw 0.532348  zeroed 0.524374  paired diff -0.007974  rmse 0.45649 -> 0.42244
+seed 200: raw 0.705529  zeroed 0.707124  paired diff +0.001595  rmse 0.81533 -> 0.78565
+seed 300: raw 0.470630  zeroed 0.435577  paired diff -0.035052  rmse 0.31354 -> 0.29323
+seed 400: raw 0.587082  zeroed 0.601217  paired diff +0.014135  rmse 0.70064 -> 0.71872
+
+PAIRED difference (zeroed - raw): mean -0.002233  sd 0.020796  se 0.009300  95% CI [-0.028050, +0.023585]  (t_4,0.975=2.776)
+PAIRED RMSE difference:          mean -0.005144  sd 0.032665

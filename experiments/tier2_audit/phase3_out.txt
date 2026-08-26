@@ -1,0 +1,24 @@
+--- tabicl_v2 ---
+--- tabpfn_v2 ---
+--- tabswift ---
+  Latency (E2.7): 953.6 ms/query
+  Latency (E2.7): 1534.2 ms/query
+  Latency (E2.7): 2421.4 ms/query
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full
+analytics-python queue is full

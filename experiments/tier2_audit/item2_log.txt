@@ -1,0 +1,33 @@
+
+--- exact_gp_wrapped ---
+Curvature: 4.309e-14
+Drift ratio (s_y): 5.097e-03
+
+--- hierarchical_gp_wrapped ---
+Curvature: 1.720e-03
+Drift ratio (s_y): 5.097e-03
+
+--- tabicl_v2 ---
+Dir 0 raw diff[:5]: [1.0676682e-03 4.9078465e-04 2.9027462e-04 2.8502941e-04 2.6017427e-05]
+Dir 1 raw diff[:5]: [ 7.4058771e-05 -4.1019917e-04  6.8545341e-06  5.7756901e-05
+ -1.7189980e-04]
+Dir 2 raw diff[:5]: [ 0.0001491  -0.00059879  0.0002352   0.000247    0.0001668 ]
+Curvature: 3.639e-02
+Drift ratio (s_y): 5.097e-03
+
+--- tabpfn_v2 ---
+Dir 0 raw diff[:5]: [ 4.21536714e-04 -5.76615334e-05 -6.24251366e-04  7.01558590e-04
+  1.01162493e-04]
+Dir 1 raw diff[:5]: [ 0.0002183  -0.00067345 -0.00116841 -0.00016035 -0.00053538]
+Dir 2 raw diff[:5]: [ 4.55376506e-04 -7.70673156e-05 -1.43303573e-03 -8.27044249e-05
+  4.72132862e-04]
+Curvature: 3.552e+01
+Drift ratio (s_y): 5.097e-03
+
+--- tabswift ---
+Dir 0 raw diff[:5]: [ 6.104e-05  5.859e-03  4.883e-04  8.545e-04 -7.324e-04]
+Dir 1 raw diff[:5]: [ 0.0003662  0.003052   0.0006104 -0.0006104 -0.001099 ]
+Dir 2 raw diff[:5]: [-0.0002441  0.003906  -0.0001221  0.0008545 -0.0007935]
+Curvature: 1.314e+00
+Drift ratio (s_y): 5.097e-03
+[W812 10:30:06.950698585 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())

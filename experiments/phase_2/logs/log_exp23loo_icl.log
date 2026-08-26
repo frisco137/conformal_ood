@@ -1,0 +1,66 @@
+
+==============================================================================
+MODEL tabicl_v2   2.3.7 actual LOO, rate 0.10 only
+==============================================================================
+  did=229   s42    flip       50.5s
+  did=229   s42    shuffle    49.2s
+  did=229   s42    noise      49.6s
+  did=229   s100   flip       49.6s
+  did=229   s100   shuffle    50.3s
+  did=229   s100   noise      49.1s
+  did=229   s200   flip       57.4s
+  did=229   s200   shuffle    51.9s
+  did=229   s200   noise      49.4s
+  did=229   s300   flip       49.2s
+  did=229   s300   shuffle    49.0s
+  did=229   s300   noise      49.3s
+  did=229   s400   flip       49.2s
+  did=229   s400   shuffle    49.3s
+  did=229   s400   noise      49.6s
+  did=509   s42    flip       48.9s
+  did=509   s42    shuffle    48.4s
+  did=509   s42    noise      49.5s
+  did=509   s100   flip       49.4s
+  did=509   s100   shuffle    49.0s
+  did=509   s100   noise      48.9s
+  did=509   s200   flip       49.0s
+  did=509   s200   shuffle    49.0s
+  did=509   s200   noise      49.6s
+  did=509   s300   flip       49.0s
+  did=509   s300   shuffle    49.6s
+  did=509   s300   noise      49.6s
+  did=509   s400   flip       49.1s
+  did=509   s400   shuffle    49.3s
+  did=509   s400   noise      49.4s
+  did=522   s42    flip       49.1s
+  did=522   s42    shuffle    49.6s
+  did=522   s42    noise      49.5s
+  did=522   s100   flip       49.7s
+  did=522   s100   shuffle    49.2s
+  did=522   s100   noise      48.5s
+  did=522   s200   flip       49.0s
+  did=522   s200   shuffle    49.1s
+  did=522   s200   noise      48.4s
+  did=522   s300   flip       48.2s
+  did=522   s300   shuffle    48.5s
+  did=522   s300   noise      47.7s
+  did=522   s400   flip       47.7s
+  did=522   s400   shuffle    47.8s
+  did=522   s400   noise      48.1s
+  did=581   s42    flip       48.1s
+  did=581   s42    shuffle    48.5s
+  did=581   s42    noise      48.5s
+  did=581   s100   flip       48.2s
+  did=581   s100   shuffle    48.1s
+  did=581   s100   noise      48.2s
+  did=581   s200   flip       47.7s
+  did=581   s200   shuffle    48.2s
+  did=581   s200   noise      48.2s
+  did=581   s300   flip       48.3s
+  did=581   s300   shuffle    48.1s
+  did=581   s300   noise      47.7s
+  did=581   s400   flip       47.9s
+  did=581   s400   shuffle    48.5s
+  did=581   s400   noise      48.0s
+
+Done.

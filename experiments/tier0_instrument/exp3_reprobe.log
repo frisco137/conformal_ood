@@ -1,0 +1,72 @@
+==============================================================================
+3.4  Quantised-ExactGP artifact floor (true values all exactly 0)
+==============================================================================
+  quantised wrapped ExactGP, t=1e-02, dither halfwidth=delta N=10
+    asym     [0.096908  0.094704  0.097001  0.099149  0.096611]  mean 0.096875  std 0.001412
+    negeig   [0.001914  0.001664  0.001562  0.002820  0.001503]  mean 0.001893  std 0.000484
+    norm_F   [6.570706  6.711870  6.592526  6.536959  6.736515]  mean 6.629715  std 0.079529
+  quantised wrapped ExactGP, t=1e-01, dither halfwidth=delta N=10
+    asym     [0.009832  0.009680  0.009678  0.009736  0.009796]  mean 0.009744  std 0.000062
+    negeig   [0.000018  0.000019  0.000015  0.000021  0.000016]  mean 0.000018  std 0.000002
+    norm_F   [6.551908  6.700879  6.575744  6.516321  6.721050]  mean 6.613181  std 0.082297
+
+==============================================================================
+3.3  TabPFN v2 amplitude sweep, no dither (plateau shape, 5 seeds each)
+==============================================================================
+  t = 1e-02
+    seed 42      38.0s  asym 1.398890  negeig 0.506262  negfrac 0.4388  ||J||_F 7.3946
+    seed 100     36.5s  asym 1.363311  negeig 0.440975  negfrac 0.4388  ||J||_F 2.7390
+    seed 200     37.2s  asym 1.360447  negeig 0.396015  negfrac 0.4184  ||J||_F 18.0330
+    seed 300     36.2s  asym 1.403146  negeig 0.499805  negfrac 0.4490  ||J||_F 41.7217
+    seed 400     36.0s  asym 1.340955  negeig 0.351658  negfrac 0.4286  ||J||_F 10.8013
+  t = 3e-02
+    seed 42      36.4s  asym 1.358109  negeig 0.475318  negfrac 0.3673  ||J||_F 6.5265
+    seed 100     28.8s  asym 1.371854  negeig 0.443017  negfrac 0.3776  ||J||_F 2.1237
+    seed 200     12.4s  asym 1.327717  negeig 0.421781  negfrac 0.3163  ||J||_F 12.4000
+    seed 300     13.2s  asym 1.403925  negeig 0.511017  negfrac 0.3878  ||J||_F 31.6959
+    seed 400     12.9s  asym 1.203351  negeig 0.234263  negfrac 0.3265  ||J||_F 6.4470
+  t = 1e-01
+    seed 42      12.4s  asym 1.379816  negeig 0.463236  negfrac 0.3163  ||J||_F 8.2535
+    seed 100     13.7s  asym 1.345677  negeig 0.406396  negfrac 0.2959  ||J||_F 2.0021
+    seed 200     13.1s  asym 1.279898  negeig 0.387594  negfrac 0.2347  ||J||_F 10.7084
+    seed 300     12.3s  asym 1.401925  negeig 0.516757  negfrac 0.3469  ||J||_F 20.0070
+    seed 400     12.8s  asym 1.150609  negeig 0.238206  negfrac 0.2449  ||J||_F 5.4815
+  t = 3e-01
+    seed 42      12.4s  asym 1.388575  negeig 0.457844  negfrac 0.2959  ||J||_F 7.8182
+    seed 100     12.2s  asym 1.320967  negeig 0.351674  negfrac 0.2653  ||J||_F 2.3598
+    seed 200     13.0s  asym 1.211535  negeig 0.340709  negfrac 0.2041  ||J||_F 8.4380
+    seed 300     12.3s  asym 1.386564  negeig 0.478975  negfrac 0.3265  ||J||_F 8.8850
+    seed 400     13.5s  asym 1.069846  negeig 0.177403  negfrac 0.1939  ||J||_F 4.8908
+
+==============================================================================
+3.1  TabPFN v2 at t=1e-1, dither halfwidth=delta, N=10  -- HEADLINE
+==============================================================================
+    seed 42     128.4s  asym 1.381972  negeig 0.462003  negfrac 0.2959  ||J||_F 8.3729
+    seed 100    131.3s  asym 1.348622  negeig 0.408385  negfrac 0.2755  ||J||_F 1.9997
+    seed 200    128.7s  asym 1.280438  negeig 0.396210  negfrac 0.2245  ||J||_F 10.6169
+    seed 300    129.7s  asym 1.402213  negeig 0.512729  negfrac 0.3469  ||J||_F 19.9325
+    seed 400    124.4s  asym 1.148824  negeig 0.241219  negfrac 0.2245  ||J||_F 5.4162
+
+==============================================================================
+3.5  TabSwift amplitude sweep, no dither
+==============================================================================
+  t = 1e-02
+    seed 42      19.8s  asym 1.331374  negeig 0.396948  negfrac 0.3673  ||J||_F 4.8916
+    seed 100     19.9s  asym 1.400300  negeig 0.497392  negfrac 0.4388  ||J||_F 16.1398
+    seed 200     20.3s  asym 1.317625  negeig 0.610437  negfrac 0.3367  ||J||_F 5.9260
+    seed 300     19.6s  asym 1.308068  negeig 0.368922  negfrac 0.2959  ||J||_F 9.4006
+    seed 400     19.4s  asym 1.340668  negeig 0.674167  negfrac 0.3265  ||J||_F 13.8204
+  t = 1e-01
+    seed 42      21.4s  asym 1.206691  negeig 0.271481  negfrac 0.2041  ||J||_F 2.3480
+    seed 100     19.2s  asym 1.270011  negeig 0.355512  negfrac 0.3061  ||J||_F 5.6800
+    seed 200     19.6s  asym 0.902896  negeig 0.169250  negfrac 0.1122  ||J||_F 2.6786
+    seed 300     19.8s  asym 0.905487  negeig 0.132425  negfrac 0.1122  ||J||_F 4.8382
+    seed 400     19.3s  asym 0.816161  negeig 0.393546  negfrac 0.1224  ||J||_F 4.7541
+  t = 1e+00
+    seed 42      19.2s  asym 1.145451  negeig 0.240706  negfrac 0.1735  ||J||_F 2.0086
+    seed 100     19.3s  asym 1.226056  negeig 0.342755  negfrac 0.2449  ||J||_F 4.6164
+    seed 200     19.2s  asym 0.835346  negeig 0.156130  negfrac 0.1122  ||J||_F 2.4838
+    seed 300     19.2s  asym 0.841677  negeig 0.124634  negfrac 0.1122  ||J||_F 4.3184
+    seed 400     19.7s  asym 0.705358  negeig 0.352759  negfrac 0.1122  ||J||_F 4.4611
+
+Saved: /home/psquare_a6000/Desktop/conformal_ood/experiments/tier0_instrument/exp3_reprobe.json  and  /home/psquare_a6000/Desktop/conformal_ood/experiments/tier0_instrument/exp3_reduced_jacobians.npz
