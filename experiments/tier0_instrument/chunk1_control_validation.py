@@ -25,89 +25,25 @@ from experiments.core.metrics import (
     asym, negeig, negfrac, get_Q, reduced_jacobian, profile_jacobian,
     second_difference_norm,
 )
+# The control maps used to be defined in this file. They now live in
+# experiments/core/controls.py as the single definition -- TargetedImitator's
+# closed-form Jacobian had been wrong here (-c v v^T for a map applying
+# -(c/2) v v^T) and was worked around inline in three other scripts. Re-exported
+# below so that `from chunk1_control_validation import wrap, TargetedImitator,
+# GP_SIGMA` keeps working for every existing caller.
+from experiments.core.controls import (           # noqa: F401  (re-export)
+    GP_SIGMA, DELTA, wrap, quantize, ImitatorWrapped, TargetedImitator,
+)
 
 SEEDS = [42, 100, 200, 300, 400]
-DELTA = 6.87e-4
 Q_SEED = 0
-GP_SIGMA = 0.5
 
 
 # ---------------------------------------------------------------- control maps
-
-def wrap(g):
-    """Affine context-statistic normaliser, N1: m(y) = ybar + s_y * g(u)."""
-    def predict(y_eval):
-        mu, sd = np.mean(y_eval), np.std(y_eval) + 1e-8
-        return mu + sd * np.asarray(g((y_eval - mu) / sd)).flatten()
-    return predict
-
-
-def quantize(f, delta):
-    return lambda y_eval: np.round(np.asarray(f(y_eval)).flatten() / delta) * delta
-
-
-class ImitatorWrapped:
-    """The saturating imitator: egp + eps*sin(<a,u>/eps - phase - pi)*a.
-
-    Phase-tuned so cos(.) = -1 exactly at u = y_std, giving inner Jacobian
-    G = W - a a^T. ||a||^2 ~ 100 dwarfs ||W||_2 <= 1, so negeig saturates at ~1.
-    """
-
-    def __init__(self, X, y, eps=0.01):
-        self.egp = ExactGP(X, sigma=GP_SIGMA)
-        n = len(y)
-        a = np.random.RandomState(42).randn(n)
-        self.a = a - np.mean(a)
-        self.eps = eps
-        u = (y - np.mean(y)) / (np.std(y) + 1e-8)
-        self.phase = np.dot(self.a, u) / eps
-
-    def inner(self, u):
-        s = np.sin(np.dot(self.a, u) / self.eps - self.phase - np.pi)
-        return self.egp.predict(u) + self.eps * s * self.a
-
-    def inner_jacobian(self, u):
-        c = np.cos(np.dot(self.a, u) / self.eps - self.phase - np.pi)
-        return self.egp.jacobian(u) + c * np.outer(self.a, self.a)
-
-    @property
-    def predict(self):
-        return wrap(self.inner)
-
-
-class TargetedImitator:
-    """Imitator tuned to a prescribed asym/negeig, with a closed-form Jacobian.
-
-    Same construction as tier2_audit/audit_phase2_imitator.py so the Chunk 1
-    numbers are comparable to results_phase2_imitator.json.
-    """
-
-    def __init__(self, X, y, seed=42):
-        self.egp = ExactGP(X, sigma=GP_SIGMA)
-        J_gp = self.egp.jacobian(y)
-        n = len(y)
-        rng = np.random.RandomState(seed)
-        M = rng.randn(n, n)
-        M_anti = (M - M.T) / 2
-        target = np.sqrt(0.09 / 0.91) * np.linalg.norm(J_gp, 'fro')
-        self.M_anti = M_anti * (target / np.linalg.norm(M_anti, 'fro'))
-        v = rng.randn(n)
-        self.v = v / np.linalg.norm(v)
-        lam_min = np.min(np.linalg.eigvalsh((J_gp + J_gp.T) / 2))
-        self.c = 0.8 * np.linalg.norm(J_gp, 2) + max(0.0, lam_min)
-
-    def inner(self, u):
-        return (self.egp.predict(u) + self.M_anti @ u
-                - (self.c / 2) * np.dot(self.v, u) * self.v)
-
-    def inner_jacobian(self, u):
-        return (self.egp.jacobian(u) + self.M_anti
-                - self.c * np.outer(self.v, self.v))
-
-    @property
-    def predict(self):
-        return wrap(self.inner)
-
+#
+# wrap / quantize / ImitatorWrapped / TargetedImitator moved to
+# experiments/core/controls.py and are re-exported at the top of this file.
+# Only the local quadratic calibration map remains here.
 
 def quadratic(y_eval):
     """m(y) = y + 0.1 y^2, elementwise. Known second derivative."""

@@ -37,7 +37,6 @@ from scipy import stats
 
 SRC = Path(__file__).resolve().parent
 sys.path.insert(0, str(SRC.parent.parent.parent))                  # repo root
-sys.path.insert(0, str(SRC.parent.parent / "tier0_instrument"))
 warnings.filterwarnings("ignore")
 
 from experiments.core.metrics import get_Q                         # noqa: E402
@@ -45,7 +44,7 @@ from experiments.core.context import generate_audit_context        # noqa: E402
 from experiments.core.surrogates import ExactGP                    # noqa: E402
 from experiments.phase_2.src.paths import RESULTS, ARRAYS, TIER0   # noqa: E402
 from experiments.phase_2.src.estimators import jsonable, spearman  # noqa: E402
-from chunk1_control_validation import TargetedImitator             # noqa: E402
+from experiments.core.controls import TargetedImitator             # noqa: E402
 
 SEEDS = [42, 100, 200, 300, 400]
 MODELS = ["tabicl_v2", "tabpfn_v2", "tabswift"]
@@ -182,16 +181,18 @@ def item_2_2_11_imitator():
     The analytic support in the reduced space is the projection of v onto
     span{1, y-ybar}^perp, so the recoverable target is P v with P = Q Q^T.
     Reported: |cos| between the measured u and P v, and Spearman(w, (Pv)^2).
-    Uses the CORRECTED inner Jacobian -- TargetedImitator.inner_jacobian ships
-    -c*vv^T where the map applies -(c/2)*vv^T (FINAL_NUMBERS.md 2.3).
+    Uses TargetedImitator.inner_jacobian, which is now correct at source in
+    experiments/core/controls.py. It previously shipped -c*vv^T for a map
+    applying -(c/2)*vv^T (FINAL_NUMBERS.md 2.3) and was re-derived inline here;
+    the fixed method is bit-identical to that inline form, so this script's
+    recorded output is unchanged.
     """
     rows = []
     for s in SEEDS:
         X, y, _ = generate_audit_context(n=100, d=5, sigma=1.0, seed=s)
         ti = TargetedImitator(X, y, seed=s)
         u_std = (y - np.mean(y)) / (np.std(y) + 1e-8)
-        G = (ti.egp.jacobian(u_std) + ti.M_anti
-             - (ti.c / 2.0) * np.outer(ti.v, ti.v))
+        G = ti.inner_jacobian(u_std)
         w, lam, u = loading(G, y)
         Q = get_Q(y, seed=Q_SEED)
         Pv = Q @ (Q.T @ ti.v)

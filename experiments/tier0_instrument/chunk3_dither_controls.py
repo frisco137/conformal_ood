@@ -62,7 +62,11 @@ def build(seed, kind, quantized):
         m = TargetedImitator(X, y, seed=seed)
         u = (y - np.mean(y)) / (np.std(y) + 1e-8)
         base = m.predict
-        G = m.egp.jacobian(u) + m.M_anti - (m.c / 2) * np.outer(m.v, m.v)
+        # Was re-derived inline here because TargetedImitator.inner_jacobian
+        # shipped -c*outer(v,v) for a map applying -(c/2)*(v.u)*v. Fixed at
+        # source in experiments/core/controls.py; the method is bit-identical
+        # to the inline form, so this script's recorded output is unchanged.
+        G = m.inner_jacobian(u)
     predict = quantize(base, DELTA) if quantized else base
     return y, Q, predict, Q.T @ G @ Q
 

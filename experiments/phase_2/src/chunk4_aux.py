@@ -65,13 +65,13 @@ warnings.filterwarnings("ignore")
 
 from experiments.phase_2.src.paths import RESULTS, ARRAYS, TIER0    # noqa: E402
 
-sys.path.insert(0, str(TIER0))     # wrap / TargetedImitator controls
-
 from experiments.core.metrics import get_Q, negeig, asym          # noqa: E402
 from experiments.core.context import generate_audit_context       # noqa: E402
 from experiments.core.surrogates import ExactGP                   # noqa: E402
 from experiments.phase_2.src.estimators import spearman, jsonable # noqa: E402
-from chunk1_control_validation import TargetedImitator, wrap, GP_SIGMA   # noqa: E402
+# Controls now come from experiments/core/controls.py, the single definition.
+# This used to reach into tier0_instrument via a sys.path insert.
+from experiments.core.controls import TargetedImitator, wrap, GP_SIGMA   # noqa: E402
 
 MODELS = ["tabicl_v2", "tabpfn_v2", "tabswift"]
 AUDIT_MEAN_SY = 1.457782
@@ -203,22 +203,21 @@ def item_4_2_controls():
                 ti = TargetedImitator(X, y, seed=s)
                 inner = ti.predict
                 u_std = (y - np.mean(y)) / (np.std(y) + 1e-8)
-                # CORRECTED analytic Jacobian. TargetedImitator.inner applies
-                #   -(c/2) * (v.u) * v          -> Jacobian -(c/2) v v^T
-                # while TargetedImitator.inner_jacobian returns -c * outer(v,v),
-                # twice the rank-one term the map applies. This is the same
-                # doubling FINAL_NUMBERS.md Section 2.3 records for
-                # audit_phase2_imitator.py's get_analytic_jacobian, and it is
-                # corrected here the same way rather than by editing the tier-0
-                # control, which other results depend on.
+                # This used to re-derive the corrected closed form inline,
+                # because TargetedImitator.inner_jacobian shipped -c*outer(v,v)
+                # for a map applying -(c/2)*(v.u)*v. That bug is now fixed at
+                # source in experiments/core/controls.py, so the method is
+                # called directly. The two are bit-identical (max abs diff
+                # 0.0 on all five seeds), so every number this script has
+                # already produced stands unchanged.
                 #
-                # With the as-coded Jacobian, lambda_min is -0.335129 on seed 42
-                # while the measured directional derivative of the map is
-                # -0.029472. With the correction both read -0.088180, and the
-                # full vector agrees to 7.1e-12. -0.088180 also reproduces
-                # FINAL_NUMBERS 2.3's seed-42 negeig of 0.088194.
-                J = (ti.egp.jacobian(u_std) + ti.M_anti
-                     - (ti.c / 2.0) * np.outer(ti.v, ti.v))
+                # For the record of what the bug cost: with the as-coded
+                # Jacobian, lambda_min was -0.335129 on seed 42 while the
+                # measured directional derivative of the map was -0.029472.
+                # Corrected, both read -0.088180, the full vector agrees to
+                # 7.1e-12, and it reproduces FINAL_NUMBERS 2.3's seed-42
+                # negeig of 0.088194.
+                J = ti.inner_jacobian(u_std)
             u, lam, ne, az = leading_negative_direction(J, y)
             predict = lambda Xt, yt, Xq: inner(yt)               # noqa: E731
             pr, scale = probe_direction(predict, X, y, u, FRACS)

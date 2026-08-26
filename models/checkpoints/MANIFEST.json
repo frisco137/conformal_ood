@@ -1,0 +1,81 @@
+{
+  "checkpoints": {
+    "tabswift/swift.ckpt": {
+      "bytes": 32947079,
+      "sha256": "16e324177be2ab9e2bac15e5edf7867329e6595e134a5c4c9b6d79d3b657b363"
+    }
+  },
+  "specs": {
+    "tabicl_v2": {
+      "checkpoint": "tabicl-{regressor,classifier}-v2-20260212.ckpt",
+      "code": "site-packages/tabicl (unmodified; hooks only)",
+      "d_model": 512,
+      "display_name": "TabICL v2",
+      "has_predictive_distribution": true,
+      "known_issues": [
+        "Must NOT be vendored: the checkpoint unpickles classes under the absolute module path `tabicl._model.*`, so a vendored copy is silently shadowed by the installed package and any hook placed on it never fires."
+      ],
+      "model_id": "tabicl_v2",
+      "n_icl_blocks": 12,
+      "n_prefix_tokens": 0,
+      "notes": "Staged: column embedder -> row interaction (CLS + RoPE) -> 12-block ICL stack of width 512. Only the ICL stack is in the layer index. The plan's '8 blocks, width 256' describes TabICL v1, not this checkpoint. Regression head emits 999 quantiles.",
+      "per_cell_state": false,
+      "source": "pip package `tabicl` (==2.1.1); weights from HF `jingang/TabICL`",
+      "supports_classification": true,
+      "supports_regression": true
+    },
+    "tabpfn_v2": {
+      "checkpoint": "Prior-Labs/TabPFN-v2-{reg,clf} :: tabpfn-v2-{regressor,classifier}.ckpt",
+      "code": "site-packages/tabpfn (unmodified; hooks only)",
+      "d_model": 192,
+      "display_name": "TabPFN v2",
+      "has_predictive_distribution": true,
+      "known_issues": [],
+      "model_id": "tabpfn_v2",
+      "n_icl_blocks": 12,
+      "n_prefix_tokens": 0,
+      "notes": "PerFeatureTransformer: state is (items, feature_groups, d_model). The decoder reads only the last feature slot, which is the canonical row stream. Item attention runs twice per block (query->support, then support->support). 12 blocks, not 24 -- 24 is TabPFN 2.5.",
+      "per_cell_state": true,
+      "source": "pip package `tabpfn` (>=7.1.0), ModelVersion.V2",
+      "supports_classification": true,
+      "supports_regression": true
+    },
+    "tabpfn_v2_5": {
+      "checkpoint": "tabpfn-v2.5-regressor-v2.5_default.ckpt (local HF cache)",
+      "code": "site-packages/tabpfn (unmodified; hooks only)",
+      "d_model": 192,
+      "display_name": "TabPFN v2.5",
+      "has_predictive_distribution": true,
+      "known_issues": [
+        "The classifier checkpoint repo (Prior-Labs/TabPFN-v2.5-clf) returns HTTP 401: gated. Only the regressor is usable, and only because it is already in the local HF cache."
+      ],
+      "model_id": "tabpfn_v2_5",
+      "n_icl_blocks": 18,
+      "n_prefix_tokens": 64,
+      "notes": "Present only to provide the within-family scale bar for cross-model alignment (how different do two checkpoints of the SAME family look?). NOT a drop-in for v2: it has 18 blocks (not 12, and not the 24 the project plan assumes) and prepends 64 'thinking tokens' to every sequence, so row indices are offset by 64 relative to v2.",
+      "per_cell_state": true,
+      "source": "pip package `tabpfn` (>=7.1.0), ModelVersion.V2_5",
+      "supports_classification": false,
+      "supports_regression": true
+    },
+    "tabswift": {
+      "checkpoint": "checkpoints/tabswift/swift.ckpt",
+      "code": "models/vendor/tabswift (2 documented patches, see vendor/PATCHES.md)",
+      "d_model": 192,
+      "display_name": "TabSwift",
+      "has_predictive_distribution": false,
+      "known_issues": [
+        "Upstream HF repo `pretrain-models/tabswift` returns HTTP 401 (gated), so swift.ckpt is committed here as the only available copy.",
+        "Regression gives no predictive distribution; uncertainty questions (plan Q4/Q7) are not answerable for this model and must be reported as N/A, never synthesised."
+      ],
+      "model_id": "tabswift",
+      "n_icl_blocks": 24,
+      "n_prefix_tokens": 64,
+      "notes": "24 ICL blocks preceded by 64 register tokens: the sequence is [64 registers][support][query]. Regression head is Linear(384, 1): a POINT ESTIMATE, so there is no predictive variance to measure.",
+      "per_cell_state": false,
+      "source": "vendored `models/vendor/tabswift`; weights committed in-repo",
+      "supports_classification": true,
+      "supports_regression": true
+    }
+  }
+}

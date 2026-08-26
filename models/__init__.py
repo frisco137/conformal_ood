@@ -1,30 +1,27 @@
-import sys
-from pathlib import Path
+"""Model layer: definitions, checkpoints, and instrumented access.
 
-# Add models/ directory to sys.path to ensure local tabicl imports resolve to models/tabicl
-models_dir = str(Path(__file__).parent.resolve())
-if models_dir not in sys.path:
-    sys.path.insert(0, models_dir)
+Two entry points, nothing else:
 
-from .tabpfn_v3 import get_classifier as get_tabpfn_v3_classifier
-from .tabpfn_v3 import get_regressor as get_tabpfn_v3_regressor
+    from models import load, SPECS
 
-from .tabpfn_v2 import get_classifier as get_tabpfn_v2_classifier
-from .tabpfn_v2 import get_regressor as get_tabpfn_v2_regressor
+    m = load("tabpfn_v2", task="regression", device="cuda")
+    trace = m.run(X_train, y_train, X_test)
 
-from .tabicl_v2 import get_classifier as get_tabicl_v2_classifier
-from .tabicl_v2 import get_regressor as get_tabicl_v2_regressor
+``SPECS`` is the single source of truth for architecture facts and
+capabilities. See models/README.md.
+"""
 
-from .google_tabfm import get_classifier as get_google_tabfm_classifier
-from .google_tabfm import get_regressor as get_google_tabfm_regressor
+from .registry import ROSTER, SCALE_BAR, SPECS, UNAVAILABLE, ModelSpec, spec, summary_table
+from .loaders import load, available
 
 __all__ = [
-    "get_tabpfn_v3_classifier",
-    "get_tabpfn_v3_regressor",
-    "get_tabpfn_v2_classifier",
-    "get_tabpfn_v2_regressor",
-    "get_tabicl_v2_classifier",
-    "get_tabicl_v2_regressor",
-    "get_google_tabfm_classifier",
-    "get_google_tabfm_regressor",
+    "load",
+    "available",
+    "SPECS",
+    "ROSTER",
+    "SCALE_BAR",
+    "UNAVAILABLE",
+    "ModelSpec",
+    "spec",
+    "summary_table",
 ]
