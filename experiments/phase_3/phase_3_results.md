@@ -714,6 +714,78 @@ the thing T1.7 was built to show and nothing else in the project can show it.
 `σ²`-mixing prior is *itself* asymmetric, so `mixed` should **plateau** where `fixed` decays. If both
 decay identically, T3.1's class-floor argument is wrong.
 
+
+### T1.2 rung A — **READING 1 FIRES. The off-family escape route is closed.** · 2026-09-03
+
+**Script:** [`src/t1_model.py`](src/t1_model.py) → `results/t1_model_A.json`,
+`results/t1_model_jacobians_A.npz`. Scored by [`src/t1_analyse.py`](src/t1_analyse.py) →
+`results/t1_summary.json`. 60 contexts, 6587 s GPU.
+
+#### The E2.1 gate splits rung A into two disjoint populations `MEASURED`
+
+| | n | proj `asym` | proj `negeig` | `trJ/n` | `‖J−I‖` | `negeig == 0` |
+|---|---|---|---|---|---|---|
+| **non-degenerate** (`‖J−I‖ > 0.3`) | **26** | **`0.6968 ± 0.265`** | **`0.2336 ± 0.104`** | `0.672` | `0.797` | **`0%`** |
+| degenerate (excluded from the verdict) | 34 | `0.1249 ± 0.060` | `0.0000 ± 0.000` | `0.976` | `0.142` | **`100%`** |
+
+**The split is exact.** Every non-degenerate context has a nonzero `negeig`; every degenerate one has
+*identically* zero. That is not a coincidence — it is E2.1 doing precisely the job it was written for.
+Where the model interpolates (`J ≈ I`), the Jacobian is trivially PSD and A1/A2 pass **vacuously**;
+where it does not interpolate, it violates.
+
+#### The pre-registered verdict, criteria applied as written
+
+```
+Reading 1  asym >= 0.40  AND  negeig >= 0.10     ->  0.6968 >= 0.40  TRUE
+                                                     0.2336 >= 0.10  TRUE     FIRES
+Reading 2  asym <= 3x floor (0.0324) and negeig <= 0.02              FALSE
+```
+
+**Reading 1 — TabICL fails prior-family.** And it fails *harder at home than away*: against Phase 1's
+same-instrument numbers on rung-D contexts,
+
+| | rung A (its own prior) | rung D (Phase 1 audit family) |
+|---|---|---|
+| proj `asym` | **`0.6968`** | `0.5803` |
+| proj `negeig` | **`0.2336`** | `0.1767` |
+
+Against rung A's own class-level floor from the T1.4 noise-hyperprior GP (`0.0108`), that is a
+**`64.6×` excess**.
+
+**The off-family escape route is closed.** The reviewer's objection — *"the models approximate the PPD
+on their prior's support; your `O(1)` violations are off-support approximation error"* — does not
+survive: the violation is present, and larger, **on support**. The Phase 1 verdict becomes
+unconditional rather than conditional on the context family it was measured in.
+
+**Reading 2 is dead**, and with it the "prior-support detector" paper. The audit does not fire
+*because* a context is off-prior.
+
+#### What must travel with this number, and it is not small
+
+**57% of rung A is degenerate.** On 34 of 60 draws from its own prior, TabICL sits in the
+near-identity regime — `trJ/n = 0.976`, `‖J−I‖ = 0.142` — and passes A1 and A2 **vacuously**. The
+ungated mean `asym` is `0.3727`, which understates the violation on the contexts where the audit has
+purchase and overstates it on the contexts where it has none. **Neither ungated number should be
+quoted.**
+
+So the honest headline is narrower than "TabICL fails on its own prior": **on the 43% of its own
+prior's contexts where the model is non-degenerate, it violates A1 and A2 more strongly than on the
+family Phase 1 audited.** The other 57% are not a pass — they are a regime where the test has no
+purchase, which is exactly what E2.1 exists to detect.
+
+#### P9 — **PASS on the mean, but the mean is the wrong statistic** `MEASURED`
+
+`trJ/n` mean `0.8442` against a `≤ 0.9` gate: **PASS**. But the range is `[0.264, 1.007]` and
+**40 of 60 contexts individually exceed `0.9`**. The mean clears the gate only because the 20
+strongly non-interpolating contexts pull it down. P9's registered form is satisfied; its *intent* —
+"the model does not interpolate its own prior's contexts" — is not. Reported both ways.
+
+#### A3 and mechanism, rung A `MEASURED`
+
+`R²` mean `0.1763` over all 60, `0.2071` on the non-degenerate set — **fails** the `≥ 0.90` gate, as
+on rung D. Row and column profiling residuals are both `0.7478`, so **neither diagonal-scaling
+mechanism fits**, reproducing Phase 1 §6 on a different context family.
+
 ---
 
 ## §3 Decisions

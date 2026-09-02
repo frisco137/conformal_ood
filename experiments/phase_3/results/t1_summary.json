@@ -10,5 +10,64 @@
       "F"
     ]
   },
-  "per_rung": {}
+  "per_rung": {
+    "A": {
+      "n": 60,
+      "n_nondegenerate": 26,
+      "frac_nondegenerate": 0.43333333333333335,
+      "asym_all_mean": 0.3727121330227244,
+      "asym_all_sd": 0.3367491414739875,
+      "asym_mean": 0.696787570276061,
+      "asym_sd": 0.2648638142154996,
+      "negeig_all_mean": 0.10123310654783207,
+      "negeig_all_sd": 0.13503743976336613,
+      "negeig_mean": 0.23361486126422787,
+      "negeig_sd": 0.10426629778048273,
+      "trJ_over_n_all_mean": 0.8442397704693334,
+      "trJ_over_n_all_sd": 0.20859891704831748,
+      "trJ_over_n_mean": 0.6723068591545766,
+      "trJ_over_n_sd": 0.21890370066413573,
+      "J_minus_I_all_mean": 0.4260344629458496,
+      "J_minus_I_all_sd": 0.39477286713993476,
+      "J_minus_I_mean": 0.7972253819012916,
+      "J_minus_I_sd": 0.3270852401611676,
+      "a3_r2_all_mean": 0.1763230680442391,
+      "a3_r2_all_sd": 0.17042472639532052,
+      "a3_r2_mean": 0.20706380131060123,
+      "a3_r2_sd": 0.198630175438625,
+      "row_residual_all_mean": 0.7477565539495536,
+      "row_residual_all_sd": 0.08509272604910412,
+      "row_residual_mean": 0.7097546750209147,
+      "row_residual_sd": 0.09369775574023297,
+      "col_residual_all_mean": 0.7477565539495536,
+      "col_residual_all_sd": 0.08509272604910412,
+      "col_residual_mean": 0.7097546750209147,
+      "col_residual_sd": 0.09369775574023297,
+      "n_neg_diag_all_mean": 0.15,
+      "n_neg_diag_all_sd": 0.684575830567082,
+      "n_neg_diag_mean": 0.34615384615384615,
+      "n_neg_diag_sd": 1.0175385080598256,
+      "skew_fro_all_mean": 3.0367549676960692,
+      "skew_fro_all_sd": 2.541397402721386,
+      "skew_fro_mean": 5.431810161620845,
+      "skew_fro_sd": 2.0729617312643636,
+      "frac_negeig_zero": 0.5666666666666667,
+      "class_floor_proj_asym": 0.010788013583465947,
+      "asym_over_floor": 64.58905199600228
+    }
+  },
+  "readings": {
+    "rung_A_asym_gated": 0.696787570276061,
+    "rung_A_negeig_gated": 0.23361486126422787,
+    "P6_floor_A": 0.010788013583465947,
+    "reading_1": true,
+    "reading_2": false,
+    "verdict": "Reading 1 -- fails prior-family"
+  },
+  "P9": {
+    "rung_A_trJ_over_n_mean": 0.8442397704693334,
+    "rung_A_trJ_over_n_max": null,
+    "gate": 0.9,
+    "PASS": true
+  }
 }
