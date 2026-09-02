@@ -662,6 +662,58 @@ evaluated at `y`; this is `n = 100`, **wrapped**, evaluated at `u`. Both are the
 neither is wrong; the numbers are not directly comparable and the paper must quote one or the other
 with its configuration attached.
 
+
+### T1.7 — nano-PFN, `fixed` arm · **the decay is real** · 2026-09-03
+
+**Scripts:** [`src/nanopfn.py`](src/nanopfn.py), [`src/t1_7_train_nanopfn.py`](src/t1_7_train_nanopfn.py),
+[`src/t1_7_audit_nanopfn.py`](src/t1_7_audit_nanopfn.py) → `results/t1_7_nanopfn_audit.json`,
+`results/nanopfn_fixed_step*.pt`.
+
+A model whose prior is known **exactly by construction** — the provenance caveat T0.1 forced on rung
+A does not apply. 135,682 parameters, no positional encoding (so permutation-equivariance is exact,
+not learned), Gaussian head, same target normalisation TabICL wears. Audited on **rung A's own
+contexts**, so nano-PFN and TabICL numbers are directly comparable.
+
+**Instrument floor for this model, measured not assumed** `MEASURED`: float32, output quantum
+`1.192e-07`, giving a quantised-wrapped-exact-GP floor of `asym 4.781e-04`, `negeig 0.000`.
+Without this, "decays toward the instrument floor" has no referent.
+
+**`fixed` arm — `σ² = 1.0` always, so Brown applies exactly to this prior** `MEASURED`, 20 contexts
+per checkpoint:
+
+| step | NLL | proj `asym` | proj `negeig` | `‖J−I‖` | `trJ/n` | asym/floor |
+|---|---|---|---|---|---|---|
+| 200 | `1.4481` | `1.4084 ± 0.024` | `0.5310 ± 0.050` | `9.77` | `0.010` | `2946×` |
+| 500 | `1.4159` | `1.4192 ± 0.035` | `0.5250 ± 0.055` | `9.62` | `0.010` | `2968×` |
+| 1000 | `1.4016` | `1.3683 ± 0.039` | `0.4484 ± 0.055` | `9.37` | `0.011` | `2862×` |
+| 2000 | `1.4012` | `0.9814 ± 0.096` | `0.2569 ± 0.056` | `9.57` | `0.012` | `2053×` |
+| 4000 | `1.3920` | `0.7683 ± 0.067` | `0.2065 ± 0.039` | `8.22` | `0.019` | `1607×` |
+| 8000 | `1.3769` | `0.5823 ± 0.104` | `0.2014 ± 0.057` | `8.08` | `0.022` | `1218×` |
+| 16000 | `1.3800` | `0.5852 ± 0.127` | `0.2365 ± 0.068` | `6.87` | `0.029` | `1224×` |
+
+**The registered prediction is directionally confirmed.** `asym` falls **`1.408 → 0.585`, ratio
+`0.415`**, monotonically in training compute; `negeig` falls `0.531 → 0.201`. **The audit works as a
+progress measure**: as the model approaches its own PPD, the structural violation shrinks. That is
+the thing T1.7 was built to show and nothing else in the project can show it.
+
+**Three caveats, all of which must travel with the number.**
+
+1. **It does not reach the floor.** It plateaus at `~0.58`, still `1224×` the measured instrument
+   floor, and steps 8000 and 16000 are flat. Within this budget the prediction "decays *toward the
+   instrument floor*" is confirmed only as a **direction**, not as an arrival.
+2. **The model is weak.** NLL `1.380` against `1.419` for a unit Gaussian — it has learned real
+   structure, but not much of it. `trJ/n` runs `0.010`–`0.029`, so it is nearly **label-insensitive**:
+   a different degeneracy from TabICL's near-identity on the same contexts, and the opposite end of
+   the E2.1 gate. Its `‖J−I‖` of `6.9`–`9.8` is far above the `0.3` gate, so it is non-degenerate in
+   the `J ≈ I` sense while being degenerate in the `J ≈ 0` sense.
+3. **The plateau value is `0.585` and TabICL's is `0.580`.** Noted because it will be tempting to
+   read as meaningful. On this evidence it is a coincidence between an undertrained 135k-parameter
+   model and a production checkpoint, and should not be presented as anything else.
+
+**The sharper test is the `mixed` arm**, training now: T3.1 proves the exact posterior mean under a
+`σ²`-mixing prior is *itself* asymmetric, so `mixed` should **plateau** where `fixed` decays. If both
+decay identically, T3.1's class-floor argument is wrong.
+
 ---
 
 ## §3 Decisions
