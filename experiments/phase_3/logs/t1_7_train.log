@@ -8,3 +8,24 @@ T1.7  nano-PFN, arm 'fixed'   135,682 parameters   16000 steps
     -> checkpoint nanopfn_fixed_step200.pt
   step    300  NLL +1.42817  lr 3.63e-05  (32s)
   step    400  NLL +1.42525  lr 5.42e-05  (40s)
+  step    500  NLL +1.41590  lr 7.61e-05  (49s)
+    -> checkpoint nanopfn_fixed_step500.pt
+  step    600  NLL +1.41699  lr 1.01e-04  (60s)
+  step    700  NLL +1.42127  lr 1.28e-04  (71s)
+  step    800  NLL +1.41431  lr 1.56e-04  (80s)
+  step    900  NLL +1.40564  lr 1.84e-04  (90s)
+  step   1000  NLL +1.40161  lr 2.11e-04  (100s)
+    -> checkpoint nanopfn_fixed_step1000.pt
+  step   1100  NLL +1.40043  lr 2.36e-04  (111s)
+  step   1200  NLL +1.39897  lr 2.58e-04  (121s)
+  step   1300  NLL +1.39798  lr 2.76e-04  (131s)
+  step   1400  NLL +1.39933  lr 2.89e-04  (141s)
+  step   1500  NLL +1.39351  lr 2.97e-04  (153s)
+  step   1600  NLL +1.39843  lr 3.00e-04  (163s)
+  step   1700  NLL +1.39620  lr 3.00e-04  (172s)
+  step   1800  NLL +1.39374  lr 3.00e-04  (182s)
+  step   1900  NLL +1.38728  lr 3.00e-04  (191s)
+  step   2000  NLL +1.40118  lr 2.99e-04  (201s)
+    -> checkpoint nanopfn_fixed_step2000.pt
+  step   2100  NLL +1.39751  lr 2.99e-04  (210s)
+  step   2200  NLL +1.39196  lr 2.99e-04  (220s)
