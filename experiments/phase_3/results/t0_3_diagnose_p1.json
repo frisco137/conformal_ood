@@ -1,0 +1,101 @@
+{
+  "_config": {
+    "n_planes": 96,
+    "n_loop": 32,
+    "seeds": [
+      42,
+      100,
+      200
+    ]
+  },
+  "D1_D2": [
+    {
+      "map": "wrapped_targeted_imitator",
+      "seed": 42,
+      "fd": 4.110943518526135,
+      "loop": 4.044239797298077,
+      "ratio": 0.9837741090512543,
+      "analytic": 4.110943518518161
+    },
+    {
+      "map": "wrapped_nonlinear",
+      "seed": 42,
+      "fd": 4.16389777573894,
+      "loop": 4.79124694601299,
+      "ratio": 1.1506639221378863,
+      "analytic": null
+    },
+    {
+      "map": "wrapped_targeted_imitator",
+      "seed": 100,
+      "fd": 4.211295317620755,
+      "loop": 3.729012082760589,
+      "ratio": 0.8854786476640065,
+      "analytic": 4.211295317620432
+    },
+    {
+      "map": "wrapped_nonlinear",
+      "seed": 100,
+      "fd": 4.250351591619682,
+      "loop": 4.5744611479875985,
+      "ratio": 1.0762547637251834,
+      "analytic": null
+    },
+    {
+      "map": "wrapped_targeted_imitator",
+      "seed": 200,
+      "fd": 4.122139229288469,
+      "loop": 4.363436710755726,
+      "ratio": 1.058536955703194,
+      "analytic": 4.122139229283854
+    },
+    {
+      "map": "wrapped_nonlinear",
+      "seed": 200,
+      "fd": 4.192181637606319,
+      "loop": 5.044935030495683,
+      "ratio": 1.2034151825006025,
+      "analytic": null
+    }
+  ],
+  "verdict_wrapped_targeted_imitator": {
+    "worst_abs_ratio_minus_1": 0.11452135233599348,
+    "instrument_ok": true
+  },
+  "verdict_wrapped_nonlinear": {
+    "worst_abs_ratio_minus_1": 0.20341518250060253,
+    "instrument_ok": true
+  },
+  "D3": [
+    {
+      "seed": 42,
+      "fd_perp": 4.665368656334106,
+      "loop_perp": 0.620916880248583,
+      "ratio_perp": 0.13309063570047627,
+      "fd_incl_y": 6.534006449317892,
+      "loop_along_y": 0.7775497713934219,
+      "ratio_along_y": 0.11900045973701066,
+      "seconds": 727.325080871582
+    },
+    {
+      "seed": 100,
+      "fd_perp": 4.157333468163271,
+      "loop_perp": 0.6497054749519424,
+      "ratio_perp": 0.15627937473078993,
+      "fd_incl_y": 6.743738094273626,
+      "loop_along_y": 0.8518738874551807,
+      "ratio_along_y": 0.12632072532273167,
+      "seconds": 835.1725225448608
+    },
+    {
+      "seed": 200,
+      "fd_perp": 3.5582660247095217,
+      "loop_perp": 0.7172117544443267,
+      "ratio_perp": 0.20156215118932153,
+      "fd_incl_y": 6.115811143770656,
+      "loop_along_y": 0.7651511788790231,
+      "ratio_along_y": 0.12511033465419846,
+      "seconds": 861.2877836227417
+    }
+  ]
+}

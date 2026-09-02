@@ -1,0 +1,74 @@
+{
+  "_config": {
+    "seeds": [
+      42,
+      100,
+      200
+    ],
+    "k_points": 6,
+    "t": 0.001,
+    "quantity": "||Q'JQ - (Q'JQ)'||_F at points on the constant-(ybar, r) sphere"
+  },
+  "rows": [
+    {
+      "seed": 42,
+      "skew_at_y": 4.665368656334106,
+      "normF_at_y": 7.69022991899556,
+      "skew_sphere_mean": 4.332672691061777,
+      "skew_sphere_sd": 0.5098456484727515,
+      "skew_sphere_min": 3.480735913814774,
+      "skew_sphere_max": 5.016590574958814,
+      "normF_sphere_mean": 5.2939123721312695,
+      "ratio_sphere_over_y": 0.9286881724082764,
+      "seconds": 368.05729961395264
+    },
+    {
+      "seed": 100,
+      "skew_at_y": 4.157333468163271,
+      "normF_at_y": 7.799965012559898,
+      "skew_sphere_mean": 4.747931655287888,
+      "skew_sphere_sd": 1.2300557482692953,
+      "skew_sphere_min": 2.6905878385636806,
+      "skew_sphere_max": 6.43278298343453,
+      "normF_sphere_mean": 5.327950173985347,
+      "ratio_sphere_over_y": 1.1420617786971865,
+      "seconds": 383.300598859787
+    },
+    {
+      "seed": 200,
+      "skew_at_y": 3.5582660247095217,
+      "normF_at_y": 5.044657832429465,
+      "skew_sphere_mean": 4.335154155668807,
+      "skew_sphere_sd": 1.1666919900006,
+      "skew_sphere_min": 2.3104295100158345,
+      "skew_sphere_max": 5.444076482790917,
+      "normF_sphere_mean": 5.144983477987729,
+      "ratio_sphere_over_y": 1.2183333470753375,
+      "seconds": 371.0167667865753
+    }
+  ],
+  "mean_ratio_sphere_over_y": 1.0963610993936002,
+  "loop_vs_sphere": [
+    {
+      "seed": 42,
+      "loop": 0.6276419784957556,
+      "fd_sphere_mean": 4.332672691061777,
+      "loop_over_fd_sphere": 0.14486254172639657
+    },
+    {
+      "seed": 100,
+      "loop": 0.6684363429475052,
+      "fd_sphere_mean": 4.747931655287888,
+      "loop_over_fd_sphere": 0.14078474406914665
+    },
+    {
+      "seed": 200,
+      "loop": 0.6931240738275583,
+      "fd_sphere_mean": 4.335154155668807,
+      "loop_over_fd_sphere": 0.15988452750202753
+    }
+  ],
+  "mean_loop_over_fd_sphere": 0.1485106044325236,
+  "locality_reading_supported": false,
+  "halt_H2": true
+}

@@ -15,3 +15,8 @@ D1/D2  does the loop recover the skew of a WRAPPED NONLINEAR map with a known an
 D3  TabICL: does the gap close when the loop plane CONTAINS y?
 ================================================================================================
   seed    FD skew(perp)  loop perp   ratio  FD skew(incl y)  loop along y   ratio
+  42            4.66537    0.62092   0.133          6.53401       0.77755   0.119
+  100           4.15733    0.64971   0.156          6.74374       0.85187   0.126
+  200           3.55827    0.71721   0.202          6.11581       0.76515   0.125
+
+Saved: /home/psquare_a6000/Desktop/conformal_ood/experiments/phase_3/results/t0_3_diagnose_p1.json

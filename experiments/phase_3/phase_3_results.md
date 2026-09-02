@@ -345,7 +345,105 @@ loop returns the **area-average** of the antisymmetric 2-form over the enclosed 
 difference returns a **point value**. If the loop value moves with `r`, the two estimators are
 measuring genuinely different things and that must be said rather than averaged over.
 
-Result appended on completion. Runtime is running longer than the ~45 min estimate.
+#### Result `MEASURED`
+
+| seed | FD skew `‖J−Jᵀ‖_F` | loop skew | ratio | loop 95% CI |
+|---|---|---|---|---|
+| 42 | `4.66537` | `0.62764` | `0.135` | `[0.544, 0.714]` |
+| 100 | `4.15733` | `0.66844` | `0.161` | `[0.552, 0.779]` |
+| 200 | `3.55827` | `0.69312` | `0.195` | `[0.536, 0.855]` |
+| 300 | `3.80023` | `0.74160` | `0.195` | `[0.585, 0.890]` |
+| 400 | `3.71357` | `0.54402` | `0.146` | `[0.431, 0.644]` |
+
+**Mean ratio `0.166`. FD lies inside the loop's CI on `0/5` seeds.**
+P1's 20% target **MISSED**; P1's `>2×` falsifier **FIRED**.
+
+**Radius sweep, seed 42:** the loop returns `0.59793` at `r = 1.40, 4.20, 14.01, 28.01` — identical
+to five decimals across two decades. Not a bug and not evidence of linearity: for
+`m(y) = ȳ1 + s_y·g(u)`, a constant-`ȳ` constant-`r` loop sends `u` around the **same** circle of
+radius `√n` whatever `r` is, and `m` scales linearly in `r`, so `I/(πr²)` is **structurally**
+`r`-invariant. The radius knob therefore cannot probe locality. `DERIVED`
+
+#### Why halt H2 does not fire on the letter of the condition
+
+H2 requires *"off by > 2× **and neither estimator can be shown correct**"*. Both can be.
+[`src/t0_3_diagnose_p1.py`](src/t0_3_diagnose_p1.py) → `results/t0_3_diagnose_p1.json`:
+
+| map | seed | FD skew | loop skew | ratio | analytic |
+|---|---|---|---|---|---|
+| wrapped `TargetedImitator` | 42 | `4.11094` | `4.04424` | `0.984` | **`4.11094`** |
+| | 100 | `4.21130` | `3.72901` | `0.885` | **`4.21130`** |
+| | 200 | `4.12214` | `4.36344` | `1.059` | **`4.12214`** |
+| wrapped nonlinear `tanh³` | 42 | `4.16390` | `4.79125` | `1.151` | — |
+| | 100 | `4.25035` | `4.57446` | `1.076` | — |
+| | 200 | `4.19218` | `5.04494` | `1.203` | — |
+
+**FD reproduces the analytic inner Jacobian exactly** on all three seeds, and **the loop recovers it
+to 11.5%** — on maps of the same class as TabICL (nonlinear, normaliser-wrapped). Neither estimator
+is wrong.
+
+#### D3 — planes containing `y`: **refuted** `MEASURED`
+
+| seed | FD (⊥) | loop ⊥ | ratio | FD (incl `y`) | loop along `y` | ratio |
+|---|---|---|---|---|---|---|
+| 42 | `4.66537` | `0.62092` | `0.133` | `6.53401` | `0.77755` | `0.119` |
+| 100 | `4.15733` | `0.64971` | `0.156` | `6.74374` | `0.85187` | `0.126` |
+| 200 | `3.55827` | `0.71721` | `0.202` | `6.11581` | `0.76515` | `0.125` |
+
+Putting `y` in the plane does not close the gap — if anything slightly worse.
+
+#### Sphere test — locality of *magnitude* refuted `MEASURED`
+
+[`src/t0_3_sphere_locality.py`](src/t0_3_sphere_locality.py) → `results/t0_3_sphere_locality.json`.
+Phase 1's own FD quantity at 6 random points on the same constant-`(ȳ, r)` sphere:
+
+| seed | FD at `y` | FD on sphere | sphere / at-`y` |
+|---|---|---|---|
+| 42 | `4.6654` | `4.3327 ± 0.5099` | `0.929` |
+| 100 | `4.1573` | `4.7479 ± 1.2301` | `1.142` |
+| 200 | `3.5583` | `4.3352 ± 1.1667` | `1.218` |
+
+**Mean `1.096`** — FD-at-`y` is entirely representative. **`loop / FD-on-sphere = 0.149`.**
+
+#### The explanation, confirmed directly `MEASURED`
+
+Magnitude is uniform, so the remaining possibility is that the antisymmetric part **changes
+direction**. Four reduced Jacobians through **one fixed basis `Q`** so they are comparable:
+
+```
+point 0 (y)       ||A||_F = 4.6654     pairwise alignment <A_i,A_j>/(||A_i|| ||A_j||)
+point 1 (sphere)  ||A||_F = 7.1600       off-diagonal: -0.003  +0.003  -0.014
+point 2 (sphere)  ||A||_F = 5.9501                     +0.006  +0.021  -0.010
+point 3 (sphere)  ||A||_F = 3.6314     mean off-diagonal alignment = +0.0004
+```
+
+**TabICL's antisymmetric 2-form has roughly uniform magnitude and essentially random direction across
+the sphere** — alignment zero to three decimals. A great-circle average of a direction-decorrelated
+field cancels; a point value does not. `0.149` implies `~45` effective independent patches, the right
+order for 32 quadrature points on a 98-dimensional sphere. It explains the controls exactly:
+`TargetedImitator`'s antisymmetric part is a **constant** matrix, so alignment is 1 by construction
+and the loop matches.
+
+#### T0.3 verdict — the instrument is correct; the plan's premise is not
+
+**Both estimators are right and they measure different quantities.** For a wrapped map the loop is
+**structurally incapable of being local** — there is no small-disc limit — so it always returns a
+great-circle average. Where the 2-form's direction is stable that equals the point value (every
+analytic control, hence P2/P3/P4 and D1/D2 passing); where it decorrelates it does not (TabICL, at
+`0.149×`).
+
+**The plan's premise "circulation replaces the *symmetry* measurement" does not hold for these
+models.** The loop remains valid and independently interesting — quantisation-immune (P3),
+wrapper-invariant to `3.9e-16` (P2) — but it is **not** `asym(QᵀJQ)`.
+
+#### HALT
+
+**H2's literal condition is not met** — both estimators are shown correct. But the reconciliation this
+gate exists to establish has **failed after three diagnostics**, and Tier 1's design assumed
+"A1 (circulation + FD)" on every rung. That assumption is void, and substituting a registered
+instrument is a design decision the plan did not anticipate.
+
+**Halting and reporting rather than choosing unilaterally.** Options in §5, O3.
 
 
 ### T0.4 — Literature artifact · **structural repair done; channel column outstanding** · 2026-09-03
@@ -504,6 +602,7 @@ extends N3's "A2 is the more robust condition" from preprocessing to noise-scale
 
 | # | Idea | Status |
 |---|---|---|
+| **O3** | **Tier 1's A1 instrument needs a decision.** **(a)** Drop circulation from A1, use FD alone — loses the quantisation-immunity and wrapper-invariance the loop was chosen for, but FD is validated and is what Phase 1 used. **(b)** Keep both as *separate registered quantities*: pointwise `asym(QᵀJQ)`, plus sphere-averaged circulation as a new one — the gap between them measures how fast the antisymmetry direction decorrelates. **(c)** Build a genuinely local loop by dropping constant-`r`, reintroducing the N1 confound the loop existed to avoid. **Recommendation: (b)** — one extra column, and it turns a failed reconciliation into a measured property of the model. | **BLOCKING Tier 1. Awaiting your call.** |
 | O1 | The `col_target_aware: true` flag in the checkpoint config means the **column embedder sees the target**. That is a plausible mechanical origin for label-asymmetry upstream of the ICL stack, and Phase 1's E1.4 only zeroed *row* RoPE. Zeroing or ablating the target-aware column path is the natural next mechanistic probe. | Parked. Off-plan for Phase 3. |
 | O2 | `mix_probs: (0.7, 0.3)` in `DEFAULT_FIXED_HP` sets the mlp/tree mechanism mix. Rung C ("mechanisms perturbed") could dial this directly rather than only deepening the DAG. | Fold into T1.2 rung C if cheap. |
 
