@@ -1,0 +1,47 @@
+{
+  "arm": "fixed",
+  "prior_config": {
+    "arm": "fixed",
+    "rung": "A (prior-family, Gaussian terminal noise)",
+    "sigma2": 1.0,
+    "sigma2_law": "fixed",
+    "n_rows": 100,
+    "n_query": 30,
+    "max_features": 20,
+    "generator": "experiments/phase_3/src/prior_family.py",
+    "source_prior": "tabicl 2.1.1 MLPSCM/TreeSCM -> Reg2Cls(num_classes=0)"
+  },
+  "n_params": 135682,
+  "total_steps": 300,
+  "ckpt_steps": [
+    200,
+    500,
+    1000,
+    2000,
+    4000,
+    8000,
+    16000
+  ],
+  "log": [
+    {
+      "step": 1,
+      "nll": 1.7132006883621216,
+      "seconds": 0.5299215316772461
+    },
+    {
+      "step": 100,
+      "nll": 1.4509501945972443,
+      "seconds": 9.58561372756958
+    },
+    {
+      "step": 200,
+      "nll": 1.4161659753322602,
+      "seconds": 20.067713737487793
+    },
+    {
+      "step": 300,
+      "nll": 1.4133958220481873,
+      "seconds": 31.752904176712036
+    }
+  ]
+}
