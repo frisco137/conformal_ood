@@ -1,0 +1,60 @@
+{
+  "source": "/home/psquare_a6000/Desktop/conformal_ood/literature/literature_extraction_all.md",
+  "n_lines": 2686,
+  "dir_counts": {
+    "a": 11,
+    "b": 11,
+    "c": 11
+  },
+  "dir_total": 33,
+  "camp_block_starts_1indexed": [
+    1,
+    772,
+    1616
+  ],
+  "camp_headers_found_by_hash_scan": 2,
+  "n_sections": 33,
+  "unmatched_titles": [],
+  "misfiled": [
+    {
+      "line": 2544,
+      "title": "What Can Transformers Learn In-Context? A Case Study of Simple Function Classes",
+      "declared_camp": "c",
+      "true_camp": "a",
+      "misfiled": true
+    },
+    {
+      "line": 2617,
+      "title": "A Mechanistic Study of Tabular Foundation Models",
+      "declared_camp": "c",
+      "true_camp": "b",
+      "misfiled": true
+    }
+  ],
+  "manifest": {
+    "a": {
+      "claimed": 12,
+      "listed": 10,
+      "sections_in_block": 10,
+      "true_count": 11
+    },
+    "b": {
+      "claimed": 11,
+      "listed": 10,
+      "sections_in_block": 10,
+      "true_count": 11
+    },
+    "c": {
+      "claimed": 11,
+      "listed": 11,
+      "sections_in_block": 13,
+      "true_count": 11
+    }
+  },
+  "repaired": {
+    "path": "/home/psquare_a6000/Desktop/conformal_ood/literature/literature_extraction_all_REPAIRED.md",
+    "n_camp_headers": 3,
+    "n_sections": 33,
+    "sections_match_dir_total": true
+  }
+}

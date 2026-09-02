@@ -347,6 +347,80 @@ measuring genuinely different things and that must be said rather than averaged 
 
 Result appended on completion. Runtime is running longer than the ~45 min estimate.
 
+
+### T0.4 — Literature artifact · **structural repair done; channel column outstanding** · 2026-09-03
+
+**Script:** [`src/t0_4_repair_literature.py`](src/t0_4_repair_literature.py)
+**Outputs:** `results/t0_4_literature_audit.json`,
+`literature/literature_extraction_all_REPAIRED.md` (the original is **not** modified)
+
+#### Two of the plan's three stated defects are wrong `MEASURED`
+
+The plan describes: camp `a` claims 12 files and lists 10 while 20 `##` sections follow; camp `c` has
+no manifest and no date; **camp `b` is absent entirely**.
+
+| plan says | actually |
+|---|---|
+| camp `b` is absent entirely | **`b` is present, at line 772.** Its header is `Camp directory: b` — *plain text, not a `#` heading* — so a `^#` scan finds only 2 of the 3 camps. That same malformed header is why camp `a`'s region appeared to hold 20 sections: the `^#`-delimited block starting at line 1 runs straight through camp `b`'s papers. |
+| camp `c` has no manifest and no date | **It has both**, lines 1617–1632. |
+| camp `a` claims 12, lists 10 | **True**, and the true count is 11. |
+
+**Ground truth is the directory listing:** `literature/{a,b,c}/*.md` — **11 files each, 33 total.**
+
+#### The defects that are real `MEASURED`
+
+| camp | manifest claims | manifest lists | sections in block | **true** |
+|---|---|---|---|---|
+| a | 12 | 10 | 10 | **11** |
+| b | 11 | 10 | 10 | **11** |
+| c | 11 | 11 | **13** | **11** |
+
+**Two papers were filed under camp `c` that belong elsewhere:**
+
+- line 2544 — *What Can Transformers Learn In-Context? A Case Study of Simple Function Classes* → camp **a**
+- line 2617 — *A Mechanistic Study of Tabular Foundation Models* → camp **b**
+
+Both camp-`a` shortfalls are explained by these: `10 + 1 = 11` for each of `a` and `b`, and
+`13 − 2 = 11` for `c`. **The counts close exactly.**
+
+Two sections also carry a *printed* title differing from their filename, so neither exact nor prefix
+matching finds them; they are mapped by an explicit alias table rather than by loosening the matcher,
+which would risk silent mis-assignment elsewhere. The script **refuses to write** if any section is
+unassigned, rather than dropping it.
+
+#### Repair verified `MEASURED`
+
+```
+camp headers   3   (all now `#` headings)
+sections      33   against 33 files on disk        OK
+unmatched      0
+content       all 33 section bodies byte-identical to the original
+```
+
+#### The von Oswald question — **answered, and it does not weaken C-X3** `MEASURED`
+
+The plan flags that von Oswald et al.'s extraction records *"comparison of the partial derivatives of
+the transformer predictions against the analytical sensitivities of gradient descent steps"*, and asks
+whether that is w.r.t. inputs/parameters (expected) or **labels** (which would weaken the gap claim).
+
+Read from the **source**, `literature/a/Transformers learn in-context learning by gradient descent.md`:
+
+- line 189 — the compared sensitivities are `∂ŷ_θ(x_τ,test)/∂x_test` and
+  `∂ŷ_θGD(x_τ,test)/∂x_test`, i.e. **with respect to the test input**.
+- line 265, Figure 5 — *"Norm of the partial derivatives of the output of the first self-attention
+  layer **w.r.t. input tokens**."*
+- line 273 — *"the mean of the norm of the partial derivative of the first layer's output **w.r.t. the
+  input tokens**"*.
+
+**It is inputs, not labels.** The sentence *"none states, derives, or measures the label-dependence of
+the predictive map"* **stands**.
+
+#### Outstanding
+
+The **channel column** (value / internal-representation / derivative / discrete-perturbation, one per
+paper) is not yet added. That is the C-X3 survey artifact proper and requires reading all 33
+extractions; the structural repair above is its prerequisite and is complete.
+
 ---
 
 ## §3 Decisions
@@ -367,6 +441,7 @@ Result appended on completion. Runtime is running longer than the ~45 min estima
 | # | What | Chasing? |
 |---|---|---|
 | S1 | **The released `PriorDataset` cannot produce the setting its own regression checkpoint was trained in.** `max_classes=0` raises. This is stronger than "we cannot verify the prior" — the public sampler is provably *not* the one used, at least not at this version. | Not chasing further. Recorded, and it is the reason the PARTIAL caveat is worded as it is. It also strengthens the case for T1.7. |
+| S3 | **The plan's description of the literature artifact is wrong in two of three particulars** — camp `b` is present (malformed header, not absent) and camp `c` does have a manifest. The single real structural fault is one plain-text header, which made a `^#` scan under-report. Worth noting because the same failure mode — a grep-shaped assumption about a file's structure — is how the "camp b is missing" belief formed in the first place. | Recorded. Repair done. |
 | S2 | The regression head is **999** quantiles, not the 9999 Phase 1–2 implied. The 9999 was a caller-supplied interpolation grid. | Not a defect — the extractor was validated at 0.31% against closed form. Logged as a wording correction in §6. |
 
 ---
