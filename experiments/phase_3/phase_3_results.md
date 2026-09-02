@@ -421,6 +421,58 @@ The **channel column** (value / internal-representation / derivative / discrete-
 paper) is not yet added. That is the C-X3 survey artifact proper and requires reading all 33
 extractions; the structural repair above is its prerequisite and is complete.
 
+
+### T3.1 — Unknown noise scale · **derivation proved, numerics confirm** · 2026-09-03
+
+**Deliverable:** [`t3_1_noise_scale.md`](t3_1_noise_scale.md)
+**Script:** [`src/t3_1_noise_scale.py`](src/t3_1_noise_scale.py) → `results/t3_1_noise_scale.json`. CPU.
+
+Assumption 1 fixes `σ²` known; the prior these models were trained on does not. The class a reviewer
+will invoke is posterior means under a **joint** prior on `(f, σ²)`, which is strictly larger, and
+Brown's identity does not apply to it directly.
+
+**Three identities, proved in the deliverable and verified here** at `n = 60`, exact `σ²`-mixing
+posterior over a 9-point log-uniform grid on `[0.25, 4.0]`, 5 audit contexts:
+
+| | identity | verification |
+|---|---|---|
+| (1) | `∇log p(y) = −g(y)`, `g = E[σ⁻²(y−f)\|y]` — generalised Tweedie | max rel err **`7.8e-10`** |
+| (2) | `Cov(σ⁻²(y−f)\|y) = w(y)I + ∇²log p(y)` — symmetric, PSD | rel err `3.8e-6` (FD-Hessian limited); **symmetric to `3.1e-15`, min eig `−1.2e-15`** |
+| (3) | `J_h = Cov(σ⁻²(y−f)\|y) + y∇w(y)ᵀ` — contamination **rank one along `y`** | `σ₂/σ₁ = **3.5e-10**`; top singular vector aligns with `y/‖y‖` at **`\|cos\| = 1.000000`** on every context |
+
+**The consequence, which is the reason this was blocking.** Since `span{1,u} = span{1,y}`, the
+projection gives `QᵀJ_hQ = Qᵀ Cov Q` **exactly** — the contamination is annihilated — and for loop
+planes with `a,b ⊥ span{1,y}` the rank-one term contributes
+`(aᵀy)(∇wᵀb) − (aᵀ∇w)(yᵀb) = 0`. **Both instruments are exactly blind to noise-scale mixing.** That
+is a *second, independent* reason they are the right instruments; the first (N1, the normaliser) was
+unrelated.
+
+**And the honest floor** `MEASURED`:
+
+| quantity | value |
+|---|---|
+| **ambient `asym` of `μ*(y)=E[f\|y]` under `σ²` mixing** | **mean `0.2830`**, range `[0.2418, 0.3380]` |
+| mean `\|aᵀ(J−Jᵀ)b\|`, planes ⊥ `span{1,y}` | `3.2e-03` – `4.6e-03` |
+| mean `\|aᵀ(J−Jᵀ)b\|`, planes containing `y` | `6.7e-02` – `9.6e-02` |
+| **suppression** | **mean `22.2×`**, range `[14.8×, 28.0×]` |
+
+*Deviation, reported not tuned:* the plan states `0.287` ambient and `~30×`. **Ambient reproduces
+almost exactly** (`0.2830`); **suppression comes in lower at `22.2×`.** Direction and order of
+magnitude hold; the specific factor does not.
+
+**What this does to Phase 1's numbers.** TabICL's A1 of `0.580` is quoted against a
+*quantisation-artifact* floor of `0.001–0.004` — `136×–570×`. That floor answers "what does the
+instrument manufacture on a map with no asymmetry", **not** "what does a Bayesian in the class the
+reviewer means produce". Against the class-level floor, the same `0.580` is a **~2× ambient excess**.
+The **projected** comparison survives untouched, because the projection annihilates this
+contamination exactly — but **the ambient ratios must not be quoted as if they were comparisons
+against the right null.** This is P6 territory; the Tier 1 noise-hyperprior GP is the registered
+measurement.
+
+**A2 is unaffected** — the projected block is a compression of a symmetric PSD matrix regardless of
+noise-scale mixing, so TabICL's `negeig = 0.177` stands. A1 needs a new floor and A2 does not, which
+extends N3's "A2 is the more robust condition" from preprocessing to noise-scale mixing.
+
 ---
 
 ## §3 Decisions
@@ -440,6 +492,7 @@ extractions; the structural repair above is its prerequisite and is complete.
 
 | # | What | Chasing? |
 |---|---|---|
+| S4 | **The class-level A1 floor is `0.283` ambient, not `10⁻³`.** A genuine `σ²`-mixing exact posterior mean — unimpeachably Bayesian — has ambient `asym` in `[0.24, 0.34]`. Phase 1's `570×` symmetry ratios are against a quantisation floor, which is the wrong null for the class a reviewer means. | Not a tangent — it is T3.1's registered consequence and it changes how every A1 ratio is quoted. The projected numbers survive; the ambient ones do not. |
 | S1 | **The released `PriorDataset` cannot produce the setting its own regression checkpoint was trained in.** `max_classes=0` raises. This is stronger than "we cannot verify the prior" — the public sampler is provably *not* the one used, at least not at this version. | Not chasing further. Recorded, and it is the reason the PARTIAL caveat is worded as it is. It also strengthens the case for T1.7. |
 | S3 | **The plan's description of the literature artifact is wrong in two of three particulars** — camp `b` is present (malformed header, not absent) and camp `c` does have a manifest. The single real structural fault is one plain-text header, which made a `^#` scan under-report. Worth noting because the same failure mode — a grep-shaped assumption about a file's structure — is how the "camp b is missing" belief formed in the first place. | Recorded. Repair done. |
 | S2 | The regression head is **999** quantiles, not the 9999 Phase 1–2 implied. The 9999 was a caller-supplied interpolation grid. | Not a defect — the extractor was validated at 0.31% against closed form. Logged as a wording correction in §6. |
