@@ -571,6 +571,97 @@ measurement.
 noise-scale mixing, so TabICL's `negeig = 0.177` stands. A1 needs a new floor and A2 does not, which
 extends N3's "A2 is the more robust condition" from preprocessing to noise-scale mixing.
 
+
+### T1.2 / T1.4 — the ladder, and the control battery · 2026-09-03
+
+#### The ladder `MEASURED`
+
+**Script:** [`src/t1_contexts.py`](src/t1_contexts.py) → `results/t1_contexts.npz` (1020 arrays),
+`results/t1_contexts_meta.json`. **60 contexts per rung, `n = 100` throughout**, so rungs differ in
+the prior over `f` and not in size.
+
+| rung | contexts | `d` | Assumption 1 |
+|---|---|---|---|
+| A prior-family, Gaussian terminal noise forced | 60 | 2–20 | **holds** |
+| B prior-family, native SCM noise | 60 | 2–20 | **VIOLATED** |
+| C prior, mechanisms perturbed | 60 | 8–19 | holds |
+| D the existing Phase 1–2 audit family | 60 | 5 | holds |
+| E real OpenML | 60 | 5–50 | assumed |
+| F degenerate / near-identity | 60 | 5 | holds |
+
+**Rungs D and F overlap in the plan and are separated here.** The plan calls D "the existing Phase 1–2
+family" and F "10 duplicated rows" — but `generate_audit_context` *already* duplicates 10 rows, so as
+written they are the same contexts. D is kept as literally the existing family (so "extend the
+existing 5 seeds to 60" means what it says and D stays comparable to every Phase 1 number); F is made
+genuinely more degenerate — **30 duplicated rows and low noise** (`σ = 0.15`), which is what drives a
+smoother toward `J ≈ I`. Logged as D10.
+
+#### T1.4 control battery — P5, P7 **PASS**; P6's ranges **MISS**, its consequence **holds**
+
+**Script:** [`src/controls.py`](src/controls.py) (the two new controls),
+[`src/t1_controls.py`](src/t1_controls.py) → `results/t1_controls.json`. CPU, 6 controls × 360
+contexts, ~25 s.
+
+**P5 — A2 is robust to noise-scale mixing. PASS.** Noise-hyperprior GP projected `negeig`, worst over
+all 360 contexts: **`9.865e-16`** against a `< 1e-10` gate.
+
+| rung | A | B | C | D | E | F |
+|---|---|---|---|---|---|---|
+| max proj `negeig` | `4.0e-16` | `3.8e-16` | `0.0` | `9.9e-16` | `0.0` | `8.5e-16` |
+
+**This promotes Theorem 15 from a normaliser statement to a class-robustness statement, and TabICL's
+`negeig = 0.177` stands untouched** — exactly as P5 registered.
+
+**P7 — the LOO smoother behaves as a catalogue row. PASS, both parts.**
+
+| rung | A | B | C | D | E | F |
+|---|---|---|---|---|---|---|
+| proj `negeig` mean (gate ≥ 0.15) | `0.645` | `0.632` | `0.716` | `0.687` | `0.679` | `0.855` |
+| row-system residual max (gate ≤ 1e-10) | `3.5e-15` | `3.3e-15` | `4.6e-15` | `1.7e-15` | `3.1e-15` | `2.1e-15` |
+
+*Note beyond the registration:* the **column** system also profiles it to machine precision. For
+`J = D⁻¹K̃` with `K̃` symmetric, the column condition reduces to `sᵢdᵢ = const`, so both systems
+succeed. That does not weaken the exclusion — TabICL fails **both** at residual `0.57`–`0.62` — but
+the LOO row is not a *row-only* discriminator and the paper should not say it is.
+
+**P6 — the registered ranges MISS on 3 of 4.** `MEASURED`
+
+| rung | proj `asym` mean | proj `asym` max | ambient `asym` | ambient `negeig` |
+|---|---|---|---|---|
+| A | `0.0108` | `0.0642` | `0.0486` | `0.0502` |
+| B | `0.0120` | `0.0836` | `0.0441` | `0.0536` |
+| C | `0.0016` | `0.0289` | `0.0146` | `0.0112` |
+| **D** | **`0.0505`** | `0.0678` | **`0.1531`** | **`0.2341`** |
+| E | `0.0063` | `0.0486` | `0.0269` | `0.0261` |
+| F | `0.0002` | `0.0008` | `0.0112` | `0.0000` |
+
+| P6 sub-prediction | gate | measured | verdict |
+|---|---|---|---|
+| proj `asym` mean | `[0.02, 0.12]` | `0.0002`–`0.0505` | **MISS** (only D) |
+| proj `asym` max | `≤ 0.45` | `0.0836` | **PASS** |
+| ambient `asym` | `[0.15, 0.36]` | `0.0112`–`0.1531` | **MISS** (only D) |
+| ambient `negeig` | `[0.07, 0.62]` | `0.0000`–`0.2341` | **MISS** (only D) |
+
+**But P6's stated *consequence* holds, and it is the part that matters.** P6's consequence was
+*"TabICL's 0.580 becomes a ~6–13× excess, not 570×"*. Phase 1's contexts **are rung D**, so rung D's
+projected floor `0.0505` is the correct null:
+
+```
+TabICL A1 (Phase 1, rung-D contexts)   0.580331
+class-level floor, noise-hyperprior GP  0.0505
+                            ratio        11.5x        <- inside P6's registered 6-13x
+```
+
+against the `136×`–`570×` Phase 1 quotes against a *quantisation* floor. **So the headline correction
+survives even though the numeric ranges do not**, and the discrepancy is that the noise-hyperprior
+GP's asymmetry is **smaller than predicted on five of six rungs** — which makes a violation on those
+rungs *starker*, not weaker.
+
+*Reconciliation with T3.1, which measured ambient `0.283`:* that was at `n = 60`, **unwrapped**, and
+evaluated at `y`; this is `n = 100`, **wrapped**, evaluated at `u`. Both are the same construction and
+neither is wrong; the numbers are not directly comparable and the paper must quote one or the other
+with its configuration attached.
+
 ---
 
 ## §3 Decisions
@@ -585,6 +676,7 @@ extends N3's "A2 is the more robust condition" from preprocessing to noise-scale
 | **D7** | **Option (b) chosen for O3: circulation and FD are kept as SEPARATE registered quantities.** A1's primary instrument is `asym(QᵀJQ)` by finite differences, as in Phase 1. Sphere-averaged circulation `C = ‖·‖_F` from the loop is registered alongside it as a *new* quantity, and the **ratio `C / asym_FD` is itself reported** as a measure of how fast the antisymmetry direction decorrelates over the constant-`(ȳ,r)` sphere. | User decision, 2026-09-03, after the T0.3 reconciliation failed and both estimators were shown correct. Turns a failed reconciliation into a measured property. The plan's "circulation replaces the symmetry measurement" is superseded. |
 | **D8** | **Circulation runs at reduced power on a 20-context subset per rung** (32 planes × 24 loop points), not on all 60. | Budget. Full-power circulation on 360 contexts is ~51 GPU-hours against a ≤40 h total for T0–T2. Plan §1: cut *power*, never a *registered comparison*. FD A1 runs on all 60; circulation is the secondary quantity under D7, and its Monte Carlo SE (`1/(2√32)` ≈ 8.8%) is reported with every value. |
 | **D9** | **T1.7 (nano-PFN) is started now**, in parallel with Tier 1. | The plan gates it on T0.1 returning FAIL or on T1+T2 landing early; T0.1 returned PARTIAL and Tier 1 has just begun. **User instruction overrides the gate.** Justified independently: T0.1 established the released `PriorDataset` *cannot* produce the regression setting, so a model whose prior is known exactly by construction is the only way to close that gap. |
+| **D10** | **Rungs D and F separated.** D is literally the existing Phase 1–2 audit family; F is made genuinely degenerate (30 duplicated rows, `σ = 0.15`). | The plan's D ("the existing family") and F ("10 duplicated rows") describe the *same* contexts, because `generate_audit_context` already duplicates 10 rows. Keeping D as the existing family preserves comparability with every Phase 1 number. |
 | D6 | Model-facing circulation runs use **64 planes**, not the 40 of P4 | P4's Monte Carlo SE is `1/(2√n_planes)`, measured and confirmed. 40 planes gives ~11% SE, enough to miss a 20% target on a 2σ draw. 64 gives ~9%, and a bootstrap CI over the plane samples is reported beside every point estimate so the comparison is never point-to-point. The registered P4 gate is **not** moved. |
 
 ---
