@@ -173,9 +173,11 @@ def main():
         p9 = A["trJ_over_n_all_mean"] <= 0.9
         out["P9"] = {"rung_A_trJ_over_n_mean": A["trJ_over_n_all_mean"],
                      "rung_A_trJ_over_n_max": None, "gate": 0.9, "PASS": bool(p9)}
+        p9_msg = ("PASS" if p9 else
+                  "*** MISS -- the model interpolates its own prior's contexts "
+                  "and the non-degeneracy gate fails at home ***")
         print(f"\n  P9  rung A trJ/n mean = {A['trJ_over_n_all_mean']:.4f}   "
-              f"gate <= 0.9 : {'PASS' if p9 else '*** MISS -- the model interpolates its '
-                               'own prior contexts and the non-degeneracy gate fails at home ***'}")
+              f"gate <= 0.9 : {p9_msg}")
 
     json.dump(out, open(RES / "t1_summary.json", "w"), indent=2, default=float)
     print(f"\nSaved: {RES / 't1_summary.json'}")

@@ -67,3 +67,4 @@ T1.7  nano-PFN, arm 'fixed'   135,682 parameters   16000 steps
   step   5700  NLL +1.38075  lr 2.44e-04  (573s)
   step   5800  NLL +1.38446  lr 2.41e-04  (582s)
   step   5900  NLL +1.38536  lr 2.39e-04  (591s)
+  step   6000  NLL +1.38138  lr 2.36e-04  (603s)

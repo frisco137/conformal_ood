@@ -1,0 +1,14 @@
+{
+  "_config": {
+    "nondeg_gate": 0.3,
+    "rungs": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+    ]
+  },
+  "per_rung": {}
+}
