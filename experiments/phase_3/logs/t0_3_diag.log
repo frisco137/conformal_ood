@@ -1,0 +1,17 @@
+================================================================================================
+D1/D2  does the loop recover the skew of a WRAPPED NONLINEAR map with a known answer?
+================================================================================================
+  map                       seed     FD skew_F  loop skew_F   ratio    analytic
+  wrapped TargetedImitator  42         4.11094      4.04424   0.984     4.11094
+  wrapped nonlinear (tanh^3)42         4.16390      4.79125   1.151           -
+  wrapped TargetedImitator  100        4.21130      3.72901   0.885     4.21130
+  wrapped nonlinear (tanh^3)100        4.25035      4.57446   1.076           -
+  wrapped TargetedImitator  200        4.12214      4.36344   1.059     4.12214
+  wrapped nonlinear (tanh^3)200        4.19218      5.04494   1.203           -
+  -> wrapped_targeted_imitator    worst |ratio-1| = 0.115  INSTRUMENT OK
+  -> wrapped_nonlinear            worst |ratio-1| = 0.203  INSTRUMENT OK
+
+================================================================================================
+D3  TabICL: does the gap close when the loop plane CONTAINS y?
+================================================================================================
+  seed    FD skew(perp)  loop perp   ratio  FD skew(incl y)  loop along y   ratio

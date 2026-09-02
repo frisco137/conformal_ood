@@ -328,7 +328,7 @@ Meta recorded per context: `prior_type`, `d_drawn`, `d_kept`, `σ²`, `num_layer
 
 ---
 
-### T0.3 part 2 — P1 reconciliation · *running* · 2026-09-03
+### T0.3 part 2 — P1 reconciliation · **prediction FALSIFIED; halt H2 does NOT fire** · 2026-09-03
 
 **Script:** [`src/t0_3_reconcile_tabicl.py`](src/t0_3_reconcile_tabicl.py)
 **Command:** `CUDA_VISIBLE_DEVICES=0 .venv/bin/python experiments/phase_3/src/t0_3_reconcile_tabicl.py`
@@ -492,6 +492,7 @@ extends N3's "A2 is the more robust condition" from preprocessing to noise-scale
 
 | # | What | Chasing? |
 |---|---|---|
+| S5 | **P1's falsifier fired and the halt condition still does not apply.** The registered falsifier said `>2×` disagreement means "one estimator is wrong". Measured `6×`, and **both estimators are demonstrably correct** on wrapped nonlinear maps with known answers. The prediction's *premise* — that a disagreement implies an error — was wrong; a nonlinear map can legitimately give different loop and FD values because they integrate over different regions. The plan's P1 tolerance implicitly assumed near-linearity. | **Chasing.** D3 tests the geometric explanation directly. |
 | S4 | **The class-level A1 floor is `0.283` ambient, not `10⁻³`.** A genuine `σ²`-mixing exact posterior mean — unimpeachably Bayesian — has ambient `asym` in `[0.24, 0.34]`. Phase 1's `570×` symmetry ratios are against a quantisation floor, which is the wrong null for the class a reviewer means. | Not a tangent — it is T3.1's registered consequence and it changes how every A1 ratio is quoted. The projected numbers survive; the ambient ones do not. |
 | S1 | **The released `PriorDataset` cannot produce the setting its own regression checkpoint was trained in.** `max_classes=0` raises. This is stronger than "we cannot verify the prior" — the public sampler is provably *not* the one used, at least not at this version. | Not chasing further. Recorded, and it is the reason the PARTIAL caveat is worded as it is. It also strengthens the case for T1.7. |
 | S3 | **The plan's description of the literature artifact is wrong in two of three particulars** — camp `b` is present (malformed header, not absent) and camp `c` does have a manifest. The single real structural fault is one plain-text header, which made a `^#` scan under-report. Worth noting because the same failure mode — a grep-shaped assumption about a file's structure — is how the "camp b is missing" belief formed in the first place. | Recorded. Repair done. |

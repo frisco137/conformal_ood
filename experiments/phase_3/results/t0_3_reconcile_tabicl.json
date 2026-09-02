@@ -1,0 +1,138 @@
+{
+  "_config": {
+    "n_planes": 64,
+    "n_loop": 32,
+    "seeds": [
+      42,
+      100,
+      200,
+      300,
+      400
+    ],
+    "phase1_npz": "/home/psquare_a6000/Desktop/conformal_ood/experiments/phase_1/tier0_instrument/exp4_tabicl_reduced.npz",
+    "phase1_key": "tabicl_t1e-03__J__{}",
+    "frobenius_const": 1.0,
+    "planes_orthogonal_to": [
+      "1",
+      "y - mean(y)"
+    ]
+  },
+  "rows": [
+    {
+      "seed": 42,
+      "fd_skew_fro": 4.665368656334106,
+      "loop_skew_fro": 0.6276419784957556,
+      "ratio_loop_over_fd": 0.1345321291263049,
+      "ci95": [
+        0.5440679669298538,
+        0.7142818636708602
+      ],
+      "fd_in_ci": false,
+      "r": 14.006247368604596,
+      "m_dim": 98,
+      "rel_diff": 0.865467870873695,
+      "seconds": 512.0443074703217,
+      "plane_vals_mean_abs": 0.005430714673767735
+    },
+    {
+      "seed": 100,
+      "fd_skew_fro": 4.157333468163271,
+      "loop_skew_fro": 0.6684363429475052,
+      "ratio_loop_over_fd": 0.1607848752250378,
+      "ci95": [
+        0.5517638054271082,
+        0.7794281230897466
+      ],
+      "fd_in_ci": false,
+      "r": 14.490120798864123,
+      "m_dim": 98,
+      "rel_diff": 0.8392151247749622,
+      "seconds": 513.5181727409363,
+      "plane_vals_mean_abs": 0.005321804424446545
+    },
+    {
+      "seed": 200,
+      "fd_skew_fro": 3.5582660247095217,
+      "loop_skew_fro": 0.6931240738275583,
+      "ratio_loop_over_fd": 0.19479265153710404,
+      "ci95": [
+        0.5355458082086864,
+        0.854828303495365
+      ],
+      "fd_in_ci": false,
+      "r": 13.957231451888552,
+      "m_dim": 98,
+      "rel_diff": 0.805207348462896,
+      "seconds": 504.00166940689087,
+      "plane_vals_mean_abs": 0.0052505020536861135
+    },
+    {
+      "seed": 300,
+      "fd_skew_fro": 3.8002277387952477,
+      "loop_skew_fro": 0.7415952353620718,
+      "ratio_loop_over_fd": 0.195144945601911,
+      "ci95": [
+        0.5847150565697685,
+        0.8903973069712954
+      ],
+      "fd_in_ci": false,
+      "r": 13.229045179971214,
+      "m_dim": 98,
+      "rel_diff": 0.804855054398089,
+      "seconds": 500.7245488166809,
+      "plane_vals_mean_abs": 0.005856154192565945
+    },
+    {
+      "seed": 400,
+      "fd_skew_fro": 3.71357047198195,
+      "loop_skew_fro": 0.5440176277790961,
+      "ratio_loop_over_fd": 0.14649449414884846,
+      "ci95": [
+        0.4306703054572022,
+        0.6437510314152521
+      ],
+      "fd_in_ci": false,
+      "r": 17.20584907397869,
+      "m_dim": 98,
+      "rel_diff": 0.8535055058511516,
+      "seconds": 509.12581157684326,
+      "plane_vals_mean_abs": 0.004071779634739831
+    }
+  ],
+  "worst_rel_diff": 0.865467870873695,
+  "mean_ratio": 0.16634981912784125,
+  "n_fd_in_ci": 0,
+  "P1_within_20pct": false,
+  "P1_falsified_2x": true,
+  "halt_H2": true,
+  "radius_sweep_seed42": {
+    "fd_skew_fro": 4.665368656334106,
+    "rows": [
+      {
+        "r_mult": 0.1,
+        "r": 1.4006247368604596,
+        "loop_skew_fro": 0.5979335719731935,
+        "ratio_to_fd": 0.12816427082592657
+      },
+      {
+        "r_mult": 0.3,
+        "r": 4.201874210581378,
+        "loop_skew_fro": 0.5979334041808619,
+        "ratio_to_fd": 0.1281642348604233
+      },
+      {
+        "r_mult": 1.0,
+        "r": 14.006247368604596,
+        "loop_skew_fro": 0.5979336124144189,
+        "ratio_to_fd": 0.1281642794943145
+      },
+      {
+        "r_mult": 2.0,
+        "r": 28.01249473720919,
+        "loop_skew_fro": 0.5979325762914591,
+        "ratio_to_fd": 0.12816405740619327
+      }
+    ]
+  },
+  "radius_sweep_spread": 2.2208812122670452e-07
+}

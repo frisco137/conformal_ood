@@ -1,0 +1,24 @@
+============================================================================================
+P1  circulation vs Phase 1 finite differences -- TabICL v2, audit contexts
+    64 planes x 32 loop points = 2048 forward passes per context
+============================================================================================
+  seed     FD skew_F  loop skew_F   ratio             loop 95% CI    sec
+  42         4.66537      0.62764   0.135   [0.54407, 0.71428]     512
+  100        4.15733      0.66844   0.161   [0.55176, 0.77943]     514
+  200        3.55827      0.69312   0.195   [0.53555, 0.85483]     504
+  300        3.80023      0.74160   0.195   [0.58472, 0.89040]     501
+  400        3.71357      0.54402   0.146   [0.43067, 0.64375]     509
+
+  worst relative difference 0.865   mean ratio 0.166   FD inside loop CI on 0/5 seeds
+  P1 (within 20%): MISS    falsifier (>2x): FIRED -- HALT H2
+
+============================================================================================
+Radius sweep, seed 42 -- loop is an area-average (Stokes); FD is a point value
+============================================================================================
+  r =  0.1 x ||y-ybar||  (  1.401)   loop 0.59793   ratio to FD 0.128
+  r =  0.3 x ||y-ybar||  (  4.202)   loop 0.59793   ratio to FD 0.128
+  r =  1.0 x ||y-ybar||  ( 14.006)   loop 0.59793   ratio to FD 0.128
+  r =  2.0 x ||y-ybar||  ( 28.012)   loop 0.59793   ratio to FD 0.128
+  ratio spread across two decades of radius: 0.000
+
+Saved: /home/psquare_a6000/Desktop/conformal_ood/experiments/phase_3/results/t0_3_reconcile_tabicl.json
