@@ -297,6 +297,56 @@ exchangeable, so `E[(aᵀAb)²] = ‖A‖_F²/(m(m−1))`. Measured empirically 
 **`c = 1.036`** against `1.0` predicted (Monte Carlo SE ≈ 0.022, so within 1.5σ) and `0.5` claimed.
 `circulation.py` uses `c = 1`. `DERIVED` + `MEASURED`
 
+
+### T1.1 — Prior-family context generator · **built and self-tested** · 2026-09-03
+
+**Script:** [`src/prior_family.py`](src/prior_family.py) (module + self-test). CPU.
+
+Drives `MLPSCM` / `TreeSCM` → `Reg2Cls(num_classes=0)` directly, which is the composition
+`SCMPrior.generate_dataset` performs, because `PriorDataset` cannot be constructed in the regression
+setting (T0.1). Returns `(X, y, f, meta)` with features standardised on context rows only.
+
+- **rung A** — `f` := the SCM's continuous output; `y := f + ε`, `ε ~ N(0, σ²I)`, `σ = 1.0`.
+  Assumption 1 **holds**, `σ²` recorded per context.
+- **rung B** — `y :=` the SCM's native output, internal layer noise only. Assumption 1 **violated**.
+
+`σ = 1.0` on a unit-variance latent is chosen so rung A matches the Phase 1 audit family's noise
+level exactly, leaving **the prior over `f`** as the only difference between rungs A and D.
+
+**Self-test** `MEASURED`, 40 draws:
+
+```
+prior_type mix   mlp_scm 29 / tree_scm 11   (72.5% / 27.5% against the prior's own 0.7 / 0.3)
+d_kept           min 3, max 20, mean 11.0   (drawn by the prior's own sampler)
+rung A SNR       0.91 - 1.15                (matches rung D's design SNR of 1)
+f_std            0.995  (Reg2Cls standard-scales)      y_std 1.25 - 1.55
+attempts         1 for every draw -- no rejection needed
+```
+
+Meta recorded per context: `prior_type`, `d_drawn`, `d_kept`, `σ²`, `num_layers`, `hidden_dim`,
+`is_causal`, `scm_noise_std`, `sampling`, and an explicit `assumption1` flag.
+
+---
+
+### T0.3 part 2 — P1 reconciliation · *running* · 2026-09-03
+
+**Script:** [`src/t0_3_reconcile_tabicl.py`](src/t0_3_reconcile_tabicl.py)
+**Command:** `CUDA_VISIBLE_DEVICES=0 .venv/bin/python experiments/phase_3/src/t0_3_reconcile_tabicl.py`
+**Expected output:** `results/t0_3_reconcile_tabicl.json`
+
+64 planes × 32 loop points = **2048 forward passes per context**, 5 contexts, plus a 4-point radius
+sweep on seed 42. Planes drawn orthogonal to **both** `1` and the centred `y`, so the loop lives in
+exactly the subspace `Q` spans and the loop and finite-difference numbers estimate the same object.
+A bootstrap CI over the plane samples is reported beside each point estimate, because P1 compares two
+*estimates* and a point-to-point comparison would be the wrong test.
+
+The radius sweep is the check that matters for interpretation: TabICL is not affine, so by Stokes the
+loop returns the **area-average** of the antisymmetric 2-form over the enclosed disc while the finite
+difference returns a **point value**. If the loop value moves with `r`, the two estimators are
+measuring genuinely different things and that must be said rather than averaged over.
+
+Result appended on completion. Runtime is running longer than the ~45 min estimate.
+
 ---
 
 ## §3 Decisions
