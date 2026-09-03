@@ -821,6 +821,75 @@ strongly non-interpolating contexts pull it down. P9's registered form is satisf
 on rung D. Row and column profiling residuals are both `0.7478`, so **neither diagonal-scaling
 mechanism fits**, reproducing Phase 1 §6 on a different context family.
 
+
+### T1.2 / T1.6 — the full ladder, all six rungs · 2026-09-03
+
+**Script:** [`src/t1_model.py`](src/t1_model.py) → `results/t1_model_<rung>.json`; scored by
+[`src/t1_analyse.py`](src/t1_analyse.py) → `results/t1_summary.json`. 360 contexts, ~11.5 h GPU.
+
+#### Gated table — non-degenerate contexts only (`‖J−I‖_F/‖J‖_F > 0.3`) `MEASURED`
+
+Ordered by violation. Same model, same instrument, so the rows are directly comparable.
+
+| rung | | gated `asym` | gated `negeig` | non-deg | `trJ/n` | A3 `R²` | class floor | ratio |
+|---|---|---|---|---|---|---|---|---|
+| **E** | real OpenML | **`0.8798 ± 0.412`** | **`0.3662 ± 0.128`** | 29/60 | `0.868` | `0.102` | `0.0063` | `139×` |
+| **A** | prior-family, Gaussian noise | `0.6968 ± 0.265` | `0.2336 ± 0.104` | 26/60 | `0.844` | `0.176` | `0.0108` | `65×` |
+| **D** | existing Phase 1–2 audit family | `0.6686 ± 0.134` | `0.2030 ± 0.066` | **60/60** | `0.496` | `0.068` | `0.0505` | `13×` |
+| **B** | prior-family, **native** noise | `0.5720 ± 0.260` | `0.1878 ± 0.135` | 26/60 | `0.867` | `0.115` | `0.0120` | `48×` |
+| **C** | prior, mechanisms perturbed | `0.4672 ± 0.208` | `0.1286 ± 0.129` | 24/60 | `0.940` | `0.162` | `0.0016` | `301×` |
+| **F** | degenerate (designed) | `0.2257 ± 0.034` | `0.0681 ± 0.021` | **60/60** | `0.674` | `0.213` | `0.0002` | `1166×` |
+
+**Rung D reproduces Phase 1.** 60 contexts, 60/60 non-degenerate, `asym 0.6686` / `negeig 0.2030`
+against Phase 1's 5-seed `0.5803` / `0.1767` — same direction, modestly higher on the larger sample.
+The audit family is the only one besides F where *every* context is non-degenerate.
+
+#### Four things this table says
+
+**1. Real data is the WORST rung, not the best.** Rung E violates most (`0.880` / `0.366`), above both
+the prior-family rung A and the audit family D. Whatever drives the violation, it is not an artifact
+of synthetic contexts — it is largest where the model is actually used.
+
+**2. The ordering is NOT monotone in expected prior-family-ness.** Ranking rungs by how in-family they
+should be gives roughly `A > C > B > D > F > E`; the observed violation ordering is
+`E > A > D > B > C > F`. The two prior-family rungs sit at *opposite ends* (A second-highest, C
+second-lowest). **A clean dose-response at the rung level does not exist.** P8's per-context test needs
+the T1.3 coordinate, which is not yet measured — but the rung-level picture already says the story is
+not a simple monotone one, and P8's registration explicitly says a non-monotone curve *is* the
+headline.
+
+**3. A3 fails on every rung, by a wide margin.** `R²` runs `0.068`–`0.213` against a `≥ 0.90` gate. The
+cross-channel law fails on real data, on synthetic data, on the model's own prior, and on the
+degenerate regime alike.
+
+**4. Neither mechanism fits anywhere.** Row-profiling residual is `0.732`–`0.822` on all six rungs,
+against `1.5e-15` on the Nadaraya–Watson positive control. The diagonal-scaling exclusion of Phase 1
+§6 reproduces on five new context families.
+
+#### Two design findings, reported because they are mine to own
+
+**Rung F did not do its job.** It was built (D10) to produce the near-identity regime, with 30
+duplicated rows and `σ = 0.15`. It came out **60/60 non-degenerate** at `‖J−I‖ = 0.696`, `trJ/n =
+0.674` — and with the *lowest* violation of any rung. The design failed: low noise does not push this
+model toward `J ≈ I`.
+
+**The regime it was chasing appeared somewhere else entirely.** The near-identity contexts are on the
+**prior-family rungs**: A, B and C run `trJ/n` of `0.844`, `0.867`, `0.940` with 34, 34 and 36 of 60
+contexts degenerate. So **TabICL interpolates on its own prior's noisy contexts and does not
+interpolate on clean low-noise ones** — the opposite of the shrinkage a posterior mean performs, where
+more noise means more smoothing. Flagged rather than chased: the rungs differ in feature dimension and
+DAG structure as well as noise, so this is an observation, not an isolated effect.
+
+#### Status of the registered items
+
+| | |
+|---|---|
+| **Reading 1** | **FIRES** on rung A (`0.6968 ≥ 0.40`, `0.2336 ≥ 0.10`) |
+| Reading 2 | false |
+| **P8** | **not scored** — needs the T1.3 coordinate (GPU, not yet run) |
+| **P9** | PASS on rung A's mean (`0.844 ≤ 0.9`); would **fail** on rung C (`0.940`) |
+| circulation `C/asym` | not measured — needs `t1_circulation.py` (GPU, not yet run) |
+
 ---
 
 ## §3 Decisions
