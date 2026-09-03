@@ -998,6 +998,37 @@ point — which `t0_3_sphere_locality.py` does correctly, for a different purpos
 different coordinate frames and makes their alignment meaningless. Queued to re-run and confirm the
 recorded numbers.
 
+
+### Block 3.1 — anti-shrinkage · **LAUNCHED, INTERRUPTED, NO RESULT** · 2026-09-03
+
+**Script:** [`src/b3_1_antishrinkage.py`](src/b3_1_antishrinkage.py). Registered as P14/P15/P16
+**before** launch (§1, round 2). **Stopped mid-run for a machine migration. There is no result
+artifact and no claim from this task.**
+
+Partial output, **base context 0 only, 3 of 6 `σ` values, one of four base contexts** — recorded so
+the state is honest, **not** as a finding:
+
+```
+  base 0   Var(f) = 0.6630
+   sigma     SNR    TabICL trJ/n     asym   negeig    GP trJ/n   hierGP     nhGP
+   0.030  736.69          0.8932   0.2043   0.1604      0.8971   0.8985   0.5912
+   0.075  116.76          0.8681   0.2278   0.1072      0.8826   0.8910   0.5909
+   0.189   18.50          0.7867   0.3716   0.1619      0.8133   0.8484   0.5886
+```
+
+**Do not read this.** On these three points TabICL's `trJ/n` falls (`0.893 → 0.787`) alongside the
+exact GP's (`0.897 → 0.813`), which would point toward **P15 failing** and the round-1 anti-shrinkage
+finding being withdrawn as a feature-dimension/DAG-depth confound. But three points of one base
+context is not the registered test, the two decades of `σ` are not covered, and the registered
+statistic is a Spearman over the full sweep pooled across four base contexts. **Re-run to completion
+on the new machine before anything is concluded.**
+
+*Operational note for the migration.* The first launch died silently when the shell wrapper was
+reaped, and a careless relaunch briefly left **two independent runs racing on the same log and output
+path**. Both were killed and the log cleared before the clean `setsid` relaunch. This is the failure
+Phase 2's README already documents; on the new machine, launch long GPU jobs with `setsid` and check
+`ps -o pid,ppid` for duplicates before walking away.
+
 ---
 
 ## §3 Decisions
