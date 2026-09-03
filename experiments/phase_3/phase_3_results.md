@@ -107,6 +107,55 @@ dose–response curve (P8) instead of a binary verdict.
 | **P12** | The potential-repaired field cuts the sign-violation rate by **≥ 50%** vs native and does not worsen normalised regret | if it cuts the violation and regret is unchanged, that is a clean null that **bounds the practical cost** of the defect — reported that way, not buried |
 | **P13** | Downstream cost tracks the T1.3 coordinate for TabICL and is **flat** for the refitted GP | this, not P10, is the experiment that answers "so what", because the dial is ours |
 
+### Registered 2026-09-03, round 2 — before any Block 3 measurement
+
+Added on the continuation directive. **Written and committed before the corresponding contexts were
+generated or any number measured.** Same rule as round 1: predictions are targets, deviations are
+reported, and a *mis-specified* prediction is distinguished from a *falsified* one.
+
+#### Block 3.1 — anti-shrinkage, de-confounded
+
+The round-1 observation (§2, full ladder) was that TabICL interpolates on noisy prior-family contexts
+(`trJ/n` `0.84`–`0.94`) and does not on clean low-noise ones (rung F, `trJ/n 0.674`). That is
+**confounded** with feature dimension and DAG depth, which also differ across those rungs.
+
+Design that removes the confound: **fix one context `(X, f)` and vary only `σ`.** Six values,
+log-spaced across two decades, `y = f + σε` with `ε` fixed across the sweep so the only thing moving
+is the noise scale. Repeat over several base contexts.
+
+| ID | Prediction | Falsifier / consequence |
+|---|---|---|
+| **P14** | **Controls smooth more as noise rises.** Exact GP and hierarchical GP: `trJ/n` **strictly decreasing** in `σ`, Spearman `≤ −0.9` on every base context. | This is a theorem, not a hypothesis — `J = K(K+σ²I)⁻¹` has eigenvalues `λᵢ/(λᵢ+σ²)`, decreasing in `σ²`. If it fails, the harness is wrong and nothing else in Block 3.1 is interpretable. |
+| **P15** | **TabICL moves the other way.** `trJ/n` **increasing** in `σ`, Spearman `≥ +0.5` pooled. | **If TabICL decreases like the controls, the anti-shrinkage finding was a confound of feature dimension and DAG depth, and is withdrawn.** A flat curve (`\|Spearman\| < 0.3`) means it is neither shrinking nor anti-shrinking, which is its own result. |
+| **P16** | Violation tracks the same axis: `asym` and `negeig` **increase** with `σ` for TabICL. | If violation is flat while `trJ/n` moves, the degeneracy and the violation are separate phenomena, which changes what Block 5's dial is dialling. |
+
+**If P14 and P15 both hold this leads the paper's empirical section**: a Bayes violation stated in one
+sentence, with no Jacobian machinery — *raising the noise makes this model rely on the labels more,
+where every posterior mean relies on them less.*
+
+#### Block 3.2 — nano-PFN, excluding the magnitude confound
+
+`asym = ‖J−Jᵀ‖_F / ‖J‖_F` is a **ratio**. The T1.7 decay (`1.408 → 0.585`) is consistent with the
+denominator growing rather than the numerator shrinking — and `trJ/n` did rise `0.010 → 0.029` over
+the run, so `‖J‖_F` plausibly grew. NLL moved only `0.04` nats, so "the model approached its PPD" is
+not established independently.
+
+| ID | Prediction | Falsifier / consequence |
+|---|---|---|
+| **P17** | The **numerator** `‖J−Jᵀ‖_F` falls across checkpoints, not merely the ratio. | If the numerator is flat or rising while `‖J‖_F` grows, **the T1.7 decay is a magnitude artifact** and the progress-measure claim is withdrawn. |
+| **P18** | A **materially larger / longer-trained** arm moves the `0.59` plateau downward. | If the plateau is unchanged, it is **capacity-bound**, and the progress-measure claim holds only as "violation falls until capacity binds" — a weaker statement that must be written as such. |
+
+#### Block 5 — Tier 2's new primary comparison
+
+The in-family-ness dial is replaced by the **degeneracy ratio** (`‖J−I‖_F/‖J‖_F`, and the new
+label-insensitivity gate of Block 2). It moves the violation from *identically zero* to `0.7`, it is
+computable from the context **before any decision is taken**, and it is not confounded with the
+prior.
+
+| ID | Prediction | Falsifier / consequence |
+|---|---|---|
+| **P19** | **Sequential cost appears exactly where the label response is non-trivial and vanishes where the model is copying labels.** Sign-violation rate and normalised-regret gap both correlate with the degeneracy ratio; Spearman `≥ +0.4`. | If cost is flat in the degeneracy ratio, the structural violation has no sequential consequence even where it is largest — a clean null that bounds the practical cost, and it is reported that way rather than buried. |
+
 ---
 
 ## §2 Task log
