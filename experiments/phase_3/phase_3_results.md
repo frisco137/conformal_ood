@@ -710,9 +710,44 @@ the thing T1.7 was built to show and nothing else in the project can show it.
    read as meaningful. On this evidence it is a coincidence between an undertrained 135k-parameter
    model and a production checkpoint, and should not be presented as anything else.
 
-**The sharper test is the `mixed` arm**, training now: T3.1 proves the exact posterior mean under a
-`σ²`-mixing prior is *itself* asymmetric, so `mixed` should **plateau** where `fixed` decays. If both
-decay identically, T3.1's class-floor argument is wrong.
+#### The `mixed` arm — the registered comparison **FAILS**, and the prediction was mis-specified `MEASURED`
+
+| step | NLL | proj `asym` | proj `negeig` | asym/floor |
+|---|---|---|---|---|
+| 200 | `1.4637` | `1.3905 ± 0.020` | `0.5246 ± 0.073` | `2908×` |
+| 1000 | `1.4019` | `1.3241 ± 0.063` | `0.4722 ± 0.075` | `2769×` |
+| 2000 | `1.3873` | `0.9768 ± 0.077` | `0.2337 ± 0.064` | `2043×` |
+| 4000 | `1.3855` | `0.7728 ± 0.060` | `0.2119 ± 0.039` | `1616×` |
+| 8000 | `1.3829` | `0.5955 ± 0.088` | `0.2180 ± 0.053` | `1245×` |
+| 16000 | `1.3814` | `0.5937 ± 0.111` | `0.2249 ± 0.053` | `1242×` |
+
+```
+fixed  asym 1.4084 -> 0.5852   ratio 0.415     predicted: DECAY to the floor
+mixed  asym 1.3905 -> 0.5937   ratio 0.427     predicted: PLATEAU at the P6 floor
+```
+
+**The two arms are indistinguishable.** A 3% difference in decay ratio, against per-checkpoint
+standard deviations of `±0.09`–`±0.13`. `mixed` did **not** plateau.
+
+**The prediction was internally inconsistent with T3.1, and the measurement is consistent with it.**
+T3.1 proves the noise-scale contamination is **rank one along `y`** and that
+`QᵀJ_hQ = Qᵀ Cov Q` **exactly** — the projection annihilates it. So a `σ²`-mixing model has **no
+projected-metric floor from noise mixing at all**, and both arms should decay the same way in the
+projected metric. They do.
+
+T1.4 had already measured this and I did not connect it at the time: the noise-hyperprior GP's
+**projected** `asym` is `0.0108` on rung A while its **ambient** `asym` is `0.0486`. The plan's T1.7
+mixed-arm prediction quoted "the P6 floor" without specifying which of the two, and the only floor
+that could produce a plateau is the **ambient** one — which is not what either arm was measured in.
+
+**So this is not a falsification of T3.1. It is a mis-specified prediction, and T3.1 predicts exactly
+what was observed.** Logged as a retraction of the T1.7 mixed-arm prediction as written, in §6.
+
+**What the shared plateau at `~0.59` actually is.** Both arms stall at `1224×`/`1242×` the measured
+instrument floor with near-identical NLL (`1.3800` / `1.3814`), so the plateau is **not** noise-scale
+mixing — it is the shared limitation of a 135k-parameter model trained for 16k steps that remains
+nearly label-insensitive (`trJ/n` `0.028`–`0.029`). Whether more capacity or compute drives it to the
+floor is untested, and that is the T1.7 question worth more budget.
 
 
 ### T1.2 rung A — **READING 1 FIRES. The off-family escape route is closed.** · 2026-09-03
@@ -831,6 +866,7 @@ mechanism fits**, reproducing Phase 1 §6 on a different context family.
 
 | # | Quantity | Correction |
 |---|---|---|
+| R2 | **T1.7's mixed-arm prediction as written** — "trained with mixed `σ²`, it should plateau near the P6 floor" | **Withdrawn as mis-specified, not falsified.** T3.1 proves the projection annihilates the noise-scale contamination exactly, so there is no *projected*-metric floor from `σ²` mixing; only the *ambient* floor could produce a plateau, and neither arm was measured in ambient terms. The measurement (both arms decay identically, ratios `0.415` / `0.427`) is what T3.1 predicts. |
 | R1 | "TabICL's regression head emits 9999 quantiles" (implied by Phase 1–2's `alphas` grid) | The head emits **999** (`num_quantiles: 999`, checkpoint config). 9999 was the caller-supplied interpolation grid. No number changes; wording does. |
 
 ---
