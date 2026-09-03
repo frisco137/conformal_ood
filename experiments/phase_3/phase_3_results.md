@@ -942,8 +942,50 @@ DAG structure as well as noise, so this is an observation, not an isolated effec
 
 ## §7 Provenance table
 
-| paper section | script | output |
+Every result in this document, with the script that produced it and the artifact it lives in.
+Paths are relative to `experiments/phase_3/`.
+
+### Shared modules (no output of their own)
+
+| module | what it provides |
+|---|---|
+| `src/circulation.py` | the loop instrument: `circulation_asym`, `centred_basis`, `frobenius_from_planes`, `FROBENIUS_CONST` |
+| `src/controls.py` | the two NEW controls: `NoiseHyperpriorGP` (P5/P6), `LOOSmoother` (P7) |
+| `src/prior_family.py` | T1.1 prior-family context generator (rungs A and B) |
+| `src/nanopfn.py` | T1.7 model definition: `NanoPFN`, `PFNConfig`, `gaussian_nll` |
+
+### Measurements
+
+| § / task | script | output artifact |
 |---|---|---|
-| §0 checkpoint pin | inline, `provenance_prior.md` §1 | `provenance_prior.md` |
-| T0.1 prior provenance | inline source read | `provenance_prior.md` |
-| T0.2 determinism | `src/t0_2_determinism.py` | `results/t0_2_determinism.json`, `results/t0_2_predictions.npz` |
+| §0 checkpoint pin, T0.1 prior provenance | inline source read of `tabicl` 2.1.1 + checkpoint | `provenance_prior.md` |
+| **T0.2** determinism | `src/t0_2_determinism.py` | `results/t0_2_determinism.json`, `results/t0_2_predictions.npz`, `logs/t0_2.log` |
+| **T0.3 pt 1** identity, P2, P3, P4 | `src/t0_3_circulation_controls.py` | `results/t0_3_controls.json` |
+| **T0.3 pt 2** P1 reconciliation | `src/t0_3_reconcile_tabicl.py` | `results/t0_3_reconcile_tabicl.json`, `logs/t0_3_p1.log` |
+| **T0.3** D1/D2/D3 diagnostics | `src/t0_3_diagnose_p1.py` | `results/t0_3_diagnose_p1.json`, `logs/t0_3_diag.log` |
+| **T0.3** sphere-locality test | `src/t0_3_sphere_locality.py` | `results/t0_3_sphere_locality.json`, `logs/t0_3_sphere.log` |
+| **T0.3** direction-decorrelation test | inline (see the T0.3 verdict block) | numbers in §2; **no saved artifact — see the note below** |
+| **T0.4** literature repair | `src/t0_4_repair_literature.py` | `results/t0_4_literature_audit.json`, `literature/literature_extraction_all_REPAIRED.md` |
+| **T3.1** noise-scale derivation + numerics | `src/t3_1_noise_scale.py` | `t3_1_noise_scale.md`, `results/t3_1_noise_scale.json` |
+| **T1.1 / T1.2** ladder construction | `src/t1_contexts.py` | `results/t1_contexts.npz` (1020 arrays), `results/t1_contexts_meta.json` |
+| **T1.4** control battery, P5/P6/P7 | `src/t1_controls.py` | `results/t1_controls.json` |
+| **T1.2** ladder audit, 6 rungs | `src/t1_model.py` | `results/t1_model_{A..F}.json`, `results/t1_model_jacobians_{A..F}.npz`, `logs/t1_model.log` |
+| **T1.6** aggregation, readings, P8/P9 | `src/t1_analyse.py` | `results/t1_summary.json` |
+| **T1.7** training, both arms | `src/t1_7_train_nanopfn.py` | `results/nanopfn_{fixed,mixed}_train.json`, `results/nanopfn_{fixed,mixed}_step{200..16000}.pt` (14 checkpoints) |
+| **T1.7** audit across compute | `src/t1_7_audit_nanopfn.py` | `results/t1_7_nanopfn_audit.json`, `logs/t1_7_train.log` |
+
+### Written but NOT YET RUN
+
+| task | script | why |
+|---|---|---|
+| **T1.3** prior-family-ness coordinate — **P8's x-axis** | `src/t1_coordinate.py` | needs ~4 h GPU; **P8 is therefore unscored** |
+| **D7** sphere-averaged circulation across the ladder | `src/t1_circulation.py` | needs ~6 h GPU; the `C / asym_FD` ratio is unmeasured |
+
+### One gap in this table, stated rather than hidden
+
+The **direction-decorrelation test** — the four reduced Jacobians through one fixed `Q` whose pairwise
+alignment came out at `+0.0004`, and which is the evidence for the whole T0.3 verdict — was run as an
+inline heredoc and **its script was not saved**. The numbers are in §2 but the code is not on disk.
+This is exactly the failure mode Phase 2 was cleaned up for (ten orphaned result files), and it is
+mine. It is cheap to reconstruct — four `reduced_jacobian` calls on seed 42 — and should be written
+into `src/` before the T0.3 verdict is cited in the paper.
