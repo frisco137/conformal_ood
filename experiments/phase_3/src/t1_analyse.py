@@ -66,6 +66,8 @@ def msd(v):
 
 
 def main():
+    a3p = RES / "b1_a3_floors.json"
+    a3 = json.load(open(a3p))["per_rung"] if a3p.exists() else {}
     ctrl_p = RES / "t1_controls.json"
     ctrl = json.load(open(ctrl_p)) if ctrl_p.exists() else None
     floors = {r: ctrl["per_rung"][r]["aggregate"]["noise_hyperprior"][P6_FLOOR_KEY]["mean"]
@@ -77,8 +79,13 @@ def main():
     print("=" * 108)
     print("T1.6  ladder summary   (gated = non-degenerate contexts only, ||J-I||/||J|| > 0.3)")
     print("=" * 108)
+    # Block 1.2: the ratio column is REMOVED. The class floor varies ~250x across
+    # rungs (0.0002 on F to 0.0505 on D), so asym/floor ranked the two LEAST
+    # violating rungs above the two worst. Violation and floor are separate
+    # columns; the reader divides where the division is meaningful, which is
+    # within a rung and not across them.
     print(f"  {'rung':<5}{'n':>4}{'nondeg':>8}{'asym (gated)':>20}{'negeig (gated)':>20}"
-          f"{'trJ/n':>16}{'A3 R2':>9}{'floor':>8}{'ratio':>8}")
+          f"{'trJ/n':>16}{'A1 floor':>10}{'A3 R2':>9}{'A3 floor':>10}{'A3 verdict':>13}")
 
     for r in RUNGS:
         rows = load_rung(r)
@@ -99,8 +106,10 @@ def main():
         e["frac_negeig_zero"] = float(np.mean([q["negeig"] == 0 for q in rows]))
         if r in floors:
             e["class_floor_proj_asym"] = floors[r]
-            e["asym_over_floor"] = (e.get("asym_mean", e["asym_all_mean"])
-                                    / floors[r]) if floors[r] > 0 else None
+            # kept in the JSON for within-rung use only; NOT printed and NOT
+            # comparable across rungs -- see the note above the header
+            e["asym_over_floor_WITHIN_RUNG_ONLY"] = (
+                e.get("asym_mean", e["asym_all_mean"]) / floors[r]) if floors[r] > 0 else None
         if coord:
             e["coord_n"] = len(coord)
             e["coord_mean"], e["coord_sd"] = msd(list(coord.values()))
@@ -119,12 +128,16 @@ def main():
         out["per_rung"][r] = e
 
         fl = f"{floors[r]:.4f}" if r in floors else "-"
-        rt = (f"{e['asym_over_floor']:.1f}x" if e.get("asym_over_floor") else "-")
+        a3f = a3.get(r, {})
+        a3fl = (f"{a3f['worst_floor_mean']:.4f}" if a3f else "-")
+        a3v = a3f.get("verdict", "-")
+        e["a3_floor_mean"] = a3f.get("worst_floor_mean")
+        e["a3_verdict"] = a3v
         print(f"  {r:<5}{e['n']:>4}{e['n_nondegenerate']:>8}"
               f"{e.get('asym_mean', float('nan')):>12.4f} +-{e.get('asym_sd', 0):<6.3f}"
               f"{e.get('negeig_mean', float('nan')):>12.4f} +-{e.get('negeig_sd', 0):<6.3f}"
               f"{e['trJ_over_n_all_mean']:>10.3f} +-{e['trJ_over_n_all_sd']:<5.3f}"
-              f"{e['a3_r2_all_mean']:>9.4f}{fl:>8}{rt:>8}")
+              f"{fl:>10}{e['a3_r2_all_mean']:>9.4f}{a3fl:>10}{a3v:>13}")
 
     # ------------------------------------------------------------- the readings
     A = out["per_rung"].get("A")

@@ -53,7 +53,9 @@
       "skew_fro_sd": 2.0729617312643636,
       "frac_negeig_zero": 0.5666666666666667,
       "class_floor_proj_asym": 0.010788013583465947,
-      "asym_over_floor": 64.58905199600228
+      "asym_over_floor_WITHIN_RUNG_ONLY": 64.58905199600228,
+      "a3_floor_mean": 0.793209124700395,
+      "a3_verdict": "UNEVALUABLE"
     },
     "B": {
       "n": 60,
@@ -97,7 +99,9 @@
       "skew_fro_sd": 1.9067061807023094,
       "frac_negeig_zero": 0.6833333333333333,
       "class_floor_proj_asym": 0.011960634222989234,
-      "asym_over_floor": 47.82269204917408
+      "asym_over_floor_WITHIN_RUNG_ONLY": 47.82269204917408,
+      "a3_floor_mean": 0.7894582000129426,
+      "a3_verdict": "UNEVALUABLE"
     },
     "C": {
       "n": 60,
@@ -141,7 +145,9 @@
       "skew_fro_sd": 1.830191870816253,
       "frac_negeig_zero": 0.6666666666666666,
       "class_floor_proj_asym": 0.001553183535648701,
-      "asym_over_floor": 300.77945278727395
+      "asym_over_floor_WITHIN_RUNG_ONLY": 300.77945278727395,
+      "a3_floor_mean": 0.8027852719353601,
+      "a3_verdict": "UNEVALUABLE"
     },
     "D": {
       "n": 60,
@@ -185,7 +191,9 @@
       "skew_fro_sd": 0.6513020648329116,
       "frac_negeig_zero": 0.0,
       "class_floor_proj_asym": 0.05050652559793008,
-      "asym_over_floor": 13.238670597792664
+      "asym_over_floor_WITHIN_RUNG_ONLY": 13.238670597792664,
+      "a3_floor_mean": 0.9907390323310566,
+      "a3_verdict": "FAILURE"
     },
     "E": {
       "n": 60,
@@ -229,7 +237,9 @@
       "skew_fro_sd": 32.16192098507022,
       "frac_negeig_zero": 0.43333333333333335,
       "class_floor_proj_asym": 0.006338290231804552,
-      "asym_over_floor": 138.81480731828324
+      "asym_over_floor_WITHIN_RUNG_ONLY": 138.81480731828324,
+      "a3_floor_mean": 0.9499068252825651,
+      "a3_verdict": "FAILURE"
     },
     "F": {
       "n": 60,
@@ -273,7 +283,9 @@
       "skew_fro_sd": 0.25574183597955447,
       "frac_negeig_zero": 0.0,
       "class_floor_proj_asym": 0.000193552602868273,
-      "asym_over_floor": 1166.037451259809
+      "asym_over_floor_WITHIN_RUNG_ONLY": 1166.037451259809,
+      "a3_floor_mean": 0.999992619083931,
+      "a3_verdict": "FAILURE"
     }
   },
   "readings": {

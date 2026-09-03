@@ -1,0 +1,186 @@
+{
+  "_config": {
+    "gate": 0.9,
+    "separation": 0.15,
+    "rungs": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+    ],
+    "controls": [
+      "hiergp",
+      "noise_hyperprior"
+    ]
+  },
+  "per_rung": {
+    "A": {
+      "model_a3_r2_mean": 0.1763230680442391,
+      "controls": {
+        "hiergp": {
+          "r2_mean": 0.9976420429500338,
+          "r2_sd": 0.003920500976059542,
+          "r2_min": 0.9786423568042188,
+          "r2_max": 0.9999997446069117,
+          "n_below_gate": 0,
+          "n": 60
+        },
+        "noise_hyperprior": {
+          "r2_mean": 0.793209124700395,
+          "r2_sd": 0.30584988098665716,
+          "r2_min": 6.8302098262806865e-06,
+          "r2_max": 0.9999716084464398,
+          "n_below_gate": 23,
+          "n": 60
+        }
+      },
+      "worst_floor_mean": 0.793209124700395,
+      "worst_floor_min": 6.8302098262806865e-06,
+      "floor_has_power": false,
+      "separated_from_model": true,
+      "verdict": "UNEVALUABLE"
+    },
+    "B": {
+      "model_a3_r2_mean": 0.11460601129915914,
+      "controls": {
+        "hiergp": {
+          "r2_mean": 0.9977990118851594,
+          "r2_sd": 0.005046570797402456,
+          "r2_min": 0.9661268902121523,
+          "r2_max": 0.9999994878363697,
+          "n_below_gate": 0,
+          "n": 60
+        },
+        "noise_hyperprior": {
+          "r2_mean": 0.7894582000129426,
+          "r2_sd": 0.32656187188918856,
+          "r2_min": 0.0013366653626943892,
+          "r2_max": 0.9999961846336124,
+          "n_below_gate": 23,
+          "n": 60
+        }
+      },
+      "worst_floor_mean": 0.7894582000129426,
+      "worst_floor_min": 0.0013366653626943892,
+      "floor_has_power": false,
+      "separated_from_model": true,
+      "verdict": "UNEVALUABLE"
+    },
+    "C": {
+      "model_a3_r2_mean": 0.16166819362649282,
+      "controls": {
+        "hiergp": {
+          "r2_mean": 0.9951145617588871,
+          "r2_sd": 0.007216480348667107,
+          "r2_min": 0.967557570442054,
+          "r2_max": 0.9999998550366374,
+          "n_below_gate": 0,
+          "n": 60
+        },
+        "noise_hyperprior": {
+          "r2_mean": 0.8027852719353601,
+          "r2_sd": 0.3070775062794168,
+          "r2_min": 0.002502568987749365,
+          "r2_max": 0.9999983828664161,
+          "n_below_gate": 23,
+          "n": 60
+        }
+      },
+      "worst_floor_mean": 0.8027852719353601,
+      "worst_floor_min": 0.002502568987749365,
+      "floor_has_power": false,
+      "separated_from_model": true,
+      "verdict": "UNEVALUABLE"
+    },
+    "D": {
+      "model_a3_r2_mean": 0.06748913194084001,
+      "controls": {
+        "hiergp": {
+          "r2_mean": 0.9999846616869609,
+          "r2_sd": 1.3015098370664258e-05,
+          "r2_min": 0.9999394148695337,
+          "r2_max": 0.9999991596668898,
+          "n_below_gate": 0,
+          "n": 60
+        },
+        "noise_hyperprior": {
+          "r2_mean": 0.9907390323310566,
+          "r2_sd": 0.004394188803751669,
+          "r2_min": 0.97968770372918,
+          "r2_max": 0.9997668748748991,
+          "n_below_gate": 0,
+          "n": 60
+        }
+      },
+      "worst_floor_mean": 0.9907390323310566,
+      "worst_floor_min": 0.97968770372918,
+      "floor_has_power": true,
+      "separated_from_model": true,
+      "verdict": "FAILURE"
+    },
+    "E": {
+      "model_a3_r2_mean": 0.10220717180950739,
+      "controls": {
+        "hiergp": {
+          "r2_mean": 0.9996546795168151,
+          "r2_sd": 0.0013378180334734783,
+          "r2_min": 0.9902818579131893,
+          "r2_max": 0.9999982088410659,
+          "n_below_gate": 0,
+          "n": 60
+        },
+        "noise_hyperprior": {
+          "r2_mean": 0.9499068252825651,
+          "r2_sd": 0.11895665000913257,
+          "r2_min": 0.4296672149745372,
+          "r2_max": 1.0,
+          "n_below_gate": 9,
+          "n": 60
+        }
+      },
+      "worst_floor_mean": 0.9499068252825651,
+      "worst_floor_min": 0.4296672149745372,
+      "floor_has_power": true,
+      "separated_from_model": true,
+      "verdict": "FAILURE"
+    },
+    "F": {
+      "model_a3_r2_mean": 0.21321110786414738,
+      "controls": {
+        "hiergp": {
+          "r2_mean": 0.999992619083931,
+          "r2_sd": 3.98037633124303e-06,
+          "r2_min": 0.9999777002457387,
+          "r2_max": 0.9999969457221709,
+          "n_below_gate": 0,
+          "n": 60
+        },
+        "noise_hyperprior": {
+          "r2_mean": 0.9999931308474956,
+          "r2_sd": 1.335393369057509e-06,
+          "r2_min": 0.9999893430962802,
+          "r2_max": 0.9999960199428721,
+          "n_below_gate": 0,
+          "n": 60
+        }
+      },
+      "worst_floor_mean": 0.999992619083931,
+      "worst_floor_min": 0.9999777002457387,
+      "floor_has_power": true,
+      "separated_from_model": true,
+      "verdict": "FAILURE"
+    }
+  },
+  "failure_rungs": [
+    "D",
+    "E",
+    "F"
+  ],
+  "unevaluable_rungs": [
+    "A",
+    "B",
+    "C"
+  ]
+}

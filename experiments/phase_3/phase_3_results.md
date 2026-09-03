@@ -939,6 +939,65 @@ DAG structure as well as noise, so this is an observation, not an isolated effec
 | **P9** | PASS on rung A's mean (`0.844 ≤ 0.9`); would **fail** on rung C (`0.940`) |
 | circulation `C/asym` | not measured — needs `t1_circulation.py` (GPU, not yet run) |
 
+
+### Block 1 — correctness, before any new claim is quoted · 2026-09-03
+
+#### B1.1 — A3 control floors on every rung · **the round-1 A3 claim was overstated** `MEASURED`
+
+**Script:** [`src/b1_a3_floors.py`](src/b1_a3_floors.py) → `results/b1_a3_floors.json`. CPU.
+
+Both controls pushed through the **identical** A3 regression the model gets — ambient wrapped
+Jacobian diagonal against the control's own predictive variance, `ols(1 + Jᵢᵢ, s²)`. Both satisfy the
+cross-channel law **exactly** by construction, so whatever they read is artifact.
+
+| rung | model `R²` | hier-GP floor | noise-hyperprior floor | verdict |
+|---|---|---|---|---|
+| A | `0.1763` | `0.99764 ± 0.0039` | **`0.79321 ± 0.3059`** | **UNEVALUABLE** |
+| B | `0.1146` | `0.99780 ± 0.0051` | **`0.78946 ± 0.3266`** | **UNEVALUABLE** |
+| C | `0.1617` | `0.99511 ± 0.0072` | **`0.80279 ± 0.3071`** | **UNEVALUABLE** |
+| D | `0.0675` | `0.99998 ± 0.0000` | `0.99074 ± 0.0044` | **FAILURE** |
+| E | `0.1022` | `0.99965 ± 0.0013` | `0.94991 ± 0.1190` | **FAILURE** |
+| F | `0.2132` | `0.99999 ± 0.0000` | `0.99999 ± 0.0000` | **FAILURE** |
+
+Decision rule, fixed in the script before the numbers were seen: a rung is a **failure** only if
+*both* controls clear the `0.90` gate **and** the model sits more than `0.15` below the worse control.
+
+**Correction to round 1.** I wrote "A3 fails on every rung". **It does not.** A3 fails on **D, E and
+F** and is **unevaluable on A, B and C** — the three prior-family rungs — because there the
+noise-hyperprior control, which satisfies the law exactly, itself reads `R² ≈ 0.79 ± 0.31` and fails
+the gate. On those rungs the wrapper artifact alone can produce the model's reading.
+
+**The binding control is the noise-hyperprior GP, not the hierarchical GP.** The hierarchical GP reads
+`0.995`–`1.000` everywhere and would have licensed all six rungs. Mixing `σ²` rather than lengthscale
+is what exposes the artifact, and the `±0.31` spread on A/B/C says it is highly context-dependent
+there. **A3's wrapper artifact is far worse on prior-family contexts than on GP-drawn or real ones** —
+a new finding, and the reason this block was necessary.
+
+#### B1.2 — the ratio column is removed `DECIDED`
+
+The class floor varies `~250×` across rungs (`0.0002` on F to `0.0505` on D), so `asym/floor` ranked
+the two **least**-violating rungs (C at `301×`, F at `1166×`) above the two worst. Violation and floor
+are now separate columns in `t1_analyse.py`; the JSON keeps the ratio under the key
+`asym_over_floor_WITHIN_RUNG_ONLY`. **The division is meaningful within a rung and not across them.**
+
+#### B1.3 — the 5-seed rung-D numbers are retired `DECIDED`
+
+Rung D on **60 contexts, 60/60 non-degenerate**, gives `asym 0.6686 ± 0.134`, `negeig 0.2030 ± 0.066`.
+Phase 1's `0.5803` / `0.1767` came from **5 seeds**. No selection is involved either way, so the
+larger sample wins on precision alone. **The 60-context values are what carry forward.** The 5-seed
+figures are retained only in their T0.2 role, where they served as the bit-identical reproduction
+check that the audit path survived the Phase 1→3 restructure — and they did, to every reported digit.
+
+#### B1.4 — the direction-decorrelation script is on disk `FIXED`
+
+[`src/t0_3_direction_decorrelation.py`](src/t0_3_direction_decorrelation.py). Reconstructed from the
+inline heredoc that produced the `+0.0004` alignment the entire T0.3 verdict rests on. The docstring
+records the one thing that makes the measurement valid and that a re-implementation would plausibly
+get wrong: **`Q` must be built once from `y` and reused at every sphere point.** Rebuilding it per
+point — which `t0_3_sphere_locality.py` does correctly, for a different purpose — puts the matrices in
+different coordinate frames and makes their alignment meaningless. Queued to re-run and confirm the
+recorded numbers.
+
 ---
 
 ## §3 Decisions
